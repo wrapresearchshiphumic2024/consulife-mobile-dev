@@ -16,13 +16,11 @@ class Onboarding2View extends GetView<Onboarding2Controller> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment
-                .spaceBetween, // Menjaga elemen dengan space antara
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Center(
                 child: SizedBox(
-                  height: height /
-                      1.7, // Menyesuaikan tinggi dengan persentase dari tinggi layar
+                  height: height / 1.7,
                   child: Image.asset(
                     'assets/images/Onboarding final.png',
                     fit: BoxFit.cover,
