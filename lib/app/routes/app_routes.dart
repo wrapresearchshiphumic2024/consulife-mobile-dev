@@ -12,6 +12,9 @@ abstract class Routes {
   static const LANDING_PSYCHOLOG = _Paths.LANDING_PSYCHOLOG;
   static const HOME_PSYCHOOLOG = _Paths.HOME_PSYCHOOLOG;
   static const HOME_PSYCHOLOG = _Paths.HOME_PSYCHOLOG;
+  static const PICK_ROLE = _Paths.PICK_ROLE;
+  static const FORGOT_PASS = _Paths.FORGOT_PASS;
+  static const RESET_PASS = _Paths.RESET_PASS;
 }
 
 abstract class _Paths {
@@ -25,4 +28,7 @@ abstract class _Paths {
   static const LANDING_PSYCHOLOG = '/landing-psycholog';
   static const HOME_PSYCHOOLOG = '/home-psychoolog';
   static const HOME_PSYCHOLOG = '/home-psycholog';
+  static const PICK_ROLE = '/pick-role';
+  static const FORGOT_PASS = '/forgot-pass';
+  static const RESET_PASS = '/reset-pass';
 }

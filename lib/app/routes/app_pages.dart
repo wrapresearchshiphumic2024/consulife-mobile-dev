@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 
+import '../modules/PickRole/bindings/pick_role_binding.dart';
+import '../modules/PickRole/views/pick_role_view.dart';
+import '../modules/forgotPass/bindings/forgot_pass_binding.dart';
+import '../modules/forgotPass/views/forgot_pass_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-
 import '../modules/home_psycholog/views/home_psycholog_view.dart';
 import '../modules/landing_psycholog/bindings/landing_psycholog_binding.dart';
 import '../modules/landing_psycholog/views/landing_psycholog_view.dart';
@@ -10,6 +13,8 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding2/bindings/onboarding2_binding.dart';
 import '../modules/onboarding2/views/onboarding2_view.dart';
+import '../modules/resetPass/bindings/reset_pass_binding.dart';
+import '../modules/resetPass/views/reset_pass_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
@@ -22,7 +27,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LANDING_PSYCHOLOG;
+  static const INITIAL = Routes.RESET_PASS;
 
   static final routes = [
     GetPage(
@@ -47,7 +52,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SIGNIN,
-      page: () => const SigninView(),
+      page: () => const SignInView(),
       binding: SigninBinding(),
     ),
     GetPage(
@@ -63,6 +68,21 @@ class AppPages {
     GetPage(
       name: _Paths.HOME_PSYCHOLOG,
       page: () => const HomePsychologView(),
+    ),
+    GetPage(
+      name: _Paths.PICK_ROLE,
+      page: () => const PickRoleView(),
+      binding: PickRoleBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASS,
+      page: () => const ForgotPassView(),
+      binding: ForgotPassBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASS,
+      page: () => const ResetPassView(),
+      binding: ResetPassBinding(),
     ),
   ];
 }
