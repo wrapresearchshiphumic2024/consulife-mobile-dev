@@ -4,6 +4,7 @@ import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/first_step
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/four_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/second_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/third_step.dart';
+import 'package:consulin_mobile_dev/widgets/ui/button_back.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,17 +27,14 @@ class SignupPsychologstView extends GetView<SignupPsychologstController> {
                   minHeight: 10,
                 );
               }),
-              IconButton(
-                onPressed: () {
+              ButtonBack(
+                onBackPressed: () {
                   if (controller.step.value == 0) {
-                    // Jika berada di step 0, navigasi kembali ke halaman sebelumnya
                     Get.back();
                   } else {
-                    // Jika di step 1 atau lebih, kembali ke langkah sebelumnya
                     controller.step.value -= 1;
                   }
                 },
-                icon: const Icon(Icons.arrow_back),
               ),
               const Padding(
                 padding: EdgeInsets.all(20.0),

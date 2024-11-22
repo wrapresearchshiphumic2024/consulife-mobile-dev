@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,9 +15,11 @@ void main() {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       builder: FToastBuilder(),
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          fontFamily: GoogleFonts.poppins().fontFamily,
-          scaffoldBackgroundColor: const Color(0xffF5F5F7)),
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        scaffoldBackgroundColor: const Color(0xffF5F5F7),
+      ),
     ),
   );
 }

@@ -1,33 +1,21 @@
+import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
+import 'package:consulin_mobile_dev/widgets/custom_appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/forgot_pass_controller.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
-import 'package:consulin_mobile_dev/app/modules/signin/views/signin_view.dart';
-import 'package:consulin_mobile_dev/app/modules/PickRole/views/pick_role_view.dart';
+
 import 'package:consulin_mobile_dev/widgets/ui/custom_text_field.dart';
 
 class ForgotPassView extends StatelessWidget {
-  const ForgotPassView({Key? key}) : super(key: key);
+  const ForgotPassView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ForgotPassController controller = Get.put(ForgotPassController());
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Image.asset(
-            'assets/images/back.png',
-            height: 24,
-            width: 24,
-          ),
-          onPressed: () {
-            Get.to(() => const SignInView());
-          },
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: const CustomAppBar(),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -35,7 +23,6 @@ class ForgotPassView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -48,8 +35,6 @@ class ForgotPassView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-
-
                 const Text(
                   'Forgot Password?',
                   style: TextStyle(
@@ -59,8 +44,6 @@ class ForgotPassView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-
-
                 const Text(
                   "Don't worry! It happens. Please enter the address associated with your account.",
                   style: TextStyle(
@@ -69,8 +52,6 @@ class ForgotPassView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 32),
-
-
                 CustomTextField(
                   controller: TextEditingController(),
                   labelText: "Your email address",
@@ -85,8 +66,6 @@ class ForgotPassView extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 32),
-
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -111,8 +90,6 @@ class ForgotPassView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -122,7 +99,7 @@ class ForgotPassView extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const PickRoleView());
+                        Get.toNamed(Routes.PICK_ROLE);
                       },
                       child: const Text(
                         'Sign Up',
@@ -135,10 +112,7 @@ class ForgotPassView extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 40),
-
-
                 const Center(
                   child: Text(
                     'Wrap Research 2024',
@@ -149,32 +123,6 @@ class ForgotPassView extends StatelessWidget {
               ],
             ),
           ),
-
-
-          Obx(() {
-            if (controller.isEmailSent.value) {
-              return Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 40),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'Email Sent Successfully',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          }),
         ],
       ),
     );

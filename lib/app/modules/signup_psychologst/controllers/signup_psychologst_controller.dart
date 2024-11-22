@@ -1,9 +1,11 @@
+import 'package:consulin_mobile_dev/app/utils/helpers/toast_helper.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/first_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/four_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/second_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/third_step.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 
@@ -83,7 +85,13 @@ class SignupPsychologstController extends GetxController {
       if (step.value < steps.length - 1) {
         step.value++;
       } else {
-        Get.snackbar("Success", "Sign up success");
+        ToastHelper.show(
+          message: "Signup Successfully",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+          gravity: ToastGravity.BOTTOM,
+        );
         Get.back();
       }
     }

@@ -1,6 +1,7 @@
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/widgets/signup/first_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/second_step.dart';
+import 'package:consulin_mobile_dev/widgets/ui/button_back.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -26,8 +27,8 @@ class SignupView extends GetView<SignupController> {
                   minHeight: 10,
                 );
               }),
-              IconButton(
-                onPressed: () {
+              ButtonBack(
+                onBackPressed: () {
                   if (controller.step.value == 0) {
                     // Jika berada di step 0, navigasi kembali ke halaman sebelumnya
                     Get.back();
@@ -36,7 +37,6 @@ class SignupView extends GetView<SignupController> {
                     controller.step.value -= 1;
                   }
                 },
-                icon: const Icon(Icons.arrow_back),
               ),
               const Padding(
                 padding: EdgeInsets.all(20.0),

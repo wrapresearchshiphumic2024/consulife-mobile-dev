@@ -4,7 +4,7 @@ import 'package:consulin_mobile_dev/widgets/ui/column_chart.dart';
 import 'package:consulin_mobile_dev/widgets/ui/stats_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+
 import '../controllers/home_psycholog_controller.dart';
 
 class HomePsychologView extends GetView<HomePsychologController> {

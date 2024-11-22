@@ -1,33 +1,18 @@
+import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
+import 'package:consulin_mobile_dev/widgets/custom_appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/pick_role_controller.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/app/modules/signin/views/signin_view.dart';
-import 'package:consulin_mobile_dev/app/modules/signup/views/signup_view.dart';
-import 'package:consulin_mobile_dev/app/modules/signup_psychologst/views/signup_psychologst_view.dart';
 
-class PickRoleView extends StatelessWidget {
-  const PickRoleView({Key? key}) : super(key: key);
+class PickRoleView extends GetView<PickRoleController> {
+  const PickRoleView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final PickRoleController controller = Get.put(PickRoleController());
-
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Image.asset(
-            'assets/images/back.png',
-            height: 24,
-            width: 24,
-          ),
-          onPressed: () {
-            Get.to(() => const SignInView());
-          },
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
@@ -59,16 +44,13 @@ class PickRoleView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => const SignupPsychologstView());
+                      Get.toNamed(Routes.SIGNUP_PSYCHOLOGST);
                     },
                     child: Stack(
                       alignment: Alignment.bottomCenter,
@@ -84,11 +66,11 @@ class PickRoleView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Text(
                                 'Become a',
                                 style: TextStyle(
@@ -112,11 +94,10 @@ class PickRoleView extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => const SignupView());
+                      Get.toNamed(Routes.SIGNUP);
                     },
                     child: Stack(
                       alignment: Alignment.bottomCenter,
@@ -132,11 +113,11 @@ class PickRoleView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Text(
                                 'Continue as',
                                 style: TextStyle(
@@ -163,8 +144,6 @@ class PickRoleView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 32),
-
-
             Center(
               child: Column(
                 children: [
@@ -178,7 +157,6 @@ class PickRoleView extends StatelessWidget {
                   const SizedBox(height: 8),
                   GestureDetector(
                     onTap: () {
-
                       print('Learn more about the account type clicked');
                     },
                     child: const Text.rich(
@@ -237,8 +215,6 @@ class PickRoleView extends StatelessWidget {
               ),
             ),
             const Spacer(),
-
-
             const Center(
               child: Padding(
                 padding: EdgeInsets.only(top: 20.0),

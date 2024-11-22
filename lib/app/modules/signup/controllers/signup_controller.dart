@@ -53,8 +53,7 @@ class SignupController extends GetxController {
           gravity: ToastGravity.BOTTOM,
         );
 
-        // Navigasi kembali jika dibutuhkan
-        // Get.back();
+        Get.back();
       }
     }
   }

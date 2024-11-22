@@ -1,3 +1,4 @@
+import 'package:consulin_mobile_dev/widgets/custom_appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/reset_pass_controller.dart';
@@ -5,28 +6,13 @@ import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/app/modules/PickRole/views/pick_role_view.dart';
 import 'package:consulin_mobile_dev/widgets/ui/custom_text_field.dart';
 
-class ResetPassView extends StatelessWidget {
-  const ResetPassView({Key? key}) : super(key: key);
+class ResetPassView extends GetView<ResetPassController> {
+  const ResetPassView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ResetPassController controller = Get.put(ResetPassController());
-
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Image.asset(
-            'assets/images/back.png',
-            height: 24,
-            width: 24,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: const CustomAppBar(),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -34,7 +20,6 @@ class ResetPassView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -47,8 +32,6 @@ class ResetPassView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-
-
                 const Text(
                   'Reset Password',
                   style: TextStyle(
@@ -58,8 +41,6 @@ class ResetPassView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-
-
                 CustomTextField(
                   controller: controller.newPasswordController,
                   labelText: "New Password",
@@ -75,8 +56,6 @@ class ResetPassView extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-
-
                 CustomTextField(
                   controller: controller.confirmPasswordController,
                   labelText: "Confirm New Password",
@@ -89,8 +68,6 @@ class ResetPassView extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 30),
-
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -115,8 +92,6 @@ class ResetPassView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -139,10 +114,7 @@ class ResetPassView extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 40),
-
-
                 const Center(
                   child: Text(
                     'Wrap Research 2024',
@@ -153,15 +125,14 @@ class ResetPassView extends StatelessWidget {
               ],
             ),
           ),
-
-
           Obx(() {
             if (controller.isPasswordReset.value) {
               return Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 40),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(8),
