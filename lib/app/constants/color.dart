@@ -7,3 +7,4 @@ const textColor = Color(0xff1E0342);
 const backgroundColor = Color(0xffDDE7F9);
 const successColor = Color(0xff28A745);
 const warningColor = Color(0xffDC3545);
+const linkColor = Color(0xff2871D1);

@@ -1,23 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SigninController extends GetxController {
-  //TODO: Implement SigninController
+class SignInController extends GetxController {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final RxBool showPassword = false.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void togglePasswordVisibility() {
+    showPassword.value = !showPassword.value;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  void signIn() {
 
-  @override
-  void onClose() {
-    super.onClose();
+    print("Email: ${emailController.text}");
+    print("Password: ${passwordController.text}");
   }
-
-  void increment() => count.value++;
 }
