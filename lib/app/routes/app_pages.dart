@@ -9,6 +9,8 @@ import '../modules/home/views/home_view.dart';
 import '../modules/home_psycholog/views/home_psycholog_view.dart';
 import '../modules/landing_psycholog/bindings/landing_psycholog_binding.dart';
 import '../modules/landing_psycholog/views/landing_psycholog_view.dart';
+
+import '../modules/manage_schedule/views/manage_schedule_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding2/bindings/onboarding2_binding.dart';
@@ -27,7 +29,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.ONBOARDING;
+  static const INITIAL = Routes.LANDING_PSYCHOLOG;
 
   static final routes = [
     GetPage(
@@ -83,6 +85,10 @@ class AppPages {
       name: _Paths.RESET_PASS,
       page: () => const ResetPassView(),
       binding: ResetPassBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANAGE_SCHEDULE,
+      page: () => const ManageScheduleView(),
     ),
   ];
 }
