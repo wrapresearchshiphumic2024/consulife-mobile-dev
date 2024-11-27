@@ -1,3 +1,4 @@
+import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -97,18 +98,10 @@ class ManageTime extends StatelessWidget {
                     width: 150,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: selected
-                          ? const Color(0xFF27374D)
-                          : const Color(0xFF27374D).withOpacity(0.1),
+                      color: disabled
+                          ? primaryColor.withOpacity(0.2)
+                          : (selected ? primaryColor : const Color(0xffDDE7F9)),
                       borderRadius: BorderRadius.circular(12),
-                      border: disabled
-                          ? null
-                          : Border.all(
-                              color: selected
-                                  ? Colors.transparent
-                                  : const Color(0xFF27374D).withOpacity(0.5),
-                              width: 2,
-                            ),
                     ),
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(
@@ -117,7 +110,9 @@ class ManageTime extends StatelessWidget {
                     child: Text(
                       item['label']!,
                       style: TextStyle(
-                        color: selected ? Colors.white : Colors.black54,
+                        color: disabled
+                            ? Colors.black.withOpacity(0.2)
+                            : (selected ? Colors.white : Colors.black54),
                       ),
                     ),
                   ),

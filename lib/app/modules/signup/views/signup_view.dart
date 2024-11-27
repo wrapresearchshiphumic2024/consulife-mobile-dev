@@ -2,6 +2,7 @@ import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/widgets/signup/first_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/second_step.dart';
 import 'package:consulin_mobile_dev/widgets/ui/button_back.dart';
+import 'package:consulin_mobile_dev/widgets/ui/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -79,27 +80,10 @@ class SignupView extends GetView<SignupController> {
                         bool isLastStep = controller.step.value ==
                             controller.steps.length - 1;
 
-                        return SizedBox(
-                          width: width,
-                          child: ElevatedButton(
-                            onPressed: controller
-                                .goToNextStep, // Lanjutkan jika validasi berhasil
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  primaryColor, // Warna tombol jika valid
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 50, vertical: 15),
-                            ),
-                            child: Text(
-                              isLastStep ? "Create Account" : "Next",
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                        );
+                        return CustomElevatedButton(
+                            primaryColor: primaryColor,
+                            onPressed: controller.goToNextStep,
+                            buttonText: isLastStep ? "Create Account" : "Next");
                       }),
                     ],
                   ),

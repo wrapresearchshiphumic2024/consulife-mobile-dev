@@ -16,6 +16,7 @@ abstract class Routes {
   static const FORGOT_PASS = _Paths.FORGOT_PASS;
   static const RESET_PASS = _Paths.RESET_PASS;
   static const MANAGE_SCHEDULE = _Paths.MANAGE_SCHEDULE;
+  static const EDIT_SCHEDULE = _Paths.EDIT_SCHEDULE;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const FORGOT_PASS = '/forgot-pass';
   static const RESET_PASS = '/reset-pass';
   static const MANAGE_SCHEDULE = '/manage-schedule';
+  static const EDIT_SCHEDULE = '/edit-schedule';
 }
