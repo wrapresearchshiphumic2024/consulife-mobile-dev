@@ -11,10 +11,11 @@ class PickRoleView extends GetView<PickRoleController> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: const CustomAppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,7 +57,7 @@ class PickRoleView extends GetView<PickRoleController> {
                       alignment: Alignment.bottomCenter,
                       children: [
                         Container(
-                          height: 350,
+                          height: height * 0.4,
                           margin: const EdgeInsets.only(right: 8),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -103,7 +104,7 @@ class PickRoleView extends GetView<PickRoleController> {
                       alignment: Alignment.bottomCenter,
                       children: [
                         Container(
-                          height: 350,
+                          height: height * 0.4,
                           margin: const EdgeInsets.only(left: 8),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -216,14 +217,11 @@ class PickRoleView extends GetView<PickRoleController> {
             ),
             const Spacer(),
             const Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Text(
-                  'Wrap Research 2024',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+              child: Text(
+                'Wrap Research 2024',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
                 ),
               ),
             ),

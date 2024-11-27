@@ -1,5 +1,6 @@
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
 import 'package:consulin_mobile_dev/app/utils/validation/signup_validation.dart';
+import 'package:consulin_mobile_dev/widgets/ui/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/signin_controller.dart';
@@ -85,28 +86,12 @@ class SignInView extends GetView<SignInController> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
+                      CustomElevatedButton(
+                          primaryColor: primaryColor,
                           onPressed: () {
                             controller.signIn();
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF27374D),
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                          ),
-                          child: const Text(
-                            "Sign In",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      ),
+                          buttonText: "Sign In"),
                     ],
                   ),
                 ),
