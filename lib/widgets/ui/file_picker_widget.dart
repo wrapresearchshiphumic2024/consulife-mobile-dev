@@ -23,11 +23,15 @@ class FilePickerWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              label,
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                label,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
+              ),
             ),
           ),
           ElevatedButton(

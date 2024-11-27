@@ -15,12 +15,17 @@ abstract class Routes {
   static const PICK_ROLE = _Paths.PICK_ROLE;
   static const FORGOT_PASS = _Paths.FORGOT_PASS;
   static const RESET_PASS = _Paths.RESET_PASS;
+
   static const PROFILE_PYCHOLOG = _Paths.PROFILE_PYCHOLOG;
   static const PSIKOLOG_HISTORY = _Paths.PSIKOLOG_HISTORY;
   static const PSIKOLOG_PER_INFO = _Paths.PSIKOLOG_PER_INFO;
   static const PSIKOLOG_PRO_DET = _Paths.PSIKOLOG_PRO_DET;
   static const PSIKOLOG_CHA_PASS = _Paths.PSIKOLOG_CHA_PASS;
   static const PSI_RESET_PASS = _Paths.PSI_RESET_PASS;
+
+  static const MANAGE_SCHEDULE = _Paths.MANAGE_SCHEDULE;
+  static const EDIT_SCHEDULE = _Paths.EDIT_SCHEDULE;
+
 }
 
 abstract class _Paths {
@@ -37,10 +42,15 @@ abstract class _Paths {
   static const PICK_ROLE = '/pick-role';
   static const FORGOT_PASS = '/forgot-pass';
   static const RESET_PASS = '/reset-pass';
+
   static const PROFILE_PYCHOLOG = '/profile-pycholog';
   static const PSIKOLOG_HISTORY = '/psikolog-history';
   static const PSIKOLOG_PER_INFO = '/psikolog-per-info';
   static const PSIKOLOG_PRO_DET = '/psikolog-pro-det';
   static const PSIKOLOG_CHA_PASS = '/psikolog-cha-pass';
   static const PSI_RESET_PASS = '/psi-reset-pass';
+
+  static const MANAGE_SCHEDULE = '/manage-schedule';
+  static const EDIT_SCHEDULE = '/edit-schedule';
+
 }

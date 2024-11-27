@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../modules/PickRole/bindings/pick_role_binding.dart';
 import '../modules/PickRole/views/pick_role_view.dart';
+
 import '../modules/ProfilePycholog/bindings/profile_pycholog_binding.dart';
 import '../modules/ProfilePycholog/views/profile_pycholog_view.dart';
 import '../modules/PsiResetPass/bindings/psi_reset_pass_binding.dart';
@@ -14,6 +15,10 @@ import '../modules/PsikologPerInfo/bindings/psikolog_per_info_binding.dart';
 import '../modules/PsikologPerInfo/views/psikolog_per_info_view.dart';
 import '../modules/PsikologProDet/bindings/psikolog_pro_det_binding.dart';
 import '../modules/PsikologProDet/views/psikolog_pro_det_view.dart';
+
+import '../modules/edit_schedule/bindings/edit_schedule_binding.dart';
+import '../modules/edit_schedule/views/edit_schedule_view.dart';
+
 import '../modules/forgotPass/bindings/forgot_pass_binding.dart';
 import '../modules/forgotPass/views/forgot_pass_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -21,6 +26,7 @@ import '../modules/home/views/home_view.dart';
 import '../modules/home_psycholog/views/home_psycholog_view.dart';
 import '../modules/landing_psycholog/bindings/landing_psycholog_binding.dart';
 import '../modules/landing_psycholog/views/landing_psycholog_view.dart';
+import '../modules/manage_schedule/views/manage_schedule_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding2/bindings/onboarding2_binding.dart';
@@ -97,6 +103,7 @@ class AppPages {
       binding: ResetPassBinding(),
     ),
     GetPage(
+
       name: _Paths.PROFILE_PYCHOLOG,
       page: () => const ProfilePychologView(),
       binding: ProfilePychologBinding(),
@@ -125,6 +132,17 @@ class AppPages {
       name: _Paths.PSI_RESET_PASS,
       page: () => const PsiResetPassView(),
       binding: PsiResetPassBinding(),
+    ), 
+    GetPage(
+
+      name: _Paths.MANAGE_SCHEDULE,
+      page: () => const ManageScheduleView(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_SCHEDULE,
+      page: () => const EditScheduleView(),
+      binding: EditScheduleBinding(),
+
     ),
   ];
 }

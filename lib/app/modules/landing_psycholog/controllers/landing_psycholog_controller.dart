@@ -1,6 +1,8 @@
 import 'package:consulin_mobile_dev/app/modules/ProfilePycholog/views/profile_pycholog_view.dart';
 import 'package:consulin_mobile_dev/app/modules/home_psycholog/controllers/home_psycholog_controller.dart';
 import 'package:consulin_mobile_dev/app/modules/home_psycholog/views/home_psycholog_view.dart';
+import 'package:consulin_mobile_dev/app/modules/manage_schedule/controllers/manage_schedule_controller.dart';
+import 'package:consulin_mobile_dev/app/modules/manage_schedule/views/manage_schedule_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,13 +15,14 @@ class LandingPsychologController extends GetxController {
   void onInit() {
     super.onInit();
     Get.put(HomePsychologController());
+    Get.put(ManageScheduleController());
   }
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> bodyView = <Widget>[
-    HomePsychologView(),
-    const Text('Index 1: Explore', style: optionStyle),
+    const HomePsychologView(),
+    const ManageScheduleView(),
     const Text('Index 2: Camera', style: optionStyle),
     ProfilePychologView()
   ];
