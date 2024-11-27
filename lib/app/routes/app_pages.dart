@@ -2,8 +2,23 @@ import 'package:get/get.dart';
 
 import '../modules/PickRole/bindings/pick_role_binding.dart';
 import '../modules/PickRole/views/pick_role_view.dart';
+
+import '../modules/ProfilePycholog/bindings/profile_pycholog_binding.dart';
+import '../modules/ProfilePycholog/views/profile_pycholog_view.dart';
+import '../modules/PsiResetPass/bindings/psi_reset_pass_binding.dart';
+import '../modules/PsiResetPass/views/psi_reset_pass_view.dart';
+import '../modules/PsikologChaPass/bindings/psikolog_cha_pass_binding.dart';
+import '../modules/PsikologChaPass/views/psikolog_cha_pass_view.dart';
+import '../modules/PsikologHistory/bindings/psikolog_history_binding.dart';
+import '../modules/PsikologHistory/views/psikolog_history_view.dart';
+import '../modules/PsikologPerInfo/bindings/psikolog_per_info_binding.dart';
+import '../modules/PsikologPerInfo/views/psikolog_per_info_view.dart';
+import '../modules/PsikologProDet/bindings/psikolog_pro_det_binding.dart';
+import '../modules/PsikologProDet/views/psikolog_pro_det_view.dart';
+
 import '../modules/edit_schedule/bindings/edit_schedule_binding.dart';
 import '../modules/edit_schedule/views/edit_schedule_view.dart';
+
 import '../modules/forgotPass/bindings/forgot_pass_binding.dart';
 import '../modules/forgotPass/views/forgot_pass_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -30,7 +45,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.ONBOARDING;
+  static const INITIAL = Routes.LANDING_PSYCHOLOG;
 
   static final routes = [
     GetPage(
@@ -88,6 +103,38 @@ class AppPages {
       binding: ResetPassBinding(),
     ),
     GetPage(
+
+      name: _Paths.PROFILE_PYCHOLOG,
+      page: () => const ProfilePychologView(),
+      binding: ProfilePychologBinding(),
+    ),
+    GetPage(
+      name: _Paths.PSIKOLOG_HISTORY,
+      page: () => const PsikologHistoryView(),
+      binding: PsikologHistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.PSIKOLOG_PER_INFO,
+      page: () => const PsikologPerInfoView(),
+      binding: PsikologPerInfoBinding(),
+    ),
+    GetPage(
+      name: _Paths.PSIKOLOG_PRO_DET,
+      page: () => const PsikologProDetView(),
+      binding: PsikologProDetBinding(),
+    ),
+    GetPage(
+      name: _Paths.PSIKOLOG_CHA_PASS,
+      page: () => const PsikologChaPassView(),
+      binding: PsikologChaPassBinding(),
+    ),
+    GetPage(
+      name: _Paths.PSI_RESET_PASS,
+      page: () => const PsiResetPassView(),
+      binding: PsiResetPassBinding(),
+    ), 
+    GetPage(
+
       name: _Paths.MANAGE_SCHEDULE,
       page: () => const ManageScheduleView(),
     ),
@@ -95,6 +142,7 @@ class AppPages {
       name: _Paths.EDIT_SCHEDULE,
       page: () => const EditScheduleView(),
       binding: EditScheduleBinding(),
+
     ),
   ];
 }
