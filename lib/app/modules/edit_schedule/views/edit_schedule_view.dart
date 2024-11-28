@@ -1,4 +1,5 @@
 import 'package:consulin_mobile_dev/app/constants/color.dart';
+import 'package:consulin_mobile_dev/widgets/ui/button_back.dart';
 import 'package:consulin_mobile_dev/widgets/ui/custom_elevated_button.dart';
 import 'package:consulin_mobile_dev/widgets/ui/manage-day.dart';
 import 'package:consulin_mobile_dev/widgets/ui/manage-time.dart';
@@ -18,7 +19,7 @@ class EditScheduleView extends GetView<EditScheduleController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BackButton(),
+            ButtonBack(),
             const SizedBox(height: 20),
             _buildChooseDaySection(),
             const SizedBox(height: 10),

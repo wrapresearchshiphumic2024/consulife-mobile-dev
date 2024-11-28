@@ -58,8 +58,6 @@ class ManageTime extends StatelessWidget {
         // Select the new time slot
         onChange([...selectedTimes, selectedTime]);
       }
-      print(value);
-      print(selectedTimes);
     }
   }
 
@@ -92,27 +90,32 @@ class ManageTime extends StatelessWidget {
               runSpacing: 10, // Vertical space between lines
               children: filteredDays.map((item) {
                 final selected = isSelected(item);
-                return GestureDetector(
-                  onTap: () => handleSelectTime(item),
-                  child: Container(
-                    width: 150,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: disabled
-                          ? primaryColor.withOpacity(0.2)
-                          : (selected ? primaryColor : const Color(0xffDDE7F9)),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8), // Add padding for better touch area
-                    child: Text(
-                      item['label']!,
-                      style: TextStyle(
+                return Container(
+                  width: (MediaQuery.of(context).size.width /
+                      2.3), // Set width to half of the screen width minus spacing
+                  child: GestureDetector(
+                    onTap: () => handleSelectTime(item),
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
                         color: disabled
-                            ? Colors.black.withOpacity(0.2)
-                            : (selected ? Colors.white : Colors.black54),
+                            ? primaryColor.withOpacity(0.2)
+                            : (selected
+                                ? primaryColor
+                                : const Color(0xffDDE7F9)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8), // Add padding for better touch area
+                      child: Text(
+                        item['label']!,
+                        style: TextStyle(
+                          color: disabled
+                              ? Colors.black.withOpacity(0.2)
+                              : (selected ? Colors.white : Colors.black54),
+                        ),
                       ),
                     ),
                   ),

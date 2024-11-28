@@ -1,3 +1,4 @@
+import 'package:consulin_mobile_dev/widgets/ui/button_back.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/psikolog_history_controller.dart';
@@ -11,12 +12,7 @@ class PsikologHistoryView extends GetView<PsikologHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: textColor, size: 40),
-          onPressed: () {
-            Get.back();
-          },
-        ),
+        leading: ButtonBack(),
         title: const Text(
           'Appointment History',
           style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
@@ -26,7 +22,7 @@ class PsikologHistoryView extends GetView<PsikologHistoryController> {
         elevation: 0,
       ),
       body: Obx(
-            () => ListView.builder(
+        () => ListView.builder(
           padding: const EdgeInsets.all(16.0),
           itemCount: controller.appointmentHistory.length,
           itemBuilder: (context, index) {

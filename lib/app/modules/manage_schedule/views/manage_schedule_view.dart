@@ -33,7 +33,7 @@ class ManageScheduleView extends GetView<ManageScheduleController> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 20),
                     _buildChooseDaySection(),

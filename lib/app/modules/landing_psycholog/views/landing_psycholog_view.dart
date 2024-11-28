@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../controllers/landing_psycholog_controller.dart';
 
@@ -8,22 +9,22 @@ class LandingPsychologView extends GetView<LandingPsychologController> {
   @override
   Widget build(BuildContext context) {
     // Icons for the bottom navigation
-    List<Widget> _icons = const [
-      Icon(
-        Icons.home_outlined,
-        size: 30,
+    List<Widget> _icons = [
+      SvgPicture.asset(
+        'assets/icons/home.svg',
+        semanticsLabel: 'Red dash paths',
       ),
-      Icon(
-        Icons.explore_outlined,
-        size: 30,
+      SvgPicture.asset(
+        'assets/icons/schedule.svg',
+        semanticsLabel: 'Red dash paths',
       ),
-      Icon(
-        Icons.camera_alt_outlined,
-        size: 30,
+      SvgPicture.asset(
+        'assets/icons/chat.svg',
+        semanticsLabel: 'Red dash paths',
       ),
-      Icon(
-        Icons.camera_alt_outlined,
-        size: 30,
+      SvgPicture.asset(
+        'assets/icons/profile.svg',
+        semanticsLabel: 'Red dash paths',
       ),
     ];
 
