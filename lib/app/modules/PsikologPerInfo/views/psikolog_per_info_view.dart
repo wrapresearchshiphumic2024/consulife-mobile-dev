@@ -30,7 +30,6 @@ class PsikologPerInfoView extends GetView<PsikologPerInfoController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Center(
               child: Stack(
                 children: [
@@ -52,17 +51,13 @@ class PsikologPerInfoView extends GetView<PsikologPerInfoController> {
                         color: Colors.blue,
                         size: 30,
                       ),
-                      onPressed: () {
-
-                      },
+                      onPressed: () {},
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-
-
             Center(
               child: Column(
                 children: [
@@ -86,8 +81,6 @@ class PsikologPerInfoView extends GetView<PsikologPerInfoController> {
               ),
             ),
             const SizedBox(height: 32),
-
-
             CustomTextField(
               controller: controller.usernameController,
               labelText: "Username",
@@ -98,8 +91,6 @@ class PsikologPerInfoView extends GetView<PsikologPerInfoController> {
               labelText: "Licence Number",
             ),
             const SizedBox(height: 16),
-
-
             DropdownButtonFormField<String>(
               value: controller.genderController.text.isEmpty
                   ? null
@@ -109,20 +100,18 @@ class PsikologPerInfoView extends GetView<PsikologPerInfoController> {
               },
               decoration: InputDecoration(
                 labelText: "Gender",
-
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
               items: ['Male', 'Female']
                   .map((gender) => DropdownMenuItem<String>(
-                value: gender,
-                child: Text(gender),
-              ))
+                        value: gender,
+                        child: Text(gender),
+                      ))
                   .toList(),
             ),
             const SizedBox(height: 16),
-
             CustomTextField(
               controller: controller.phoneNumberController,
               labelText: "Phone Number",
@@ -142,20 +131,17 @@ class PsikologPerInfoView extends GetView<PsikologPerInfoController> {
                 return null;
               },
             ),
-
             const SizedBox(height: 32),
-
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: controller.saveChanges,
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 14, horizontal: 30),
                       backgroundColor: const Color(0xFF27374D),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -171,15 +157,14 @@ class PsikologPerInfoView extends GetView<PsikologPerInfoController> {
                   ),
                 ),
                 const SizedBox(height: 10),
-
-
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () => controller.cancel(context),
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: Colors.white),
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 14, horizontal: 30),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

@@ -58,6 +58,9 @@ class _ColumnChartState extends State<ColumnChart> {
               // Set borderRadius to make the columns rounded
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(5), topRight: Radius.circular(5)),
+              // Set animation duration to speed up the animation
+              animationDuration:
+                  500, // Set to a lower value for faster animation
             ),
           ],
         ),

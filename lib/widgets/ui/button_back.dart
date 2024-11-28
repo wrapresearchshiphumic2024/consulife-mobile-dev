@@ -10,8 +10,8 @@ class ButtonBack extends StatelessWidget {
     return IconButton(
       icon: Image.asset(
         'assets/images/back.png',
-        height: 24,
-        width: 24,
+        height: 18,
+        width: 18,
       ),
       onPressed: onBackPressed ?? () => Get.back(),
     );

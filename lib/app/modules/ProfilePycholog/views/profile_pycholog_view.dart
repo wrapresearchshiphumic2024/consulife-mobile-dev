@@ -8,34 +8,9 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
   const ProfilePychologView({super.key});
 
   @override
-
   Widget build(BuildContext context) {
     Get.put(ProfilePychologController());
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: textColor,size: 40),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        title: const Text(
-          'Profile',
-          style: TextStyle(color: textColor,fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: textColor),
-            onPressed: () {
-              Get.toNamed('/notifications');
-            },
-          ),
-        ],
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -72,7 +47,7 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
               ),
             ),
             Card(
-              color: primaryColor ,
+              color: primaryColor,
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -96,7 +71,8 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
                     color: Colors.white,
                   ),
                 ),
-                subtitle: const Text('See your appointment record',style: TextStyle(color: Colors.white, fontSize: 12)),
+                subtitle: const Text('See your appointment record',
+                    style: TextStyle(color: Colors.white, fontSize: 12)),
                 trailing: const Icon(Icons.chevron_right, color: Colors.white),
                 onTap: () {
                   Get.toNamed(Routes.PSIKOLOG_HISTORY);
@@ -104,7 +80,6 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
               ),
             ),
             const SizedBox(height: 20),
-
             Card(
               color: Colors.white,
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -140,14 +115,14 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Edit your information',style: TextStyle(color: textColor, fontSize: 12)),
+                    subtitle: const Text('Edit your information',
+                        style: TextStyle(color: textColor, fontSize: 12)),
                     trailing: const Icon(Icons.chevron_right, color: textColor),
                     onTap: () {
                       Get.toNamed(Routes.PSIKOLOG_PER_INFO);
                     },
                   ),
                   const SizedBox(height: 20),
-
                   ListTile(
                     leading: Container(
                       width: 40,
@@ -164,7 +139,8 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
                           ),
                         ],
                       ),
-                      child: const Icon(Icons.business_center, color: textColor),
+                      child:
+                          const Icon(Icons.business_center, color: textColor),
                     ),
                     title: const Text(
                       'Professional Details',
@@ -217,11 +193,9 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
                 ],
               ),
             ),
-
             const SizedBox(height: 16),
             TextButton.icon(
               onPressed: () {
-
                 controller.cancel(context);
               },
               icon: const Icon(Icons.logout, color: Colors.red),

@@ -28,14 +28,13 @@ class LandingPsychologController extends GetxController {
   ];
 
   // Tab labels
-  final List<String> labels = ['Home', 'Explore', 'Camera', "Profile"];
+  final List<String> labels = ['Home', 'Schedule', 'Chat', "Profile"];
 
   // Function to handle tab item selection
   void onItemTapped(int index) {
     selectedIndex.value = index;
   }
 
-  // Widget to create the tab item
   Widget tabItem(Widget child, String label, {bool isSelected = false}) {
     return AnimatedContainer(
       alignment: Alignment.center,
@@ -50,15 +49,24 @@ class LandingPsychologController extends GetxController {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Ikon tetap di tengah
           child,
-          // Animasi untuk label dengan opacity
-          AnimatedOpacity(
-            opacity: isSelected ? 1.0 : 0.0, // Label akan muncul saat selected
-            duration: const Duration(milliseconds: 300), // Durasi animasi
-            child: Text(
-              label,
-              style: const TextStyle(fontSize: 12),
-            ),
+          // Menggunakan AnimatedSwitcher untuk animasi label
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: isSelected
+                ? SizedBox(
+                    key: ValueKey<String>(label), // Kunci untuk animasi
+                    height: 20, // Tinggi untuk menjaga posisi
+                    child: Text(
+                      label,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  )
+                : SizedBox(
+                    key: ValueKey<String>(''), // Kunci untuk animasi
+                    height: 0, // Tinggi 0 saat tidak aktif
+                  ),
           ),
         ],
       ),
