@@ -1,24 +1,29 @@
 import 'package:get/get.dart';
 
+import '../modules/Edit_Information/bindings/psikolog_pro_det_binding.dart';
+import '../modules/Edit_Information/views/psikolog_pro_det_view.dart';
+import '../modules/Edit_Profile/bindings/psikolog_per_info_binding.dart';
+import '../modules/Edit_Profile/views/psikolog_per_info_view.dart';
+import '../modules/ForgotPass_psycholog/bindings/psikolog_cha_pass_binding.dart';
+import '../modules/ForgotPass_psycholog/views/psikolog_cha_pass_view.dart';
+import '../modules/History/bindings/psikolog_history_binding.dart';
+import '../modules/History/views/psikolog_history_view.dart';
 import '../modules/PickRole/bindings/pick_role_binding.dart';
 import '../modules/PickRole/views/pick_role_view.dart';
-
-import '../modules/ProfilePycholog/bindings/profile_pycholog_binding.dart';
-import '../modules/ProfilePycholog/views/profile_pycholog_view.dart';
-import '../modules/PsiResetPass/bindings/psi_reset_pass_binding.dart';
-import '../modules/PsiResetPass/views/psi_reset_pass_view.dart';
-import '../modules/PsikologChaPass/bindings/psikolog_cha_pass_binding.dart';
-import '../modules/PsikologChaPass/views/psikolog_cha_pass_view.dart';
-import '../modules/PsikologHistory/bindings/psikolog_history_binding.dart';
-import '../modules/PsikologHistory/views/psikolog_history_view.dart';
-import '../modules/PsikologPerInfo/bindings/psikolog_per_info_binding.dart';
-import '../modules/PsikologPerInfo/views/psikolog_per_info_view.dart';
-import '../modules/PsikologProDet/bindings/psikolog_pro_det_binding.dart';
-import '../modules/PsikologProDet/views/psikolog_pro_det_view.dart';
-
+import '../modules/Profile/bindings/profile_pycholog_binding.dart';
+import '../modules/Profile/views/profile_pycholog_view.dart';
+import '../modules/Reset_Pass_psycholog/bindings/psi_reset_pass_binding.dart';
+import '../modules/Reset_Pass_psycholog/views/psi_reset_pass_view.dart';
+import '../modules/detail_cancel/bindings/detail_cancel_binding.dart';
+import '../modules/detail_cancel/views/detail_cancel_view.dart';
+import '../modules/detail_completed/bindings/detail_completed_binding.dart';
+import '../modules/detail_completed/views/detail_completed_view.dart';
+import '../modules/detail_ongoing/bindings/detail_ongoing_binding.dart';
+import '../modules/detail_ongoing/views/detail_ongoing_view.dart';
+import '../modules/detail_waiting/bindings/detail_waiting_binding.dart';
+import '../modules/detail_waiting/views/detail_waiting_view.dart';
 import '../modules/edit_schedule/bindings/edit_schedule_binding.dart';
 import '../modules/edit_schedule/views/edit_schedule_view.dart';
-
 import '../modules/forgotPass/bindings/forgot_pass_binding.dart';
 import '../modules/forgotPass/views/forgot_pass_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -27,6 +32,8 @@ import '../modules/home_psycholog/views/home_psycholog_view.dart';
 import '../modules/landing_psycholog/bindings/landing_psycholog_binding.dart';
 import '../modules/landing_psycholog/views/landing_psycholog_view.dart';
 import '../modules/manage_schedule/views/manage_schedule_view.dart';
+import '../modules/notification/bindings/notification_binding.dart';
+import '../modules/notification/views/notification_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding2/bindings/onboarding2_binding.dart';
@@ -39,6 +46,8 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/signup_psychologst/bindings/signup_psychologst_binding.dart';
 import '../modules/signup_psychologst/views/signup_psychologst_view.dart';
+import '../modules/upcoming_appointment/bindings/upcoming_appointment_binding.dart';
+import '../modules/upcoming_appointment/views/upcoming_appointment_view.dart';
 
 part 'app_routes.dart';
 
@@ -103,7 +112,6 @@ class AppPages {
       binding: ResetPassBinding(),
     ),
     GetPage(
-
       name: _Paths.PROFILE_PYCHOLOG,
       page: () => const ProfilePychologView(),
       binding: ProfilePychologBinding(),
@@ -132,9 +140,8 @@ class AppPages {
       name: _Paths.PSI_RESET_PASS,
       page: () => const PsiResetPassView(),
       binding: PsiResetPassBinding(),
-    ), 
+    ),
     GetPage(
-
       name: _Paths.MANAGE_SCHEDULE,
       page: () => const ManageScheduleView(),
     ),
@@ -142,7 +149,36 @@ class AppPages {
       name: _Paths.EDIT_SCHEDULE,
       page: () => const EditScheduleView(),
       binding: EditScheduleBinding(),
-
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATION,
+      page: () => const NotificationView(),
+      binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPCOMING_APPOINTMENT,
+      page: () => const UpcomingAppointmentView(),
+      binding: UpcomingAppointmentBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_ONGOING,
+      page: () => const DetailOngoingView(),
+      binding: DetailOngoingBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_CANCEL,
+      page: () => const DetailCancelView(),
+      binding: DetailCancelBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_WAITING,
+      page: () => const DetailWaitingView(),
+      binding: DetailWaitingBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_COMPLETED,
+      page: () => const DetailCompletedView(),
+      binding: DetailCompletedBinding(),
     ),
   ];
 }

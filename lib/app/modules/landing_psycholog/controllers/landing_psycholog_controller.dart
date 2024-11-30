@@ -1,4 +1,4 @@
-import 'package:consulin_mobile_dev/app/modules/ProfilePycholog/views/profile_pycholog_view.dart';
+import 'package:consulin_mobile_dev/app/modules/Profile/views/profile_pycholog_view.dart';
 import 'package:consulin_mobile_dev/app/modules/home_psycholog/controllers/home_psycholog_controller.dart';
 import 'package:consulin_mobile_dev/app/modules/home_psycholog/views/home_psycholog_view.dart';
 import 'package:consulin_mobile_dev/app/modules/manage_schedule/controllers/manage_schedule_controller.dart';

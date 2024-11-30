@@ -25,7 +25,15 @@ abstract class Routes {
 
   static const MANAGE_SCHEDULE = _Paths.MANAGE_SCHEDULE;
   static const EDIT_SCHEDULE = _Paths.EDIT_SCHEDULE;
-
+  static const DETAIL_APPOINTMENT = _Paths.DETAIL_APPOINTMENT;
+  static const DETAIL_APPOINTMENT_HISTORY = _Paths.DETAIL_APPOINTMENT_HISTORY;
+  static const NOTIFICATION = _Paths.NOTIFICATION;
+  static const UPCOMMING_APPOINTMENT = _Paths.UPCOMMING_APPOINTMENT;
+  static const UPCOMING_APPOINTMENT = _Paths.UPCOMING_APPOINTMENT;
+  static const DETAIL_ONGOING = _Paths.DETAIL_ONGOING;
+  static const DETAIL_CANCEL = _Paths.DETAIL_CANCEL;
+  static const DETAIL_WAITING = _Paths.DETAIL_WAITING;
+  static const DETAIL_COMPLETED = _Paths.DETAIL_COMPLETED;
 }
 
 abstract class _Paths {
@@ -52,5 +60,13 @@ abstract class _Paths {
 
   static const MANAGE_SCHEDULE = '/manage-schedule';
   static const EDIT_SCHEDULE = '/edit-schedule';
-
+  static const DETAIL_APPOINTMENT = '/detail-appointment';
+  static const DETAIL_APPOINTMENT_HISTORY = '/detail-appointment-history';
+  static const NOTIFICATION = '/notification';
+  static const UPCOMMING_APPOINTMENT = '/upcomming-appointment';
+  static const UPCOMING_APPOINTMENT = '/upcoming-appointment';
+  static const DETAIL_ONGOING = '/detail-ongoing';
+  static const DETAIL_CANCEL = '/detail-cancel';
+  static const DETAIL_WAITING = '/detail-waiting';
+  static const DETAIL_COMPLETED = '/detail-completed';
 }

@@ -5,7 +5,7 @@ class HomePsychologController extends GetxController {
 
   final count = 0.obs;
   final List<Map<String, dynamic>> upcomingAppointment = [
-    {"status": "Waiting", "name": "John Rodrigo", "time": "12 Oct 2024, 10:00"},
+    {"status": "Ongoing", "name": "John Rodrigo", "time": "12 Oct 2024, 10:00"},
     {"status": "Waiting", "name": "Jane Doe", "time": "13 Oct 2024, 14:00"},
     {"status": "Waiting", "name": "Sarah Smith", "time": "14 Oct 2024, 15:00"},
   ];

@@ -4,7 +4,7 @@ import 'package:consulin_mobile_dev/widgets/ui/column_chart.dart';
 import 'package:consulin_mobile_dev/widgets/ui/stats_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
 import '../controllers/home_psycholog_controller.dart';
 
 class HomePsychologView extends GetView<HomePsychologController> {
@@ -46,7 +46,9 @@ class HomePsychologView extends GetView<HomePsychologController> {
                       ],
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.NOTIFICATION);
+                        },
                         icon: const Icon(Icons.notifications)),
                   ],
                 ),
@@ -98,7 +100,9 @@ class HomePsychologView extends GetView<HomePsychologController> {
                           fontSize: 16),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.UPCOMING_APPOINTMENT);
+                        },
                         child: const Text(
                           "See More",
                           style: TextStyle(
@@ -136,7 +140,9 @@ class HomePsychologView extends GetView<HomePsychologController> {
                           fontSize: 16),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.PSIKOLOG_HISTORY);
+                        },
                         child: const Text(
                           "See More",
                           style: TextStyle(
