@@ -34,6 +34,12 @@ abstract class Routes {
   static const DETAIL_CANCEL = _Paths.DETAIL_CANCEL;
   static const DETAIL_WAITING = _Paths.DETAIL_WAITING;
   static const DETAIL_COMPLETED = _Paths.DETAIL_COMPLETED;
+  static const LANDING_PASIEN = _Paths.LANDING_PASIEN;
+  static const PROFILE_PASIEN = _Paths.PROFILE_PASIEN;
+  static const PERSONAL_INFORMATION_PASIEN = _Paths.PERSONAL_INFORMATION_PASIEN;
+  static const HISTORY_PASIEN = _Paths.HISTORY_PASIEN;
+  static const DETAIL_CANCEL_PASIEN = _Paths.DETAIL_CANCEL_PASIEN;
+  static const COMPLATED_DETAIL_PASIEN = _Paths.COMPLATED_DETAIL_PASIEN;
 }
 
 abstract class _Paths {
@@ -69,4 +75,10 @@ abstract class _Paths {
   static const DETAIL_CANCEL = '/detail-cancel';
   static const DETAIL_WAITING = '/detail-waiting';
   static const DETAIL_COMPLETED = '/detail-completed';
+  static const LANDING_PASIEN = '/landing-pasien';
+  static const PROFILE_PASIEN = '/profile-pasien';
+  static const PERSONAL_INFORMATION_PASIEN = '/personal-information-pasien';
+  static const HISTORY_PASIEN = '/history-pasien';
+  static const DETAIL_CANCEL_PASIEN = '/detail-cancel-pasien';
+  static const COMPLATED_DETAIL_PASIEN = '/complated-detail-pasien';
 }

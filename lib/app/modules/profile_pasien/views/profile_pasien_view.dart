@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/profile_pycholog_controller.dart';
+import '../controllers/profile_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
 
-class ProfilePychologView extends GetView<ProfilePychologController> {
-  const ProfilePychologView({super.key});
+class ProfilePasienView extends GetView<ProfilePasienController> {
+  const ProfilePasienView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProfilePychologController());
+    Get.put(ProfilePasienController());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -89,7 +89,7 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
                     style: TextStyle(color: Colors.white, fontSize: 12)),
                 trailing: const Icon(Icons.chevron_right, color: Colors.white),
                 onTap: () {
-                  Get.toNamed(Routes.PSIKOLOG_HISTORY);
+                  Get.toNamed(Routes.HISTORY_PASIEN);
                 },
               ),
             ),
@@ -133,41 +133,7 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
                         style: TextStyle(color: textColor, fontSize: 12)),
                     trailing: const Icon(Icons.chevron_right, color: textColor),
                     onTap: () {
-                      Get.toNamed(Routes.PSIKOLOG_PER_INFO);
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  ListTile(
-                    leading: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child:
-                          const Icon(Icons.business_center, color: textColor),
-                    ),
-                    title: const Text(
-                      'Professional Details',
-                      style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    subtitle: const Text('Edit professional details'),
-                    trailing: const Icon(Icons.chevron_right, color: textColor),
-                    onTap: () {
-                      Get.toNamed(Routes.PSIKOLOG_PRO_DET);
+                      Get.toNamed(Routes.PERSONAL_INFORMATION_PASIEN);
                     },
                   ),
                   const SizedBox(height: 20),
@@ -224,3 +190,4 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
     );
   }
 }
+
