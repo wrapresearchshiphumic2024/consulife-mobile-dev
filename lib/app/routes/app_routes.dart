@@ -40,6 +40,7 @@ abstract class Routes {
   static const HISTORY_PASIEN = _Paths.HISTORY_PASIEN;
   static const DETAIL_CANCEL_PASIEN = _Paths.DETAIL_CANCEL_PASIEN;
   static const COMPLATED_DETAIL_PASIEN = _Paths.COMPLATED_DETAIL_PASIEN;
+  static const PSYCHOLOG = _Paths.PSYCHOLOG;
 }
 
 abstract class _Paths {
@@ -81,4 +82,5 @@ abstract class _Paths {
   static const HISTORY_PASIEN = '/history-pasien';
   static const DETAIL_CANCEL_PASIEN = '/detail-cancel-pasien';
   static const COMPLATED_DETAIL_PASIEN = '/complated-detail-pasien';
+  static const PSYCHOLOG = '/psycholog';
 }

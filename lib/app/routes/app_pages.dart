@@ -50,6 +50,8 @@ import '../modules/onboarding2/bindings/onboarding2_binding.dart';
 import '../modules/onboarding2/views/onboarding2_view.dart';
 import '../modules/profile_pasien/bindings/profile_pasien_binding.dart';
 import '../modules/profile_pasien/views/profile_pasien_view.dart';
+import '../modules/psycholog/bindings/psycholog_binding.dart';
+import '../modules/psycholog/views/psycholog_view.dart';
 import '../modules/resetPass/bindings/reset_pass_binding.dart';
 import '../modules/resetPass/views/reset_pass_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
@@ -66,7 +68,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.PROFILE_PASIEN;
+  static const INITIAL = Routes.PSYCHOLOG;
 
   static final routes = [
     GetPage(
@@ -221,6 +223,11 @@ class AppPages {
       name: _Paths.COMPLATED_DETAIL_PASIEN,
       page: () => const ComplatedDetailPasienView(),
       binding: ComplatedDetailPasienBinding(),
+    ),
+    GetPage(
+      name: _Paths.PSYCHOLOG,
+      page: () => const PsychologView(),
+      binding: PsychologBinding(),
     ),
   ];
 }
