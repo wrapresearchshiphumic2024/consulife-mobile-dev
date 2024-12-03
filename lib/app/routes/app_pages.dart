@@ -16,6 +16,8 @@ import '../modules/Reset_Pass_psycholog/bindings/psi_reset_pass_binding.dart';
 import '../modules/Reset_Pass_psycholog/views/psi_reset_pass_view.dart';
 import '../modules/complated_detail_pasien/bindings/complated_detail_pasien_binding.dart';
 import '../modules/complated_detail_pasien/views/complated_detail_pasien_view.dart';
+import '../modules/detail_available_pasien/bindings/detail_available_pasien_binding.dart';
+import '../modules/detail_available_pasien/views/detail_available_pasien_view.dart';
 import '../modules/detail_cancel/bindings/detail_cancel_binding.dart';
 import '../modules/detail_cancel/views/detail_cancel_view.dart';
 import '../modules/detail_cancel_pasien/bindings/detail_cancel_pasien_binding.dart';
@@ -228,6 +230,11 @@ class AppPages {
       name: _Paths.PSYCHOLOG,
       page: () => const PsychologView(),
       binding: PsychologBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_AVAILABLE_PASIEN,
+      page: () => const DetailAvailablePasienView(),
+      binding: DetailAvailablePasienBinding(),
     ),
   ];
 }

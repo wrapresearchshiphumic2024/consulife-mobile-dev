@@ -1,7 +1,7 @@
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
 import '../controllers/psycholog_controller.dart';
 
 class PsychologView extends GetView<PsychologController> {
@@ -152,7 +152,18 @@ class PsychologistCard extends StatelessWidget {
       child: Card(
         color: carddetail,
         child: InkWell(
-          onTap: onTap,
+          onTap: psychologist.status == 'Available'
+              ? () {
+            if (psychologist.status == 'Available') {
+              Get.toNamed(
+                Routes.DETAIL_AVAILABLE_PASIEN,
+                arguments: {'psychologist': psychologist},
+              );
+            } else if (psychologist.status == 'Full Booked') {
+              Get.snackbar('Unavailable', 'This psychologist is fully booked.');
+            }
+          }
+              : null,
           child: Padding(
             padding: const EdgeInsets.all(2.0),
             child: Row(
@@ -162,7 +173,7 @@ class PsychologistCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 10.0), // Padding hanya di sisi kiri
+                        padding: const EdgeInsets.only(left: 10.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.asset(
