@@ -11,7 +11,7 @@ class DetailAvailablePasienController extends GetxController {
   final RxBool isCalendarVisible = false.obs;
   final Rx<DateTime> focusedDay = DateTime.now().obs;
 
-  final availableTimes = [
+  final RxList<String> availableTimes = [
     '10.00-11.00',
     '11.00-12.00',
     '13.00-14.00',
@@ -34,12 +34,14 @@ class DetailAvailablePasienController extends GetxController {
   }
 
   void selectTime(String time) {
+    // Ensure only one time can be selected
     selectedTime.value = time;
   }
 
   String formatDate(DateTime date) {
     return DateFormat('dd MMM yyyy').format(date);
   }
+
   void showToast(String message, {Color backgroundColor = Colors.green}) {
     Fluttertoast.showToast(
       msg: message,
@@ -51,16 +53,21 @@ class DetailAvailablePasienController extends GetxController {
   }
 
   void BookAppointment(BuildContext context) {
-
+    // Only proceed if both date and time are selected
+    if (selectedDate.value != null && selectedTime.isNotEmpty) {
       Get.dialog(
         AlertDialog(
-          title: const Text('Appointment Confirmation', textAlign: TextAlign.center, style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          )),
+          title: const Text(
+            'Appointment Confirmation',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
           content: const Text(
-            'Are you sure you want to make a appointment for this schedule?',
+            'Are you sure you want to make an appointment for this schedule?',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: primaryColor,
@@ -81,6 +88,7 @@ class DetailAvailablePasienController extends GetxController {
                       textColor: Colors.white,
                       toastLength: Toast.LENGTH_SHORT,
                     );
+                    // Additional booking logic can be added here
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: successColor,
@@ -89,9 +97,7 @@ class DetailAvailablePasienController extends GetxController {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text('Yes, Book', style: TextStyle(
-                    color: Colors.white,
-                  )),
+                  child: const Text('Yes, Book', style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 8),
                 OutlinedButton(
@@ -105,9 +111,7 @@ class DetailAvailablePasienController extends GetxController {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text('Cancel', style: TextStyle(
-                    color: Colors.white,
-                  )),
+                  child: const Text('Cancel', style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
@@ -115,6 +119,9 @@ class DetailAvailablePasienController extends GetxController {
           actionsAlignment: MainAxisAlignment.center,
         ),
       );
+    } else {
+      // Show a toast or alert if date or time is not selected
+      showToast('Please select a date and time', backgroundColor: Colors.red);
     }
-
+  }
 }

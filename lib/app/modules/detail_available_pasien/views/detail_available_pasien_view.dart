@@ -249,42 +249,53 @@ class DetailAvailablePasienView extends GetView<DetailAvailablePasienController>
                 ),
               ),
               const SizedBox(height: 8.0),
-              Obx(() => GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 8.0,
-                  childAspectRatio: 2.5,
-                ),
-                itemCount: controller.availableTimes.length,
-                itemBuilder: (context, index) {
-                  final time = controller.availableTimes[index];
-                  final isSelected = controller.selectedTime.value == time;
-                  return GestureDetector(
-                    onTap: () {
-                      controller.selectTime(time);
-                    },
-                    child: Card(
-                      color: isSelected ? primaryColor : carddetail,
-                      child: Center(
-                        child: Text(
-                          time,
-                          style: TextStyle(
-                            color: isSelected ? Colors.white : textColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+          Obx(() => GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+              childAspectRatio: 2.5,
+            ),
+            itemCount: controller.availableTimes.length,
+            itemBuilder: (context, index) {
+              final time = controller.availableTimes[index];
+              final isSelected = controller.selectedTime.value == time;
+              return GestureDetector(
+                onTap: () {
+                  controller.selectTime(time);
+                },
+                child: Card(
+                  color: isSelected ? primaryColor : carddetail,
+                  child: Center(
+                    child: Text(
+                      time,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : textColor,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                  ),
+                ),
+              );
+            },
+          )),
+          const SizedBox(height: 16.0),
+              CustomElevatedButton(
+                primaryColor: (controller.selectedDate.value != null && controller.selectedTime.value.isNotEmpty)
+                    ? primaryColor
+                    : carddetail,
+                onPressed: (controller.selectedDate.value != null && controller.selectedTime.value.isNotEmpty)
+                    ? () => controller.BookAppointment(context)
+                    : () {
+                  controller.showToast(
+                    "Please select a date and time",
+                    backgroundColor: warningColor
                   );
                 },
-              )),
-              const SizedBox(height: 16.0),
-              CustomElevatedButton(
-                  primaryColor: primaryColor,
-                  onPressed: () => controller.BookAppointment(context),
-                  buttonText: "Book Appointment"),
+                buttonText: "Book Appointment",
+              ),
             ],
           ),
         ),

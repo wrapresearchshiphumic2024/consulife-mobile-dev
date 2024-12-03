@@ -42,6 +42,8 @@ abstract class Routes {
   static const COMPLATED_DETAIL_PASIEN = _Paths.COMPLATED_DETAIL_PASIEN;
   static const PSYCHOLOG = _Paths.PSYCHOLOG;
   static const DETAIL_AVAILABLE_PASIEN = _Paths.DETAIL_AVAILABLE_PASIEN;
+  static const AI_ANALYZER_PASIEN = _Paths.AI_ANALYZER_PASIEN;
+  static const ANALYZER_HISTORY_PASIEN = _Paths.ANALYZER_HISTORY_PASIEN;
 }
 
 abstract class _Paths {
@@ -85,4 +87,6 @@ abstract class _Paths {
   static const COMPLATED_DETAIL_PASIEN = '/complated-detail-pasien';
   static const PSYCHOLOG = '/psycholog';
   static const DETAIL_AVAILABLE_PASIEN = '/detail-available-pasien';
+  static const AI_ANALYZER_PASIEN = '/ai-analyzer-pasien';
+  static const ANALYZER_HISTORY_PASIEN = '/analyzer-history-pasien';
 }

@@ -14,6 +14,10 @@ import '../modules/Profile/bindings/profile_pycholog_binding.dart';
 import '../modules/Profile/views/profile_pycholog_view.dart';
 import '../modules/Reset_Pass_psycholog/bindings/psi_reset_pass_binding.dart';
 import '../modules/Reset_Pass_psycholog/views/psi_reset_pass_view.dart';
+import '../modules/ai_analyzer_pasien/bindings/ai_analyzer_pasien_binding.dart';
+import '../modules/ai_analyzer_pasien/views/ai_analyzer_pasien_view.dart';
+import '../modules/analyzer_history_pasien/bindings/analyzer_history_pasien_binding.dart';
+import '../modules/analyzer_history_pasien/views/analyzer_history_pasien_view.dart';
 import '../modules/complated_detail_pasien/bindings/complated_detail_pasien_binding.dart';
 import '../modules/complated_detail_pasien/views/complated_detail_pasien_view.dart';
 import '../modules/detail_available_pasien/bindings/detail_available_pasien_binding.dart';
@@ -70,7 +74,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.PSYCHOLOG;
+  static const INITIAL = Routes.DETAIL_AVAILABLE_PASIEN;
 
   static final routes = [
     GetPage(
@@ -235,6 +239,16 @@ class AppPages {
       name: _Paths.DETAIL_AVAILABLE_PASIEN,
       page: () => const DetailAvailablePasienView(),
       binding: DetailAvailablePasienBinding(),
+    ),
+    GetPage(
+      name: _Paths.AI_ANALYZER_PASIEN,
+      page: () => const AiAnalyzerPasienView(),
+      binding: AiAnalyzerPasienBinding(),
+    ),
+    GetPage(
+      name: _Paths.ANALYZER_HISTORY_PASIEN,
+      page: () => const AnalyzerHistoryPasienView(),
+      binding: AnalyzerHistoryPasienBinding(),
     ),
   ];
 }
