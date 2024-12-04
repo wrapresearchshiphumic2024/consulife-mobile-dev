@@ -34,7 +34,6 @@ class DetailAvailablePasienController extends GetxController {
   }
 
   void selectTime(String time) {
-    // Ensure only one time can be selected
     selectedTime.value = time;
   }
 
@@ -80,6 +79,7 @@ class DetailAvailablePasienController extends GetxController {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    Get.toNamed(Routes.HOME_PASIEN);
                     Navigator.pop(context);
                     Fluttertoast.showToast(
                       msg: "Successfully scheduled",
@@ -88,7 +88,6 @@ class DetailAvailablePasienController extends GetxController {
                       textColor: Colors.white,
                       toastLength: Toast.LENGTH_SHORT,
                     );
-                    // Additional booking logic can be added here
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: successColor,

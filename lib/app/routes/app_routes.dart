@@ -44,6 +44,12 @@ abstract class Routes {
   static const DETAIL_AVAILABLE_PASIEN = _Paths.DETAIL_AVAILABLE_PASIEN;
   static const AI_ANALYZER_PASIEN = _Paths.AI_ANALYZER_PASIEN;
   static const ANALYZER_HISTORY_PASIEN = _Paths.ANALYZER_HISTORY_PASIEN;
+  static const HOME_PASIEN = _Paths.HOME_PASIEN;
+  static const DETAIL_WAITING_PASIEN = _Paths.DETAIL_WAITING_PASIEN;
+  static const DETAIL_COMPLETED_PASIEN = _Paths.DETAIL_COMPLETED_PASIEN;
+  static const DETAIL_ONGOING_PASIEN = _Paths.DETAIL_ONGOING_PASIEN;
+  static const NOTIFICATION_PASIEN = _Paths.NOTIFICATION_PASIEN;
+  static const UPCOMING_APPOINTMET_PASIEN = _Paths.UPCOMING_APPOINTMET_PASIEN;
 }
 
 abstract class _Paths {
@@ -89,4 +95,10 @@ abstract class _Paths {
   static const DETAIL_AVAILABLE_PASIEN = '/detail-available-pasien';
   static const AI_ANALYZER_PASIEN = '/ai-analyzer-pasien';
   static const ANALYZER_HISTORY_PASIEN = '/analyzer-history-pasien';
+  static const HOME_PASIEN = '/home-pasien';
+  static const DETAIL_WAITING_PASIEN = '/detail-waiting-pasien';
+  static const DETAIL_COMPLETED_PASIEN = '/detail-completed-pasien';
+  static const DETAIL_ONGOING_PASIEN = '/detail-ongoing-pasien';
+  static const NOTIFICATION_PASIEN = '/notification-pasien';
+  static const UPCOMING_APPOINTMET_PASIEN = '/upcoming-appointmet-pasien';
 }

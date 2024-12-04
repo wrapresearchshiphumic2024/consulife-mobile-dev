@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String status;
@@ -66,7 +67,7 @@ class AppointmentCard extends StatelessWidget {
             RotatedBox(
               quarterTurns: 1,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                 decoration: BoxDecoration(
                   color: _getStatusColor(),
                   borderRadius: const BorderRadius.only(
@@ -101,6 +102,17 @@ class AppointmentCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (status.toLowerCase() == 'canceled' || status.toLowerCase() == 'completed')
+              Padding(
+                padding: const EdgeInsets.only(left: 80.0),
+                child: SvgPicture.asset(
+                  status.toLowerCase() == 'canceled'
+                      ? 'assets/icons/cancel.svg'
+                      : 'assets/icons/complate.svg',
+                  width: 30,
+                  height: 30,
+                ),
+              ),
           ],
         ),
       ),
