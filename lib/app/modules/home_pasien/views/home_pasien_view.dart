@@ -5,7 +5,7 @@ import '../controllers/home_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/widgets/ui/appointment_card_pasien.dart';
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
-
+import 'package:consulin_mobile_dev/widgets/ui/Cardappointment.dart';
 
 class HomePasienView extends GetView<HomePasienController> {
   const HomePasienView({super.key});
@@ -58,7 +58,23 @@ class HomePasienView extends GetView<HomePasienController> {
                   "Upcoming Appointments",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-              const SizedBox(height: 25),
+                const SizedBox(height: 25),
+                ListView.builder(
+                  itemCount: controller.ShowAppointment.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final appointment = controller.ShowAppointment[index];
+                    return AppointmentCard(
+                      name: appointment["name"],
+                      time: appointment["time"],
+                      status: appointment["status"],
+                      details: appointment["details"],
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

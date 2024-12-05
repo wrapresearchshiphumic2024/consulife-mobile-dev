@@ -5,20 +5,20 @@ class HomePasienController extends GetxController {
   var probabilityOfAnxiety = 40.0.obs;
   var probabilityOfDepression = 70.0.obs;
 
-  final UpComing = [
-    {
-      "status": "Canceled",
-      "name": "Michael Brown",
-      "time": "14 Nov 2024, 10:00",
-      "color": "warningColor",
-    },
+  final List<Map<String, dynamic>> ShowAppointment = [
     {
       "status": "Ongoing",
-      "name": "Sarah Davis",
-      "time": "18 Nov 2024, 15:00",
-      "color": "primaryColor",
+      "name": "John Rodrigo",
+      "time": "12 Oct 2024, 10:00",
+      "details": "General health checkup scheduled."
     },
-  ].obs;
+    // {
+    //   "status": "Canceled",
+    //   "name": "Jane Doe",
+    //   "time": "13 Oct 2024, 14:00",
+    //   "details": "Appointment canceled due to personal reasons."
+    // },
+  ];
 
   final List<Map<String, dynamic>> upcomingAppointment = [
     {"status": "Ongoing", "name": "John Rodrigo", "time": "12 Oct 2024, 10:00"},

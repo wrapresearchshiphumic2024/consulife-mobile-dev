@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/landing_pasien_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-
+import '../controllers/landing_pasien_controller.dart';
 
 class LandingPasienView extends GetView<LandingPasienController> {
   const LandingPasienView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Icons for the bottom navigation
     List<Widget> _icons = [
-      SvgPicture.asset('assets/icons/home.svg'),
-      SvgPicture.asset('assets/icons/schedule.svg'),
-      SvgPicture.asset('assets/icons/chat.svg'),
-      SvgPicture.asset('assets/icons/chat.svg'),
-      SvgPicture.asset('assets/icons/profile.svg'),
+      SvgPicture.asset(
+        'assets/icons/home.svg',
+        semanticsLabel: 'Red dash paths',
+      ),
+      SvgPicture.asset(
+        'assets/icons/psycho.svg',
+        semanticsLabel: 'Red dash paths',
+      ),
+      SvgPicture.asset(
+        'assets/icons/profile.svg',
+        semanticsLabel: 'Red dash paths',
+      ),
+      SvgPicture.asset(
+        'assets/icons/chat.svg',
+        semanticsLabel: 'Red dash paths',
+      ),
+      SvgPicture.asset(
+        'assets/icons/profile.svg',
+        semanticsLabel: 'Red dash paths',
+      ),
     ];
 
     return Scaffold(
@@ -30,7 +42,7 @@ class LandingPasienView extends GetView<LandingPasienController> {
       bottomNavigationBar: Obx(() {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xffF5F5F7),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.3),
@@ -39,35 +51,34 @@ class LandingPasienView extends GetView<LandingPasienController> {
               ),
             ],
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(
-              controller.bodyView.length,
-                  (index) => GestureDetector(
-                onTap: () => controller.onItemTapped(index),
-                child: controller.tabItem(
-                  _icons[index],
-                  controller.labels[index],
-                  isSelected: index == controller.selectedIndex.value,
+          child: SizedBox(
+            height: 80,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment
+                      .spaceAround,
+                  crossAxisAlignment:
+                  CrossAxisAlignment.center,
+                  children: List.generate(
+                    controller.bodyView.length,
+                        (index) => GestureDetector(
+                      onTap: () => controller.onItemTapped(index),
+                      child: controller.tabItem(
+                        _icons[index],
+                        controller.labels[index],
+                        isSelected: index == controller.selectedIndex.value,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
         );
       }),
-      floatingActionButton: Obx(() {
-        return FloatingActionButton(
-          onPressed: () => controller.onItemTapped(2),
-          child: SvgPicture.asset(
-            'assets/icons/chat.svg',
-            color: controller.selectedIndex.value == 2 ? Colors.white : null,
-          ),
-          backgroundColor:
-          controller.selectedIndex.value == 2 ? Colors.blue : Colors.white,
-        );
-      }),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
-
