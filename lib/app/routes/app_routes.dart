@@ -25,7 +25,31 @@ abstract class Routes {
 
   static const MANAGE_SCHEDULE = _Paths.MANAGE_SCHEDULE;
   static const EDIT_SCHEDULE = _Paths.EDIT_SCHEDULE;
-
+  static const DETAIL_APPOINTMENT = _Paths.DETAIL_APPOINTMENT;
+  static const DETAIL_APPOINTMENT_HISTORY = _Paths.DETAIL_APPOINTMENT_HISTORY;
+  static const NOTIFICATION = _Paths.NOTIFICATION;
+  static const UPCOMMING_APPOINTMENT = _Paths.UPCOMMING_APPOINTMENT;
+  static const UPCOMING_APPOINTMENT = _Paths.UPCOMING_APPOINTMENT;
+  static const DETAIL_ONGOING = _Paths.DETAIL_ONGOING;
+  static const DETAIL_CANCEL = _Paths.DETAIL_CANCEL;
+  static const DETAIL_WAITING = _Paths.DETAIL_WAITING;
+  static const DETAIL_COMPLETED = _Paths.DETAIL_COMPLETED;
+  static const LANDING_PASIEN = _Paths.LANDING_PASIEN;
+  static const PROFILE_PASIEN = _Paths.PROFILE_PASIEN;
+  static const PERSONAL_INFORMATION_PASIEN = _Paths.PERSONAL_INFORMATION_PASIEN;
+  static const HISTORY_PASIEN = _Paths.HISTORY_PASIEN;
+  static const DETAIL_CANCEL_PASIEN = _Paths.DETAIL_CANCEL_PASIEN;
+  static const COMPLATED_DETAIL_PASIEN = _Paths.COMPLATED_DETAIL_PASIEN;
+  static const PSYCHOLOG = _Paths.PSYCHOLOG;
+  static const DETAIL_AVAILABLE_PASIEN = _Paths.DETAIL_AVAILABLE_PASIEN;
+  static const AI_ANALYZER_PASIEN = _Paths.AI_ANALYZER_PASIEN;
+  static const ANALYZER_HISTORY_PASIEN = _Paths.ANALYZER_HISTORY_PASIEN;
+  static const HOME_PASIEN = _Paths.HOME_PASIEN;
+  static const DETAIL_WAITING_PASIEN = _Paths.DETAIL_WAITING_PASIEN;
+  static const DETAIL_COMPLETED_PASIEN = _Paths.DETAIL_COMPLETED_PASIEN;
+  static const DETAIL_ONGOING_PASIEN = _Paths.DETAIL_ONGOING_PASIEN;
+  static const NOTIFICATION_PASIEN = _Paths.NOTIFICATION_PASIEN;
+  static const UPCOMING_APPOINTMET_PASIEN = _Paths.UPCOMING_APPOINTMET_PASIEN;
 }
 
 abstract class _Paths {
@@ -52,5 +76,29 @@ abstract class _Paths {
 
   static const MANAGE_SCHEDULE = '/manage-schedule';
   static const EDIT_SCHEDULE = '/edit-schedule';
-
+  static const DETAIL_APPOINTMENT = '/detail-appointment';
+  static const DETAIL_APPOINTMENT_HISTORY = '/detail-appointment-history';
+  static const NOTIFICATION = '/notification';
+  static const UPCOMMING_APPOINTMENT = '/upcomming-appointment';
+  static const UPCOMING_APPOINTMENT = '/upcoming-appointment';
+  static const DETAIL_ONGOING = '/detail-ongoing';
+  static const DETAIL_CANCEL = '/detail-cancel';
+  static const DETAIL_WAITING = '/detail-waiting';
+  static const DETAIL_COMPLETED = '/detail-completed';
+  static const LANDING_PASIEN = '/landing-pasien';
+  static const PROFILE_PASIEN = '/profile-pasien';
+  static const PERSONAL_INFORMATION_PASIEN = '/personal-information-pasien';
+  static const HISTORY_PASIEN = '/history-pasien';
+  static const DETAIL_CANCEL_PASIEN = '/detail-cancel-pasien';
+  static const COMPLATED_DETAIL_PASIEN = '/complated-detail-pasien';
+  static const PSYCHOLOG = '/psycholog';
+  static const DETAIL_AVAILABLE_PASIEN = '/detail-available-pasien';
+  static const AI_ANALYZER_PASIEN = '/ai-analyzer-pasien';
+  static const ANALYZER_HISTORY_PASIEN = '/analyzer-history-pasien';
+  static const HOME_PASIEN = '/home-pasien';
+  static const DETAIL_WAITING_PASIEN = '/detail-waiting-pasien';
+  static const DETAIL_COMPLETED_PASIEN = '/detail-completed-pasien';
+  static const DETAIL_ONGOING_PASIEN = '/detail-ongoing-pasien';
+  static const NOTIFICATION_PASIEN = '/notification-pasien';
+  static const UPCOMING_APPOINTMET_PASIEN = '/upcoming-appointmet-pasien';
 }
