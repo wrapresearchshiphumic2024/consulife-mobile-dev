@@ -18,7 +18,7 @@ class LandingPasienView extends GetView<LandingPasienController> {
         semanticsLabel: 'Red dash paths',
       ),
       SvgPicture.asset(
-        'assets/icons/profile.svg',
+        'assets/icons/AIButton.svg',
         semanticsLabel: 'Red dash paths',
       ),
       SvgPicture.asset(

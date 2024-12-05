@@ -52,7 +52,6 @@ class DetailAvailablePasienController extends GetxController {
   }
 
   void BookAppointment(BuildContext context) {
-    // Only proceed if both date and time are selected
     if (selectedDate.value != null && selectedTime.isNotEmpty) {
       Get.dialog(
         AlertDialog(
@@ -79,8 +78,8 @@ class DetailAvailablePasienController extends GetxController {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(Routes.HOME_PASIEN);
-                    Navigator.pop(context);
+                    Get.back();
+                    Get.offAllNamed(Routes.LANDING_PASIEN);
                     Fluttertoast.showToast(
                       msg: "Successfully scheduled",
                       gravity: ToastGravity.BOTTOM,
@@ -119,8 +118,13 @@ class DetailAvailablePasienController extends GetxController {
         ),
       );
     } else {
-      // Show a toast or alert if date or time is not selected
-      showToast('Please select a date and time', backgroundColor: Colors.red);
+      Fluttertoast.showToast(
+        msg: 'Please select a date and time',
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        toastLength: Toast.LENGTH_SHORT,
+      );
     }
   }
 }

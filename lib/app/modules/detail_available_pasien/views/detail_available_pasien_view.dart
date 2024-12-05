@@ -249,38 +249,42 @@ class DetailAvailablePasienView extends GetView<DetailAvailablePasienController>
                 ),
               ),
               const SizedBox(height: 8.0),
-              Obx(() => GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 8.0,
-                  childAspectRatio: 2.5,
-                ),
-                itemCount: controller.availableTimes.length,
-                itemBuilder: (context, index) {
-                  final time = controller.availableTimes[index];
-                  final isSelected = controller.selectedTime.value == time;
-                  return GestureDetector(
-                    onTap: () {
-                      controller.selectTime(time);
-                    },
-                    child: Card(
-                      color: isSelected ? primaryColor : carddetail,
-                      child: Center(
-                        child: Text(
-                          time,
-                          style: TextStyle(
-                            color: isSelected ? Colors.white : textColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+              Obx(() {
+                return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 8.0,
+                    childAspectRatio: 2.5,
+                  ),
+                  itemCount: controller.availableTimes.length,
+                  itemBuilder: (context, index) {
+                    final time = controller.availableTimes[index];
+                    final isSelected = controller.selectedTime.value == time;
+                    return ElevatedButton(
+                      onPressed: () {
+                        controller.selectTime(time);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isSelected ? primaryColor : carddetail,
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                    ),
-                  );
-                },
-              )),
+                      child: Text(
+                        time,
+                        style: TextStyle(
+                          color: isSelected ? Colors.white : textColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
               const SizedBox(height: 16.0),
               CustomElevatedButton(
                 primaryColor: (controller.selectedDate.value != null && controller.selectedTime.isNotEmpty)
