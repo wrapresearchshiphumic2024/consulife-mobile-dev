@@ -8,13 +8,19 @@ class AppointmentCard extends StatelessWidget {
   final String status;
   final String name;
   final String time;
+  final String id;
+  final bool isVertical;
+  final bool isPatient;
 
   const AppointmentCard({
-    Key? key,
+    super.key,
     required this.status,
     required this.name,
     required this.time,
-  }) : super(key: key);
+    required this.id,
+    required this.isVertical,
+    required this.isPatient,
+  });
 
   Color _getStatusColor() {
     switch (status.toLowerCase()) {
@@ -32,24 +38,11 @@ class AppointmentCard extends StatelessWidget {
   }
 
   void _navigateToDetail(BuildContext context) {
-    String routeName = '';
-    switch (status.toLowerCase()) {
-      case 'waiting':
-        routeName =  Routes.DETAIL_WAITING;
-        break;
-      case 'ongoing':
-        routeName = Routes.DETAIL_ONGOING;
-        break;
-      case 'canceled':
-        routeName = Routes.DETAIL_CANCEL;
-        break;
-      case 'completed':
-        routeName = Routes.DETAIL_COMPLETED;
-        break;
-      default:
-        return;
+    if (isPatient) {
+      Get.toNamed(Routes.DETAIL_COMPLETED_PASIEN, arguments: id);
+    } else {
+      Get.toNamed(Routes.DETAIL_COMPLETED, arguments: id);
     }
-    Get.toNamed(routeName);
   }
 
   @override
@@ -67,7 +60,8 @@ class AppointmentCard extends StatelessWidget {
             RotatedBox(
               quarterTurns: 1,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                 decoration: BoxDecoration(
                   color: _getStatusColor(),
                   borderRadius: const BorderRadius.only(
@@ -76,7 +70,7 @@ class AppointmentCard extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  status,
+                  status.capitalizeFirst!,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.white,
@@ -86,33 +80,57 @@ class AppointmentCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Name: $name",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: textColor),
-                ),
-                Text(
-                  "Time: $time",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: textColor),
-                ),
-              ],
-            ),
-            if (status.toLowerCase() == 'canceled' || status.toLowerCase() == 'completed')
-              Padding(
-                padding: const EdgeInsets.only(left: 80.0),
-                child: SvgPicture.asset(
-                  status.toLowerCase() == 'canceled'
-                      ? 'assets/icons/cancel.svg'
-                      : 'assets/icons/complate.svg',
-                  width: 30,
-                  height: 30,
-                ),
-              ),
+            isVertical
+                ? Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Name: $name",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: textColor),
+                            ),
+                            Text(
+                              "Time: $time",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: textColor),
+                            ),
+                          ],
+                        ),
+                        if (status.toLowerCase() == 'canceled' ||
+                            status.toLowerCase() == 'completed')
+                          SvgPicture.asset(
+                            status.toLowerCase() == 'canceled'
+                                ? 'assets/icons/cancel.svg'
+                                : 'assets/icons/complate.svg',
+                            width: 30,
+                            height: 30,
+                          ),
+                      ],
+                    ),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Name: $name",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, color: textColor),
+                      ),
+                      Text(
+                        "Time: $time",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, color: textColor),
+                      ),
+                    ],
+                  )
           ],
         ),
       ),

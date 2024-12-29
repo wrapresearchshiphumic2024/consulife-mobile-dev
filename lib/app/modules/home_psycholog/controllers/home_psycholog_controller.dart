@@ -1,26 +1,31 @@
+import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst.dart';
+import 'package:consulin_mobile_dev/app/modules/Profile/controllers/profile_pycholog_controller.dart';
+import 'package:consulin_mobile_dev/app/utils/api/psychologst/PsychologstService.dart';
 import 'package:get/get.dart';
 
 class HomePsychologController extends GetxController {
-  //TODO: Implement HomePsychologController
+  // Observable count for incrementing
+  final isLoading = false.obs;
+  final ProfilePychologController profilePychologController =
+      Get.find<ProfilePychologController>();
 
-  final count = 0.obs;
-  final List<Map<String, dynamic>> upcomingAppointment = [
-    {"status": "Ongoing", "name": "John Rodrigo", "time": "12 Oct 2024, 10:00"},
-    {"status": "Waiting", "name": "Jane Doe", "time": "13 Oct 2024, 14:00"},
-    {"status": "Waiting", "name": "Sarah Smith", "time": "14 Oct 2024, 15:00"},
-  ];
-  final List<Map<String, dynamic>> historyAppointment = [
-    {
-      "status": "Canceled",
-      "name": "John Rodrigo",
-      "time": "12 Oct 2024, 10:00"
-    },
-    {"status": "Completed", "name": "Jane Doe", "time": "13 Oct 2024, 14:00"},
-    {"status": "Canceled", "name": "Sarah Smith", "time": "14 Oct 2024, 15:00"},
-  ];
+  // Observable for consultation data
+  var consultationDataPsychologst = ConsultationDataPsychologist(
+    consultations: [],
+    totalWeeklyConsultation: 0,
+    totalConsultation: 0,
+    todayOngoingConsultation: 0,
+  ).obs;
+
+  // Observable for appointment history
+  var appointmentHistory = <Appointment>[].obs;
+
+  // Sample upcoming appointments
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await getConsultationDataPsychologist();
   }
 
   @override
@@ -33,5 +38,38 @@ class HomePsychologController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  // Method to fetch consultation data
+  Future<void> getConsultationDataPsychologist() async {
+    try {
+      isLoading.value = true;
+      // Fetch consultation data
+      ConsultationDataPsychologist data =
+          await PsychologstService().getConsultationDataPsychologist();
+
+      // Update the observable with the fetched data
+      consultationDataPsychologst.value = data;
+
+      await getAppointmentHistory();
+    } catch (e) {
+      // Handle any errors that occur during the fetch
+      print('Error fetching consultation data: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Method to fetch appointment history
+  Future<void> getAppointmentHistory() async {
+    try {
+      // Fetch appointment history
+      List<Appointment> appointments =
+          await PsychologstService().getAppointmentHistory();
+      print(appointments);
+      // Limit to the first 5 appointments
+      appointmentHistory.value = appointments.take(5).toList();
+    } catch (e) {
+      // Handle any errors that occur during the fetch
+      print('Error fetching appointment history: $e');
+    }
+  }
 }

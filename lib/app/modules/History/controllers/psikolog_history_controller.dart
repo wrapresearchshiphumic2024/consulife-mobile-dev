@@ -1,51 +1,32 @@
+import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst.dart';
+import 'package:consulin_mobile_dev/app/utils/api/psychologst/PsychologstService.dart';
 import 'package:get/get.dart';
 
 class PsikologHistoryController extends GetxController {
-  final appointmentHistory = [
-    {
-      "status": "Canceled Consultation",
-      "name": "Michael Brown",
-      "time": "14 Nov 2024, 10:00",
-      "color": "warningColor",
-    },
-    {
-      "status": "Completed Consultation",
-      "name": "Sarah Davis",
-      "time": "18 Nov 2024, 15:00",
-      "color": "primaryColor",
-    },
-    {
-      "status": "Canceled Consultation",
-      "name": "William Garcia",
-      "time": "18 Nov 2024, 10:00",
-      "color": "warningColor",
-    },
-    {
-      "status": "Canceled Consultation",
-      "name": "David Lee",
-      "time": "16 Nov 2024, 13:00",
-      "color": "warningColor",
-    },
-    {
-      "status": "Completed Consultation",
-      "name": "Laura Martinez",
-      "time": "22 Oct 2024, 14:00",
-      "color": "primaryColor",
-    },
-  ].obs;
+  // Observable for appointment history
+  var appointmentHistory = <Appointment>[].obs;
+  final isLoading = false.obs;
+  // Method to fetch appointment history
+  Future<void> getAppointmentHistory() async {
+    try {
+      isLoading.value = true;
+      // Fetch appointment history
+      List<Appointment> appointments =
+          await PsychologstService().getAppointmentHistory();
+      print(appointments);
+      // Limit to the first 5 appointments
+      appointmentHistory.value = appointments.take(5).toList();
+    } catch (e) {
+      // Handle any errors that occur during the fetch
+      print('Error fetching appointment history: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   @override
   void onInit() {
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
+    getAppointmentHistory();
   }
 }

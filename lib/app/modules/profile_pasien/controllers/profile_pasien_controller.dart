@@ -1,24 +1,32 @@
+import 'package:consulin_mobile_dev/app/models/user.dart';
+import 'package:consulin_mobile_dev/app/utils/api/patient/PatientService.dart';
+import 'package:consulin_mobile_dev/app/utils/storage_service.dart';
 import 'package:get/get.dart';
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
-class ProfilePasienController extends GetxController {
 
-  final count = 0.obs;
+class ProfilePasienController extends GetxController {
+  final profile = User(id: '', firstname: '', lastname: '').obs;
+  final isLoading = false.obs;
+  // Method to fetch the psychologist's profile
+  Future<void> fetchPsychologistProfile() async {
+    try {
+      isLoading.value = true;
+      User fetchedProfile = await PatientService().getPatientProfile();
+      profile.value = fetchedProfile;
+    } catch (e) {
+      print('Error fetching profile: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
+    fetchPsychologistProfile();
   }
 
   void cancel(BuildContext context) {
@@ -36,7 +44,7 @@ class ProfilePasienController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              'Are you sure you want to exit this account?  Once signed out, you will need to log in again to access your account.',
+              'Are you sure you want to exit this account? Once signed out, you will need to log in again to access your account.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: primaryColor,
@@ -45,7 +53,8 @@ class ProfilePasienController extends GetxController {
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () {
-                Get.back();
+                StorageService.clearToken("auth_token");
+                StorageService.clearToken("role");
                 Get.offAllNamed(Routes.SIGNIN);
                 Fluttertoast.showToast(
                   msg: "Logged out successfully",
@@ -94,8 +103,4 @@ class ProfilePasienController extends GetxController {
       ),
     );
   }
-
-  void increment() => count.value++;
 }
-
-

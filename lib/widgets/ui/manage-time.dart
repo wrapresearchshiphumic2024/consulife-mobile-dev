@@ -1,4 +1,5 @@
 import 'package:consulin_mobile_dev/app/constants/color.dart';
+import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class ManageTime extends StatelessWidget {
 
   final RxList<Map<String, String>> value; // Selected time slots
   final Function(List<Map<String, String>>) onChange; // Callback for changes
-  final List<Map<String, String>>? times; // Optional available times
+  final List<Time>? times; // Optional available times
   final bool isSingleSelect; // Single selection mode
   final bool disabled; // Disable interaction
 
@@ -22,9 +23,9 @@ class ManageTime extends StatelessWidget {
     super.key,
     required this.value, // Now required to be an observable list
     required this.onChange,
-    this.times,
     this.isSingleSelect = false,
     this.disabled = false,
+    this.times,
   });
 
   void handleSelectTime(Map<String, String> selectedTime) {
@@ -76,8 +77,8 @@ class ManageTime extends StatelessWidget {
     // Filter available time slots based on the provided times
     final filteredDays = (times != null && times!.isNotEmpty)
         ? days
-            .where((day) => times!.any((time) =>
-                time['start'] == day['start'] && time['end'] == day['end']))
+            .where((day) => times!.any(
+                (time) => time.start == day['start'] && time.end == day['end']))
             .toList()
         : days;
 
@@ -90,7 +91,7 @@ class ManageTime extends StatelessWidget {
               runSpacing: 10, // Vertical space between lines
               children: filteredDays.map((item) {
                 final selected = isSelected(item);
-                return Container(
+                return SizedBox(
                   width: (MediaQuery.of(context).size.width /
                       2.3), // Set width to half of the screen width minus spacing
                   child: GestureDetector(
@@ -99,7 +100,9 @@ class ManageTime extends StatelessWidget {
                       height: 50,
                       decoration: BoxDecoration(
                         color: disabled
-                            ? primaryColor.withOpacity(0.2)
+                            ? (selected
+                                ? primaryColor.withOpacity(0.5)
+                                : primaryColor.withOpacity(0.2))
                             : (selected
                                 ? primaryColor
                                 : const Color(0xffDDE7F9)),
@@ -113,7 +116,9 @@ class ManageTime extends StatelessWidget {
                         item['label']!,
                         style: TextStyle(
                           color: disabled
-                              ? Colors.black.withOpacity(0.2)
+                              ? (selected
+                                  ? Colors.white.withOpacity(0.7)
+                                  : Colors.black.withOpacity(0.2))
                               : (selected ? Colors.white : Colors.black54),
                         ),
                       ),

@@ -1,24 +1,29 @@
+import 'package:consulin_mobile_dev/app/models/user.dart';
+import 'package:consulin_mobile_dev/app/utils/api/psychologst/PsychologstService.dart';
+import 'package:consulin_mobile_dev/app/utils/storage_service.dart';
 import 'package:get/get.dart';
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
+
 class ProfilePychologController extends GetxController {
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
+  final profile = User(id: '', firstname: '', lastname: '').obs;
+  // Method to fetch the psychologist's profile
+  Future<void> fetchPsychologistProfile() async {
+    try {
+      // Fetch the profile using the session token
+      User fetchedProfile = await PsychologstService().getPsychologistProfile();
+      profile.value = fetchedProfile; // Update the observable profile
+      print(fetchedProfile);
+      // Access other properties as needed
+      if (profile.value.psychologist != null) {
+        print('Degree: ${profile.value.psychologist!.degree}');
+        print('University: ${profile.value.psychologist!.university}');
+      }
+    } catch (e) {
+      print('Error fetching profile: $e');
+    }
   }
 
   void cancel(BuildContext context) {
@@ -36,7 +41,7 @@ class ProfilePychologController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              'Are you sure you want to exit this account?  Once signed out, you will need to log in again to access your account.',
+              'Are you sure you want to exit this account? Once signed out, you will need to log in again to access your account.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: primaryColor,
@@ -45,7 +50,8 @@ class ProfilePychologController extends GetxController {
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () {
-                Get.back();
+                StorageService.clearToken("auth_token");
+                StorageService.clearToken("role");
                 Get.offAllNamed(Routes.SIGNIN);
                 Fluttertoast.showToast(
                   msg: "Logged out successfully",
@@ -95,8 +101,9 @@ class ProfilePychologController extends GetxController {
     );
   }
 
-
-
-  void increment() => count.value++;
+  @override
+  void onInit() {
+    super.onInit();
+    fetchPsychologistProfile(); // Fetch the profile when the controller is initialized
+  }
 }
-

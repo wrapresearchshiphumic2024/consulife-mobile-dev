@@ -1,67 +1,45 @@
+import 'package:consulin_mobile_dev/app/models/user.dart';
+import 'package:consulin_mobile_dev/app/utils/api/patient/PatientService.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Psychologist {
-  final String name;
-  final String specialty;
-  final String gender;
-  final String experience;
-  final String status;
-
-  Psychologist({
-    required this.name,
-    required this.specialty,
-    required this.gender,
-    required this.experience,
-    required this.status,
-  });
-}
-
 class PsychologController extends GetxController {
-  RxList<Psychologist> psychologists = <Psychologist>[
-    Psychologist(
-      name: 'David Williams',
-      specialty: 'Anxiety Disorders',
-      gender: 'Male',
-      experience: '7 years',
-      status: 'Available',
-    ),
-    Psychologist(
-      name: 'John Anderson',
-      specialty: 'Clinical Psychology',
-      gender: 'Male',
-      experience: '4 years',
-      status: 'Full Booked',
-    ),
-    Psychologist(
-      name: 'James Mitchel',
-      specialty: 'Child Psychology',
-      gender: 'Female',
-      experience: '3 years',
-      status: 'Available',
-    ),
-  ].obs;
+  // Observable properties
+  final isLoading = false.obs;
+  final psychologists = <User>[].obs;
+  final patientHasAIAnalysis = false.obs;
+  final name = TextEditingController();
+  final gender = ''.obs;
 
-  RxList<Psychologist> filteredPsychologists = RxList<Psychologist>();
+  // Fungsi untuk mengambil data psikolog
+  Future<void> fetchPsychologists({
+    String name = "",
+    String gender = "",
+  }) async {
+    try {
+      isLoading(true); // Menandai proses sedang berjalan
+      final response = await PatientService().getPsychologistData(
+        name: name,
+        gender: gender,
+      );
+
+      // Memperbarui nilai observable
+      patientHasAIAnalysis.value = response.patientHasAIAnalysis;
+      psychologists.value = response.psychologists;
+    } catch (error) {
+      Get.snackbar(
+        'Error',
+        'Failed to fetch psychologists: $error',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading(false); // Menandai proses selesai
+    }
+  }
 
   @override
   void onInit() {
     super.onInit();
-    filteredPsychologists.value = psychologists;
-  }
-
-  void filterPsychologists({
-    String? name,
-    String? gender,
-    String? status,
-  }) {
-    filteredPsychologists.value = psychologists.where((psychologist) {
-      return (name == null || psychologist.name.toLowerCase().contains(name.toLowerCase())) &&
-          (gender == null || psychologist.gender.toLowerCase() == gender.toLowerCase()) &&
-          (status == null || psychologist.status.toLowerCase() == status.toLowerCase());
-    }).toList();
-  }
-
-  void goToDetails(Psychologist psychologist) {
-
+    fetchPsychologists(name: name.text, gender: gender.value);
   }
 }
