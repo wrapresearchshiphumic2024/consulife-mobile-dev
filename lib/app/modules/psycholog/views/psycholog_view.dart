@@ -1,8 +1,13 @@
-import 'package:consulin_mobile_dev/app/constants/color.dart';
+import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
+import 'package:consulin_mobile_dev/app/utils/helpers/string_helper.dart';
+import 'package:consulin_mobile_dev/widgets/ui/loading_custom.dart';
+import 'package:consulin_mobile_dev/widgets/ui/refresh_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
+
 import '../controllers/psycholog_controller.dart';
+import 'package:consulin_mobile_dev/app/constants/color.dart';
+import 'package:consulin_mobile_dev/app/models/user.dart';
 
 class PsychologView extends GetView<PsychologController> {
   const PsychologView({super.key});
@@ -10,124 +15,107 @@ class PsychologView extends GetView<PsychologController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: textColor, size: 40),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        title: const Text(
-          'Psychologist',
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: Column(
         children: [
-
+          // Search Bar
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
-              onChanged: (value) => controller.filterPsychologists(name: value),
+              controller: controller.name,
+              onChanged: (value) {
+                controller.fetchPsychologists(
+                    name: value, gender: controller.gender.value);
+              },
               decoration: InputDecoration(
                 hintText: 'Search psychologist by name',
                 border: InputBorder.none,
                 filled: true,
                 fillColor: Colors.grey[200],
                 prefixIcon: const Icon(Icons.search),
-                contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 12.0, horizontal: 16.0),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide(color: Colors.transparent),
+                  borderSide: const BorderSide(color: Colors.transparent),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide(color: Colors.transparent),
+                  borderSide: const BorderSide(color: Colors.transparent),
                 ),
               ),
             ),
           ),
+          // Gender Filter with Obx
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0),
-            child: Column(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.filterPsychologists(gender: 'Male');
-                      },
-                      child: const Text(
-                        'Male',
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.filterPsychologists(gender: 'Female');
-                      },
-                      child: const Text(
-                        'Female',
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.filterPsychologists(status: 'Available');
-                      },
-                      child: const Text(
-                        'Available',
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.filterPsychologists(status: 'Full Booked');
-                      },
-                      child: const Text(
-                        'Full Booked',
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                  ],
+                GenderFilterButton(
+                  genderLabel: 'All',
+                  genderValue: '',
+                  selectedGender: controller.gender,
+                  onGenderSelected: (gender) {
+                    controller.gender.value = gender;
+                    controller.fetchPsychologists(
+                        name: controller.name.text, gender: gender);
+                  },
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(width: 8.0),
+                GenderFilterButton(
+                  genderLabel: 'Male',
+                  genderValue: 'Male',
+                  selectedGender: controller.gender,
+                  onGenderSelected: (gender) {
+                    controller.gender.value = gender;
+                    controller.fetchPsychologists(
+                        name: controller.name.text, gender: gender);
+                  },
+                ),
+                const SizedBox(width: 8.0),
+                GenderFilterButton(
+                  genderLabel: 'Female',
+                  genderValue: 'Female',
+                  selectedGender: controller.gender,
+                  onGenderSelected: (gender) {
+                    controller.gender.value = gender;
+                    controller.fetchPsychologists(
+                        name: controller.name.text, gender: gender);
+                  },
+                ),
               ],
             ),
           ),
-
+          const SizedBox(height: 8.0),
+          // List of Psychologists
           Expanded(
-            child: Obx(
-                  () {
-                return ListView.builder(
-                  itemCount: controller.filteredPsychologists.length,
-                  itemBuilder: (context, index) {
-                    final psychologist = controller.filteredPsychologists[index];
-                    return PsychologistCard(
-                      psychologist: psychologist,
-                      onTap: () => controller.goToDetails(psychologist),
-                    );
-                  },
+            child: Obx(() {
+              if (controller.isLoading.value) {
+                return const LoadingCustom();
+              } else if (controller.psychologists.isEmpty) {
+                return const Center(child: Text("No psychologists found."));
+              } else {
+                return CustomRefreshIndicator(
+                  onRefresh: () => controller.fetchPsychologists(
+                    name: controller.name.text,
+                    gender: controller.gender.value,
+                  ),
+                  child: ListView.builder(
+                    itemCount: controller.psychologists.length,
+                    itemBuilder: (context, index) {
+                      final psychologist = controller.psychologists[index];
+                      return PsychologistCard(
+                        psychologist: psychologist,
+                        onTap: () {
+                          // Handle onTap action here
+                          Get.toNamed(Routes.DETAIL_AVAILABLE_PASIEN,
+                              arguments: psychologist.id);
+                        },
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
+              }
+            }),
           ),
         ],
       ),
@@ -136,7 +124,7 @@ class PsychologView extends GetView<PsychologController> {
 }
 
 class PsychologistCard extends StatelessWidget {
-  final Psychologist psychologist;
+  final User psychologist;
   final VoidCallback onTap;
 
   const PsychologistCard({
@@ -152,18 +140,7 @@ class PsychologistCard extends StatelessWidget {
       child: Card(
         color: carddetail,
         child: InkWell(
-          onTap: psychologist.status == 'Available'
-              ? () {
-            if (psychologist.status == 'Available') {
-              Get.toNamed(
-                Routes.DETAIL_AVAILABLE_PASIEN,
-                arguments: {'psychologist': psychologist},
-              );
-            } else if (psychologist.status == 'Full Booked') {
-              Get.snackbar('Unavailable', 'This psychologist is fully booked.');
-            }
-          }
-              : null,
+          onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(2.0),
             child: Row(
@@ -184,118 +161,40 @@ class PsychologistCard extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       const SizedBox(width: 16.0),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              psychologist.name,
+                              '${psychologist.firstname.capitalizeFirst} ${psychologist.lastname.capitalizeFirst}',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
                             ),
-                            const SizedBox(height: 8.0),
-                            Text(psychologist.specialty),
+                            Text(
+                              getSpecializationString(
+                                  psychologist.psychologist?.specialization),
+                              style: const TextStyle(fontSize: 10),
+                            ),
                             const SizedBox(height: 8.0),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0,
-                                    horizontal: 12.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.blue.withOpacity(0.2),
-                                        blurRadius: 4,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        psychologist.gender == 'Male'
-                                            ? Icons.male
-                                            : Icons.female,
-                                        size: 12,
-                                        color: textColor,
-                                      ),
-                                      const SizedBox(width: 8.0),
-                                      Text(
-                                        psychologist.gender,
-                                        style: TextStyle(
-                                          color: textColor,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                GenderInfoBadge(
+                                  gender: psychologist.gender.toString(),
                                 ),
                                 const SizedBox(width: 8.0),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 7.0,
-                                    horizontal: 12.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.orange.withOpacity(0.2),
-                                        blurRadius: 4,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.access_time,
-                                        size: 16,
-                                        color: textColor,
-                                      ),
-                                      const SizedBox(width: 8.0),
-                                      Text(
-                                        '7 years',
-                                        style: TextStyle(
-                                          color: textColor,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                ExperienceInfoBadge(
+                                  experience: psychologist
+                                          .psychologist?.workExperience
+                                          .toString() ??
+                                      'N/A',
                                 ),
                               ],
                             ),
                             const SizedBox(height: 8.0),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40.0,
-                                vertical: 4.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: psychologist.status == 'Available'
-                                    ? Colors.green
-                                    : Colors.red,
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                              child: Text(
-                                psychologist.status,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -306,10 +205,11 @@ class PsychologistCard extends StatelessWidget {
                 RotatedBox(
                   quarterTurns: 1,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                    decoration: const BoxDecoration(
                       color: primaryColor,
-                      borderRadius: const BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                         bottomRight: Radius.circular(10),
@@ -332,5 +232,130 @@ class PsychologistCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class GenderInfoBadge extends StatelessWidget {
+  final String gender;
+
+  const GenderInfoBadge({
+    super.key,
+    required this.gender,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.withOpacity(0.2),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(
+            gender == 'Male' ? Icons.male : Icons.female,
+            size: 12,
+            color: textColor,
+          ),
+          const SizedBox(width: 8.0),
+          Text(
+            gender,
+            style: const TextStyle(
+              color: textColor,
+              fontSize: 10,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ExperienceInfoBadge extends StatelessWidget {
+  final String experience;
+  const ExperienceInfoBadge({
+    super.key,
+    required this.experience,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 7.0, horizontal: 12.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.orange.withOpacity(0.2),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.access_time,
+            size: 16,
+            color: textColor,
+          ),
+          const SizedBox(width: 8.0),
+          Text(
+            experience, // Example experience value
+            style: const TextStyle(
+              color: textColor,
+              fontSize: 10,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GenderFilterButton extends StatelessWidget {
+  final String genderLabel;
+  final String genderValue;
+  final RxString selectedGender;
+  final Function(String) onGenderSelected;
+
+  const GenderFilterButton({
+    super.key,
+    required this.genderLabel,
+    required this.genderValue,
+    required this.selectedGender,
+    required this.onGenderSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      return ElevatedButton(
+        onPressed: () {
+          onGenderSelected(genderValue); // When button pressed, select gender
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: selectedGender.value == genderValue
+              ? primaryColor
+              : Colors.grey, // Button color changes based on selection
+        ),
+        child: Text(
+          genderLabel,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+          ),
+        ),
+      );
+    });
   }
 }

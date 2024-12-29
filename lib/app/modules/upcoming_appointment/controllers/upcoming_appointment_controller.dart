@@ -1,41 +1,38 @@
+import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst.dart';
+import 'package:consulin_mobile_dev/app/utils/api/psychologst/PsychologstService.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class Consultation {
-  final String status;
-  final String name;
-  final DateTime dateTime;
-
-  Consultation({
-    required this.status,
-    required this.name,
-    required this.dateTime,
-  });
-
-  String get formattedDateWithTime {
-
-    final dateTimeInWIB = dateTime.toUtc().add(Duration(hours: 7));
-    return DateFormat('dd MMM yyyy HH:mm').format(dateTimeInWIB);
-  }
-}
-
 class UpcomingAppointmentController extends GetxController {
+  // Observable for consultation data
+  var consultationDataPsychologst = ConsultationDataPsychologist(
+    consultations: [],
+    totalWeeklyConsultation: 0,
+    totalConsultation: 0,
+    todayOngoingConsultation: 0,
+  ).obs;
+  final isLoading = false.obs;
+  // Method to fetch consultation data
+  Future<void> getConsultationDataPsychologist() async {
+    try {
+      isLoading.value = true;
+      // Fetch consultation data
+      ConsultationDataPsychologist data =
+          await PsychologstService().getConsultationDataPsychologist();
 
-  var upcomingAppointments = <Consultation>[
-    Consultation(
-      status: 'Ongoing Consultation',
-      name: 'John Doe',
-      dateTime: DateTime.now().subtract(Duration(hours: 5)),
-    ),
-    Consultation(
-      status: 'Waiting Consultation',
-      name: 'Jane Smith',
-      dateTime: DateTime.now().add(Duration(hours: 2)),
-    ),
-  ].obs;
+      // Update the observable with the fetched data
+      consultationDataPsychologst.value = data;
+    } catch (e) {
+      // Handle any errors that occur during the fetch
+      print('Error fetching consultation data: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await getConsultationDataPsychologist();
   }
 }

@@ -1,42 +1,33 @@
+import 'package:consulin_mobile_dev/app/models/patient/info-patient.dart';
+import 'package:consulin_mobile_dev/app/utils/api/patient/PatientService.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-
-class Consultation {
-  final String status;
-  final String name;
-  final DateTime dateTime;
-
-  Consultation({
-    required this.status,
-    required this.name,
-    required this.dateTime,
-  });
-
-  String get formattedDateWithTime {
-
-    final dateTimeInWIB = dateTime.toUtc().add(Duration(hours: 7));
-    return DateFormat('dd MMM yyyy HH:mm').format(dateTimeInWIB);
-  }
-}
 
 class UpcomingAppointmetPasienController extends GetxController {
+  // Observable for appointment data
+  var appointmentData = AppointmentPatient(
+    upcomingAppointments: [],
+    history: [],
+  ).obs;
+  final isLoading = false.obs;
+  // Method to fetch appointment data
+  Future<void> fetchAppointments() async {
+    try {
+      isLoading.value = true; // Set loading to true
+      AppointmentPatient data = await PatientService().getAppointmentPatient();
+      // Fetch appointment data
 
-  var upcomingAppointments = <Consultation>[
-    Consultation(
-      status: 'Ongoing Consultation',
-      name: 'John Doe',
-      dateTime: DateTime.now().subtract(Duration(hours: 5)),
-    ),
-    Consultation(
-      status: 'Waiting Consultation',
-      name: 'Jane Smith',
-      dateTime: DateTime.now().add(Duration(hours: 2)),
-    ),
-  ].obs;
+      appointmentData.value.upcomingAppointments = data.upcomingAppointments;
+    } catch (e) {
+      // Handle any errors that occur during the fetch
+      print('Error fetching appointment data: $e');
+    } finally {
+      isLoading.value = false; // Set loading to false
+    }
+  }
 
   @override
   void onInit() {
     super.onInit();
+    fetchAppointments();
   }
 }
-

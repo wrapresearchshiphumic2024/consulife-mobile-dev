@@ -1,5 +1,6 @@
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';
+import 'package:consulin_mobile_dev/app/utils/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,6 +47,7 @@ class Onboarding2View extends GetView<Onboarding2Controller> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                       onPressed: () {
+                        StorageService.saveToken('isFirstTime', 'false');
                         Get.offAllNamed(Routes.SIGNIN);
                       },
                       style: ElevatedButton.styleFrom(

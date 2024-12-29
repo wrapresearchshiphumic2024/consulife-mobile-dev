@@ -50,6 +50,9 @@ abstract class Routes {
   static const DETAIL_ONGOING_PASIEN = _Paths.DETAIL_ONGOING_PASIEN;
   static const NOTIFICATION_PASIEN = _Paths.NOTIFICATION_PASIEN;
   static const UPCOMING_APPOINTMET_PASIEN = _Paths.UPCOMING_APPOINTMET_PASIEN;
+  static const CHAT_PSYCHOLOG = _Paths.CHAT_PSYCHOLOG;
+  static const CHAT_PATIENT = _Paths.CHAT_PATIENT;
+  static const DETAIL_CHAT_PATIENT = _Paths.DETAIL_CHAT_PATIENT;
 }
 
 abstract class _Paths {
@@ -101,4 +104,7 @@ abstract class _Paths {
   static const DETAIL_ONGOING_PASIEN = '/detail-ongoing-pasien';
   static const NOTIFICATION_PASIEN = '/notification-pasien';
   static const UPCOMING_APPOINTMET_PASIEN = '/upcoming-appointmet-pasien';
+  static const CHAT_PSYCHOLOG = '/chat-psycholog';
+  static const CHAT_PATIENT = '/chat-patient';
+  static const DETAIL_CHAT_PATIENT = '/detail-chat-patient';
 }

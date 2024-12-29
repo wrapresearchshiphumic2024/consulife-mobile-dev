@@ -10,7 +10,6 @@ import '../modules/History/bindings/psikolog_history_binding.dart';
 import '../modules/History/views/psikolog_history_view.dart';
 import '../modules/PickRole/bindings/pick_role_binding.dart';
 import '../modules/PickRole/views/pick_role_view.dart';
-import '../modules/Profile/bindings/profile_pycholog_binding.dart';
 import '../modules/Profile/views/profile_pycholog_view.dart';
 import '../modules/Reset_Pass_psycholog/bindings/psi_reset_pass_binding.dart';
 import '../modules/Reset_Pass_psycholog/views/psi_reset_pass_view.dart';
@@ -18,26 +17,14 @@ import '../modules/ai_analyzer_pasien/bindings/ai_analyzer_pasien_binding.dart';
 import '../modules/ai_analyzer_pasien/views/ai_analyzer_pasien_view.dart';
 import '../modules/analyzer_history_pasien/bindings/analyzer_history_pasien_binding.dart';
 import '../modules/analyzer_history_pasien/views/analyzer_history_pasien_view.dart';
-import '../modules/complated_detail_pasien/bindings/complated_detail_pasien_binding.dart';
-import '../modules/complated_detail_pasien/views/complated_detail_pasien_view.dart';
-import '../modules/detail_available_pasien/bindings/detail_available_pasien_binding.dart';
-import '../modules/detail_available_pasien/views/detail_available_pasien_view.dart';
-import '../modules/detail_cancel/bindings/detail_cancel_binding.dart';
-import '../modules/detail_cancel/views/detail_cancel_view.dart';
-import '../modules/detail_cancel_pasien/bindings/detail_cancel_pasien_binding.dart';
-import '../modules/detail_cancel_pasien/views/detail_cancel_pasien_view.dart';
+import '../modules/chat_patient/views/chat_patient_view.dart';
+import '../modules/chat_psycholog/views/chat_psycholog_view.dart';
+import '../modules/detail_chat_patient/bindings/detail_chat_patient_binding.dart';
+import '../modules/detail_chat_patient/views/detail_chat_patient_view.dart';
 import '../modules/detail_completed/bindings/detail_completed_binding.dart';
 import '../modules/detail_completed/views/detail_completed_view.dart';
 import '../modules/detail_completed_pasien/bindings/detail_completed_pasien_binding.dart';
 import '../modules/detail_completed_pasien/views/detail_completed_pasien_view.dart';
-import '../modules/detail_ongoing/bindings/detail_ongoing_binding.dart';
-import '../modules/detail_ongoing/views/detail_ongoing_view.dart';
-import '../modules/detail_ongoing_pasien/bindings/detail_ongoing_pasien_binding.dart';
-import '../modules/detail_ongoing_pasien/views/detail_ongoing_pasien_view.dart';
-import '../modules/detail_waiting/bindings/detail_waiting_binding.dart';
-import '../modules/detail_waiting/views/detail_waiting_view.dart';
-import '../modules/detail_waiting_pasien/bindings/detail_waiting_pasien_binding.dart';
-import '../modules/detail_waiting_pasien/views/detail_waiting_pasien_view.dart';
 import '../modules/edit_profile_pasien/bindings/personal_information_pasien_binding.dart';
 import '../modules/edit_profile_pasien/views/personal_information_pasien_view.dart';
 import '../modules/edit_schedule/bindings/edit_schedule_binding.dart';
@@ -48,7 +35,6 @@ import '../modules/history_pasien/bindings/history_pasien_binding.dart';
 import '../modules/history_pasien/views/history_pasien_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/home_pasien/bindings/home_pasien_binding.dart';
 import '../modules/home_pasien/views/home_pasien_view.dart';
 import '../modules/home_psycholog/views/home_psycholog_view.dart';
 import '../modules/landing_pasien/bindings/landing_pasien_binding.dart';
@@ -64,7 +50,6 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding2/bindings/onboarding2_binding.dart';
 import '../modules/onboarding2/views/onboarding2_view.dart';
-import '../modules/profile_pasien/bindings/profile_pasien_binding.dart';
 import '../modules/profile_pasien/views/profile_pasien_view.dart';
 import '../modules/psycholog/bindings/psycholog_binding.dart';
 import '../modules/psycholog/views/psycholog_view.dart';
@@ -86,7 +71,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LANDING_PASIEN;
+  static const INITIAL = Routes.ONBOARDING;
 
   static final routes = [
     GetPage(
@@ -146,7 +131,6 @@ class AppPages {
     GetPage(
       name: _Paths.PROFILE_PYCHOLOG,
       page: () => const ProfilePychologView(),
-      binding: ProfilePychologBinding(),
     ),
     GetPage(
       name: _Paths.PSIKOLOG_HISTORY,
@@ -193,21 +177,6 @@ class AppPages {
       binding: UpcomingAppointmentBinding(),
     ),
     GetPage(
-      name: _Paths.DETAIL_ONGOING,
-      page: () => const DetailOngoingView(),
-      binding: DetailOngoingBinding(),
-    ),
-    GetPage(
-      name: _Paths.DETAIL_CANCEL,
-      page: () => const DetailCancelView(),
-      binding: DetailCancelBinding(),
-    ),
-    GetPage(
-      name: _Paths.DETAIL_WAITING,
-      page: () => const DetailWaitingView(),
-      binding: DetailWaitingBinding(),
-    ),
-    GetPage(
       name: _Paths.DETAIL_COMPLETED,
       page: () => const DetailCompletedView(),
       binding: DetailCompletedBinding(),
@@ -220,7 +189,6 @@ class AppPages {
     GetPage(
       name: _Paths.PROFILE_PASIEN,
       page: () => const ProfilePasienView(),
-      binding: ProfilePasienBinding(),
     ),
     GetPage(
       name: _Paths.PERSONAL_INFORMATION_PASIEN,
@@ -233,24 +201,9 @@ class AppPages {
       binding: HistoryPasienBinding(),
     ),
     GetPage(
-      name: _Paths.DETAIL_CANCEL_PASIEN,
-      page: () => const DetailCancelPasienView(),
-      binding: DetailCancelPasienBinding(),
-    ),
-    GetPage(
-      name: _Paths.COMPLATED_DETAIL_PASIEN,
-      page: () => const ComplatedDetailPasienView(),
-      binding: ComplatedDetailPasienBinding(),
-    ),
-    GetPage(
       name: _Paths.PSYCHOLOG,
       page: () => const PsychologView(),
       binding: PsychologBinding(),
-    ),
-    GetPage(
-      name: _Paths.DETAIL_AVAILABLE_PASIEN,
-      page: () => const DetailAvailablePasienView(),
-      binding: DetailAvailablePasienBinding(),
     ),
     GetPage(
       name: _Paths.AI_ANALYZER_PASIEN,
@@ -265,22 +218,11 @@ class AppPages {
     GetPage(
       name: _Paths.HOME_PASIEN,
       page: () => const HomePasienView(),
-      binding: HomePasienBinding(),
-    ),
-    GetPage(
-      name: _Paths.DETAIL_WAITING_PASIEN,
-      page: () => const DetailWaitingPasienView(),
-      binding: DetailWaitingPasienBinding(),
     ),
     GetPage(
       name: _Paths.DETAIL_COMPLETED_PASIEN,
       page: () => const DetailCompletedPasienView(),
       binding: DetailCompletedPasienBinding(),
-    ),
-    GetPage(
-      name: _Paths.DETAIL_ONGOING_PASIEN,
-      page: () => const DetailOngoingPasienView(),
-      binding: DetailOngoingPasienBinding(),
     ),
     GetPage(
       name: _Paths.NOTIFICATION_PASIEN,
@@ -291,6 +233,19 @@ class AppPages {
       name: _Paths.UPCOMING_APPOINTMET_PASIEN,
       page: () => const UpcomingAppointmetPasienView(),
       binding: UpcomingAppointmetPasienBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT_PSYCHOLOG,
+      page: () => const ChatPsychologView(),
+    ),
+    GetPage(
+      name: _Paths.CHAT_PATIENT,
+      page: () => const ChatPatientView(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_CHAT_PATIENT,
+      page: () => const DetailChatPatientView(),
+      binding: DetailChatPatientBinding(),
     ),
   ];
 }

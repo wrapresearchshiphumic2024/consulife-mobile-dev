@@ -6,6 +6,7 @@ class CustomDropdownField<T> extends StatelessWidget {
   final List<T> items;
   final void Function(T?)? onChanged;
   final String? Function(T?)? validator;
+  final bool isEnabled; // Menambahkan properti untuk kontrol enabled
 
   const CustomDropdownField({
     super.key,
@@ -14,6 +15,7 @@ class CustomDropdownField<T> extends StatelessWidget {
     required this.items,
     this.onChanged,
     this.validator,
+    this.isEnabled = true, // Defaultnya adalah true (aktif)
   });
 
   @override
@@ -22,24 +24,35 @@ class CustomDropdownField<T> extends StatelessWidget {
       value: value,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: const TextStyle(
-          color: Color(0xff8D95A1), // Ganti warna sesuai keinginan
+        labelStyle: TextStyle(
+          color: isEnabled ? const Color(0xff8D95A1) : Colors.grey,
         ),
         filled: true,
-        fillColor: Colors.grey[200],
+        fillColor: isEnabled ? Colors.grey[200] : Colors.grey[300],
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      items: items.map((T item) {
-        return DropdownMenuItem<T>(
-          value: item,
-          child: Text(item.toString()),
-        );
-      }).toList(),
-      onChanged: onChanged,
-      validator: validator,
+      items: isEnabled
+          ? items.map((T item) {
+              return DropdownMenuItem<T>(
+                value: item,
+                child: Text(item.toString()),
+              );
+            }).toList()
+          : [
+              DropdownMenuItem<T>(
+                value: value,
+                child: Text(value != null ? value.toString() : '-'),
+              ),
+            ], // Tetap menampilkan nilai terpilih saat tidak aktif
+      onChanged: isEnabled
+          ? onChanged
+          : null, // Nonaktifkan perubahan jika isEnabled false
+      validator: isEnabled
+          ? validator
+          : null, // Nonaktifkan validasi jika isEnabled false
     );
   }
 }

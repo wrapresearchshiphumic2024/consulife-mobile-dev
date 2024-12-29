@@ -68,7 +68,9 @@ class ManageDay extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: disabled
-                          ? primaryColor.withOpacity(0.2)
+                          ? (selected
+                              ? primaryColor.withOpacity(0.5)
+                              : primaryColor.withOpacity(0.2))
                           : (selected ? primaryColor : const Color(0xffDDE7F9)),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -76,7 +78,9 @@ class ManageDay extends StatelessWidget {
                       item['label']!,
                       style: TextStyle(
                         color: disabled
-                            ? Colors.black.withOpacity(0.2)
+                            ? (selected
+                                ? Colors.white.withOpacity(0.7)
+                                : Colors.black.withOpacity(0.2))
                             : (selected ? Colors.white : Colors.black54),
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
