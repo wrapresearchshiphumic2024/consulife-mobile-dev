@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final bool? showPassword; // Menerima nilai showPassword dari controller
   final VoidCallback?
       onTogglePasswordVisibility; // Callback untuk toggle password
+  final bool isEnabled; // Menambahkan properti untuk kontrol enabled
 
   const CustomTextField({
     super.key,
@@ -17,8 +18,9 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.isPassword = false,
     this.isNumber = false,
-    this.showPassword, // Menerima nilai showPassword
-    this.onTogglePasswordVisibility, // Callback untuk toggle
+    this.showPassword,
+    this.onTogglePasswordVisibility,
+    this.isEnabled = true, // Defaultnya adalah true (aktif)
   });
 
   @override
@@ -28,13 +30,14 @@ class CustomTextField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: showPassword == true ? false : isPassword,
       keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+      enabled: isEnabled, // Mengatur enabled sesuai parameter
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: const TextStyle(
-          color: Color(0xff8D95A1),
+        labelStyle: TextStyle(
+          color: isEnabled ? const Color(0xff8D95A1) : Colors.grey,
         ),
         filled: true,
-        fillColor: Colors.grey[200],
+        fillColor: isEnabled ? Colors.grey[200] : Colors.grey[300],
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(10),
@@ -46,8 +49,9 @@ class CustomTextField extends StatelessWidget {
                       ? Icons.visibility
                       : Icons.visibility_off,
                 ),
-                onPressed:
-                    onTogglePasswordVisibility, // Memanggil fungsi toggle
+                onPressed: isEnabled
+                    ? onTogglePasswordVisibility
+                    : null, // Hanya aktif jika isEnabled true
               )
             : null,
       ),

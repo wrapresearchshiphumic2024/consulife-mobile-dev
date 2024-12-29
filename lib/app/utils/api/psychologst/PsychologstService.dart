@@ -14,7 +14,7 @@ class PsychologstService {
     }
 
     final json = jsonDecode(response.body);
-
+    print(json['data']);
     return User.fromJson(json['data']);
   }
 

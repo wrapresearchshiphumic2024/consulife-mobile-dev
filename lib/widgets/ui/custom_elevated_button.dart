@@ -2,33 +2,39 @@ import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final Color primaryColor;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed; // Allow null to handle disabled state
   final String buttonText;
-  final bool isLoading; // New parameter to indicate loading state
+  final bool isLoading; // Indicate loading state
+  final bool isEnabled; // Indicate enabled/disabled state
 
   const CustomElevatedButton({
-    Key? key,
+    super.key,
     required this.primaryColor,
     required this.onPressed,
     required this.buttonText,
     this.isLoading = false, // Default value is false
-  }) : super(key: key);
+    this.isEnabled = true, // Default value is true
+  });
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    // Dim the background color if loading
-    final buttonColor = isLoading
-        ? primaryColor.withOpacity(0.6) // Reduce opacity when loading
-        : primaryColor;
+    // Adjust button color based on loading and enabled state
+    final buttonColor = !isEnabled
+        ? Colors.grey // Disabled color
+        : isLoading
+            ? primaryColor.withOpacity(0.6) // Dimmed color when loading
+            : primaryColor;
 
     return SizedBox(
       width: width,
       child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed, // Disable button if loading
+        onPressed: (isEnabled && !isLoading)
+            ? onPressed
+            : null, // Disable button if not enabled or loading
         style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor, // Use the dimmed color
+          backgroundColor: buttonColor, // Use adjusted color
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

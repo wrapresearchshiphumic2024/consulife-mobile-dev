@@ -37,7 +37,7 @@ class ProfilePychologView extends GetView<ProfilePychologController> {
                       return Column(
                         children: [
                           Text(
-                            '${controller.profile.value.firstname} ${controller.profile.value.lastname}',
+                            '${controller.profile.value.firstname.capitalizeFirst} ${controller.profile.value.lastname.capitalizeFirst}',
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
