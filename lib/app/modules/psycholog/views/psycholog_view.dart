@@ -153,11 +153,10 @@ class PsychologistCard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            'assets/images/pikolog.png',
-                            width: 80,
-                            height: 120,
-                            fit: BoxFit.cover,
+                          child: Icon(
+                            Icons.person,
+                            size: 80,
+                            color: textColor,
                           ),
                         ),
                       ),
@@ -188,8 +187,8 @@ class PsychologistCard extends StatelessWidget {
                                 const SizedBox(width: 8.0),
                                 ExperienceInfoBadge(
                                   experience: psychologist
-                                          .psychologist?.workExperience
-                                          .toString() ??
+                                      .psychologist?.workExperience
+                                      .toString() ??
                                       'N/A',
                                 ),
                               ],
