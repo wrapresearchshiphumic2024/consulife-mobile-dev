@@ -55,25 +55,29 @@ class HistoryPasienView extends GetView<HistoryPasienController> {
       onTap: () => Get.toNamed(Routes.DETAIL_COMPLETED_PASIEN,
           arguments: appointment.id.toString()),
       child: Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
         elevation: 4,
         margin: const EdgeInsets.only(bottom: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Bagian status appointment (dijadikan kiri)
             Container(
               decoration: BoxDecoration(
                 color: statusColor,
                 borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(16.0)),
+                const BorderRadius.vertical(top: Radius.circular(16.0)),
               ),
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Center(
-                child: Text(
-                  '${appointment.status.capitalizeFirst!} Appointment',
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+              child: Align(
+                alignment: Alignment.centerLeft, // Menjorok ke kiri
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0), // Memberi jarak dari kiri
+                  child: Text(
+                    '${appointment.status.capitalizeFirst!} Appointment',
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),

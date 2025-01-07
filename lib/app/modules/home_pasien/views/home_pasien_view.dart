@@ -56,12 +56,12 @@ class HomePasienView extends GetView<HomePasienController> {
                                   ),
                                 ],
                               ),
-                              IconButton(
-                                  onPressed: () {
-                                    Get.toNamed(Routes.NOTIFICATION_PASIEN);
-                                  },
-                                  icon:
-                                      const Icon(Icons.notifications_outlined)),
+                              // IconButton(
+                              //     onPressed: () {
+                              //       Get.toNamed(Routes.NOTIFICATION_PASIEN);
+                              //     },
+                              //     icon:
+                              //         const Icon(Icons.notifications_outlined)),
                             ],
                           ),
                           const SizedBox(
