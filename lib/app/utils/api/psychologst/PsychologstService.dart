@@ -156,9 +156,11 @@ class PsychologstService {
 
     final json = jsonDecode(response.body);
     final item = json['data'];
+    print(item);
     // Manually constructing the Appointment object
+    // Parsing manual jika struktur berbeda
     final user = User(
-      id: item['id'].toString(), // Assuming id is a string
+      id: item['patient_id'].toString(),
       firstname: item['firstname'],
       lastname: item['lastname'],
       phoneNumber: item['phone'],
@@ -166,7 +168,11 @@ class PsychologstService {
       gender: item['gender'],
     );
 
-    final appointment = Appointment(
+    final aiAnalyzer = item['ai_analyzer'] != null
+        ? AiAnalyzer.fromJson(item['ai_analyzer'])
+        : null;
+
+    return Appointment(
       id: item['id'],
       channelId: item['channel_id'],
       date: item['date'],
@@ -174,11 +180,35 @@ class PsychologstService {
       endTime: item['end_time'],
       duration: item['duration'],
       status: item['status'],
+      note: item['note'],
+      user: user,
+      aiAnalyzer: aiAnalyzer,
+    );
+  }
 
-      aiAnalyzer: item['ai_analyzer'], // Optional field
-      user: user, // Assign the constructed user
+  Future<List<AiAnalyzer>?> getAiAnalysisHistory(String uuid) async {
+    final response = await HttpService.getRequest(
+      '/psychologist/patients/$uuid/ai-analysis',
+      includeBearer: true,
     );
 
-    return appointment;
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch AI analysis history');
+    }
+
+    final json = jsonDecode(response.body);
+    print(json['data']);
+
+    // Pastikan json['data'] adalah objek yang berisi kunci 'analysis' sebagai list
+    if (json['data'] == null || json['data']['analysis'] == null) {
+      return null; // Return null if no analysis data found
+    }
+
+    // Periksa apakah 'analysis' adalah List dan lakukan mapping
+    List<AiAnalyzer> analyzers = (json['data']['analysis'] as List).map((item) {
+      return AiAnalyzer.fromJson(item);
+    }).toList();
+
+    return analyzers;
   }
 }

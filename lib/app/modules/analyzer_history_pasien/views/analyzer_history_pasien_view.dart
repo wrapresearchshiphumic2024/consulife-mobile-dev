@@ -1,61 +1,58 @@
+import 'package:consulin_mobile_dev/app/utils/helpers/string_helper.dart';
+import 'package:consulin_mobile_dev/widgets/ui/button_back.dart';
+import 'package:consulin_mobile_dev/widgets/ui/loading_custom.dart';
+import 'package:consulin_mobile_dev/widgets/ui/refresh_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/analyzer_history_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 
-class AnalyzerHistoryPasienView extends GetView<AnalyzerHistoryPasienController> {
+class AnalyzerHistoryPasienView
+    extends GetView<AnalyzerHistoryPasienController> {
   const AnalyzerHistoryPasienView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: textColor, size: 40),
-          onPressed: () {
-            Get.back();
-          },
+        leading: const ButtonBack(),
+        title: const Text(
+          'AI Analyzer History',
+          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
         ),
-        title: const Text('AI Analyzer History',
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),),
         centerTitle: true,
         backgroundColor: Colors.white,
-        actions: [
-        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildAnalyzeResultSection(
-                title: 'Latest Analyze Result',
-                appointmentDate: controller.latestAnalyzerResultDate,
-                description: controller.latestAnalyzerResult,
-                stressProbability: controller.stressProbability,
-                anxietyProbability: controller.anxietyProbability,
-                depressionProbability: controller.depressionProbability,
-              ),
-              const SizedBox(height: 16),
-              _buildAnalyzeResultSection(
-                title: 'Earlier Scan Result',
-                appointmentDate: controller.earlierScanResultDate,
-                description: controller.earlierScanResult,
-                stressProbability: controller.stressProbability,
-                anxietyProbability: controller.anxietyProbability,
-                depressionProbability: controller.depressionProbability,
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: Obx(() {
+        return controller.isLoading.value
+            ? const LoadingCustom()
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: CustomRefreshIndicator(
+                  onRefresh: () async {
+                    await controller.fetchAnalyzerHistory();
+                  },
+                  child: ListView.builder(
+                    itemCount: controller.analyzerHistory.length,
+                    itemBuilder: (context, index) {
+                      var analyzeResult = controller.analyzerHistory[index];
+                      return _buildAnalyzeResultSection(
+                        appointmentDate: analyzeResult.createdAt,
+                        description: analyzeResult.complaint,
+                        stressProbability: analyzeResult.stress,
+                        anxietyProbability: analyzeResult.anxiety,
+                        depressionProbability: analyzeResult.depression,
+                      );
+                    },
+                  ),
+                ),
+              );
+      }),
     );
   }
 
   Widget _buildAnalyzeResultSection({
-    required String title,
-    required DateTime appointmentDate,
+    required String appointmentDate,
     required String description,
     required double stressProbability,
     required double anxietyProbability,
@@ -64,15 +61,6 @@ class AnalyzerHistoryPasienView extends GetView<AnalyzerHistoryPasienController>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
-        ),
-        const SizedBox(height: 8),
         Card(
           elevation: 0,
           margin: const EdgeInsets.only(bottom: 16.0),
@@ -83,8 +71,8 @@ class AnalyzerHistoryPasienView extends GetView<AnalyzerHistoryPasienController>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${appointmentDate.toLocal().toString().substring(0, 10)}",
-                  style: TextStyle(
+                  formatDate(appointmentDate),
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: textColor,
@@ -93,7 +81,7 @@ class AnalyzerHistoryPasienView extends GetView<AnalyzerHistoryPasienController>
                 const SizedBox(height: 8),
                 Text(
                   description,
-                  style: TextStyle(fontSize: 16, color: textColor),
+                  style: const TextStyle(fontSize: 16, color: textColor),
                 ),
                 const Divider(color: Colors.grey),
                 Row(
@@ -103,16 +91,16 @@ class AnalyzerHistoryPasienView extends GetView<AnalyzerHistoryPasienController>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Probability of Stress: ${stressProbability}%",
-                          style: TextStyle(color: textColor),
+                          "Probability of Stress: $stressProbability%",
+                          style: const TextStyle(color: textColor),
                         ),
                         Text(
-                          "Probability of Anxiety: ${anxietyProbability}%",
-                          style: TextStyle(color: textColor),
+                          "Probability of Anxiety: $anxietyProbability%",
+                          style: const TextStyle(color: textColor),
                         ),
                         Text(
-                          "Probability of Depression:  ${depressionProbability}%",
-                          style: TextStyle(color: textColor),
+                          "Probability of Depression:  $depressionProbability%",
+                          style: const TextStyle(color: textColor),
                         ),
                       ],
                     ),

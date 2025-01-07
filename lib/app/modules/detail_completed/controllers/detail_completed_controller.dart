@@ -18,13 +18,12 @@ class DetailCompletedController extends GetxController {
   ); // Declare channel without initialization here
   var selectedTabIndex = 0.obs;
   final isLoading = false.obs;
+
   var appointmentDetail =
       Rx<Appointment?>(null); // Observable for appointment details
   final DateTime appointmentDate = DateTime.now().add(Duration(hours: 2));
-  final String aiAnalysisResult = "AI has detected high stress levels.";
-  final double stressProbability = 85.0;
-  final double anxietyProbability = 70.0;
-  final double depressionProbability = 50.0;
+  Rx<List<AiAnalyzer>?> aiAnalysisHistory = Rx<List<AiAnalyzer>?>(null);
+
   void changeTab(int index) {
     selectedTabIndex.value = index;
   }
@@ -88,6 +87,7 @@ class DetailCompletedController extends GetxController {
       isLoading.value = true;
       appointmentDetail.value = await PsychologstService()
           .getAppointmentDetailPsychologst(appointmentId);
+      await fetchAiAnalysisHistory();
       final apiKey = dotenv.env["API_KEY"];
       if (apiKey == null) {
         throw Exception('API_KEY is not set in the environment variables');
@@ -98,6 +98,22 @@ class DetailCompletedController extends GetxController {
       print(e);
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchAiAnalysisHistory() async {
+    try {
+      // Misalnya kita menggunakan UUID pasien yang ada dalam detail janji
+      String uuid = appointmentDetail.value?.user.id ?? '';
+
+      // Ambil riwayat analisis AI dari service
+      final analysisHistory =
+          await PsychologstService().getAiAnalysisHistory(uuid);
+
+      aiAnalysisHistory.value =
+          analysisHistory; // Simpan hasil analisis ke dalam Rx
+    } catch (e) {
+      print("Error fetching AI analysis history: $e");
     }
   }
 

@@ -253,4 +253,38 @@ class PatientService {
       };
     }
   }
+
+  // Method to fetch AI analysis history
+  Future<List<AiAnalyzer>?> getHistoryAiAnalyzer() async {
+    final response = await HttpService.getRequest(
+      '/patients/ai-analysis-history', // API endpoint
+      includeBearer: true, // Include Bearer token in the request
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch AI analysis history');
+    }
+
+    final json = jsonDecode(response.body);
+
+    if (json['data'] == null || (json['data'] as List).isEmpty) {
+      return null;
+    }
+
+    // Mapping data from JSON to a list of AiAnalyzer objects
+    List<AiAnalyzer> analyzers = (json['data'] as List).map((item) {
+      return AiAnalyzer(
+        id: item['id'],
+        complaint: item['complaint'],
+        stress: item['stress'],
+        anxiety: item['anxiety'],
+        depression: item['depression'],
+        createdAt: item['created_at'],
+        updatedAt: item['updated_at'],
+        patientId: item['patient_id'],
+      );
+    }).toList();
+
+    return analyzers;
+  }
 }
