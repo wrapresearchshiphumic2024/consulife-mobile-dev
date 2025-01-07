@@ -5,12 +5,14 @@ class ConsultationDataPsychologist {
   int totalWeeklyConsultation;
   int totalConsultation;
   int todayOngoingConsultation;
+  Map<String, double>? monthlyPatientCount;
 
   ConsultationDataPsychologist({
     required this.consultations,
     required this.totalWeeklyConsultation,
     required this.totalConsultation,
     required this.todayOngoingConsultation,
+    this.monthlyPatientCount,
   });
 
   factory ConsultationDataPsychologist.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,31 @@ class ConsultationDataPsychologist {
       totalWeeklyConsultation: json['total_weekly_consultation'],
       totalConsultation: json['total_consultation'],
       todayOngoingConsultation: json['today_ongoing_consultation'],
+      monthlyPatientCount: json['monthly_patient_count'] != null
+          ? {
+              'January':
+                  (json['monthly_patient_count']['January'] as num).toDouble(),
+              'February':
+                  (json['monthly_patient_count']['February'] as num).toDouble(),
+              'March':
+                  (json['monthly_patient_count']['March'] as num).toDouble(),
+              'April':
+                  (json['monthly_patient_count']['April'] as num).toDouble(),
+              'May': (json['monthly_patient_count']['May'] as num).toDouble(),
+              'June': (json['monthly_patient_count']['June'] as num).toDouble(),
+              'July': (json['monthly_patient_count']['July'] as num).toDouble(),
+              'August':
+                  (json['monthly_patient_count']['August'] as num).toDouble(),
+              'September': (json['monthly_patient_count']['September'] as num)
+                  .toDouble(),
+              'October':
+                  (json['monthly_patient_count']['October'] as num).toDouble(),
+              'November':
+                  (json['monthly_patient_count']['November'] as num).toDouble(),
+              'December':
+                  (json['monthly_patient_count']['December'] as num).toDouble(),
+            }
+          : null, // If monthly_patient_count doesn't exist, leave it null
     );
   }
 
@@ -30,21 +57,23 @@ class ConsultationDataPsychologist {
       'total_weekly_consultation': totalWeeklyConsultation,
       'total_consultation': totalConsultation,
       'today_ongoing_consultation': todayOngoingConsultation,
+      if (monthlyPatientCount != null)
+        'monthly_patient_count': monthlyPatientCount,
     };
   }
 }
 
 class Appointment {
-  int id;
-  String? channelId;
-  String date;
-  String? startTime;
-  String? endTime;
-  String? duration;
-  String status;
-  String? note;
-  User user;
-  String? aiAnalyzer; // Optional field for AI Analyzer
+  final int id;
+  final String? channelId;
+  final String date;
+  final String? startTime;
+  final String? endTime;
+  final String? duration;
+  final String status;
+  final String? note;
+  final User user;
+  final AiAnalyzer? aiAnalyzer;
 
   Appointment({
     required this.id,
@@ -56,28 +85,23 @@ class Appointment {
     required this.status,
     this.note,
     required this.user,
-    this.aiAnalyzer, // Include aiAnalyzer in the constructor
+    this.aiAnalyzer,
   });
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
-    // Check if the user field is null
-    if (json['user'] == null) {
-      throw Exception('User data is missing in the appointment details');
-    }
-
     return Appointment(
       id: json['id'],
-      channelId: json['channel_id'] != null && json['channel_id'] != 'undefined'
-          ? json['channel_id']
-          : null, // Handle undefined case
+      channelId: json['channel_id'],
       date: json['date'],
       startTime: json['start_time'],
       endTime: json['end_time'],
       duration: json['duration'],
       status: json['status'],
       note: json['note'],
-      user: User.fromJson(json['user']), // This will throw if user is null
-      aiAnalyzer: json['ai_analyzer'], // Optional field, can be null
+      user: User.fromJson(json['user']),
+      aiAnalyzer: json['ai_analyzer'] != null
+          ? AiAnalyzer.fromJson(json['ai_analyzer'])
+          : null,
     );
   }
 
@@ -92,7 +116,57 @@ class Appointment {
       'status': status,
       'note': note,
       'user': user.toJson(),
-      'ai_analyzer': aiAnalyzer, // Include aiAnalyzer in the JSON output
+      'ai_analyzer': aiAnalyzer?.toJson(),
+    };
+  }
+}
+
+class AiAnalyzer {
+  final int? id; // Optional field
+  final String complaint;
+  final double stress;
+  final double anxiety;
+  final double depression;
+  final String createdAt;
+  final String? updatedAt; // Optional field
+  final int? patientId; // Optional field
+
+  AiAnalyzer({
+    this.id,
+    required this.complaint,
+    required this.stress,
+    required this.anxiety,
+    required this.depression,
+    required this.createdAt,
+    this.updatedAt,
+    this.patientId,
+  });
+
+  // Factory constructor to create an AiAnalyzer instance from JSON
+  factory AiAnalyzer.fromJson(Map<String, dynamic> json) {
+    return AiAnalyzer(
+      id: json['id'], // Optional
+      complaint: json['complaint'],
+      stress: (json['stress'] as num).toDouble(),
+      anxiety: (json['anxiety'] as num).toDouble(),
+      depression: (json['depression'] as num).toDouble(),
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'], // Optional
+      patientId: json['patient_id'], // Optional
+    );
+  }
+
+  // Method to convert AiAnalyzer instance to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id, // Optional
+      'complaint': complaint,
+      'stress': stress,
+      'anxiety': anxiety,
+      'depression': depression,
+      'created_at': createdAt,
+      'updated_at': updatedAt, // Optional
+      'patient_id': patientId, // Optional
     };
   }
 }

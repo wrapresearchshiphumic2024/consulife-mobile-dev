@@ -1,66 +1,80 @@
 import 'package:consulin_mobile_dev/app/constants/color.dart';
+import 'package:consulin_mobile_dev/app/modules/home_psycholog/controllers/home_psycholog_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ColumnChart extends StatefulWidget {
+class ColumnChart extends StatelessWidget {
   const ColumnChart({Key? key}) : super(key: key);
 
   @override
-  _ColumnChartState createState() => _ColumnChartState();
-}
-
-class _ColumnChartState extends State<ColumnChart> {
-  List<_SalesData> data = [
-    _SalesData('Jan', 35),
-    _SalesData('Feb', 28),
-    _SalesData('Mar', 34),
-    _SalesData('Apr', 32),
-    _SalesData('May', 40),
-    _SalesData('Jun', 45),
-    _SalesData('Jul', 50),
-    _SalesData('Aug', 42),
-    _SalesData('Sep', 38),
-    _SalesData('Oct', 48),
-    _SalesData('Nov', 41),
-    _SalesData('Dec', 55)
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    // Mengambil data dari controller
+    var consultationData =
+        Get.find<HomePsychologController>().consultationDataPsychologst.value;
+
+    // Membuat data untuk chart berdasarkan monthlyPatientCount dari controller
+    List<_ConsultationData> data = [
+      _ConsultationData(
+          'Jan', consultationData.monthlyPatientCount?['January'] ?? 0),
+      _ConsultationData(
+          'Feb', consultationData.monthlyPatientCount?['February'] ?? 0),
+      _ConsultationData(
+          'Mar', consultationData.monthlyPatientCount?['March'] ?? 0),
+      _ConsultationData(
+          'Apr', consultationData.monthlyPatientCount?['April'] ?? 0),
+      _ConsultationData(
+          'May', consultationData.monthlyPatientCount?['May'] ?? 0),
+      _ConsultationData(
+          'Jun', consultationData.monthlyPatientCount?['June'] ?? 0),
+      _ConsultationData(
+          'Jul', consultationData.monthlyPatientCount?['July'] ?? 0),
+      _ConsultationData(
+          'Aug', consultationData.monthlyPatientCount?['August'] ?? 0),
+      _ConsultationData(
+          'Sep', consultationData.monthlyPatientCount?['September'] ?? 0),
+      _ConsultationData(
+          'Oct', consultationData.monthlyPatientCount?['October'] ?? 0),
+      _ConsultationData(
+          'Nov', consultationData.monthlyPatientCount?['November'] ?? 0),
+      _ConsultationData(
+          'Dec', consultationData.monthlyPatientCount?['December'] ?? 0),
+    ];
+
     return Column(
       children: [
-        // Initialize the chart widget
+        // Inisialisasi widget chart
         SfCartesianChart(
-          backgroundColor: Colors.transparent, // Remove chart background color
-          borderColor: Colors.transparent, // Remove chart border
-          borderWidth: 0, // Set border width to 0
+          backgroundColor: Colors.transparent, // Menghapus background chart
+          borderColor: Colors.transparent, // Menghapus border chart
+          borderWidth: 0, // Set borderWidth ke 0
           primaryXAxis: const CategoryAxis(
-            axisLine: AxisLine(width: 0), // Hide axis line
-            majorGridLines: MajorGridLines(width: 0), // Hide grid lines
+            axisLine: AxisLine(width: 0), // Menyembunyikan garis sumbu X
+            majorGridLines:
+                MajorGridLines(width: 0), // Menyembunyikan garis grid
           ),
           primaryYAxis: const NumericAxis(
-            axisLine: AxisLine(width: 0), // Hide axis line
-            majorGridLines: MajorGridLines(width: 0), // Hide grid lines
+            axisLine: AxisLine(width: 0), // Menyembunyikan garis sumbu Y
+            majorGridLines:
+                MajorGridLines(width: 0), // Menyembunyikan garis grid
           ),
           tooltipBehavior: TooltipBehavior(enable: true),
-          series: <CartesianSeries<_SalesData, String>>[
-            // ColumnSeries to display column chart
-            ColumnSeries<_SalesData, String>(
+          series: <CartesianSeries<_ConsultationData, String>>[
+            // ColumnSeries untuk menampilkan chart kolom
+            ColumnSeries<_ConsultationData, String>(
               dataSource: data,
-              xValueMapper: (_SalesData sales, _) => sales.year,
-              yValueMapper: (_SalesData sales, _) => sales.sales,
-              name: 'Sales',
-              // Enable data label
-              pointColorMapper: (sales, index) {
-                // Alternating colors based on index
+              xValueMapper: (_ConsultationData consultation, _) =>
+                  consultation.month,
+              yValueMapper: (_ConsultationData consultation, _) =>
+                  consultation.consultation,
+              name: 'Consultation',
+              pointColorMapper: (consultation, index) {
+                // Alternatif warna berdasarkan index
                 return index % 2 == 0 ? primaryColor : Colors.green;
               },
-              // Set borderRadius to make the columns rounded
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(5), topRight: Radius.circular(5)),
-              // Set animation duration to speed up the animation
-              animationDuration:
-                  500, // Set to a lower value for faster animation
+              animationDuration: 500, // Durasi animasi chart
             ),
           ],
         ),
@@ -69,9 +83,9 @@ class _ColumnChartState extends State<ColumnChart> {
   }
 }
 
-class _SalesData {
-  _SalesData(this.year, this.sales);
+class _ConsultationData {
+  _ConsultationData(this.month, this.consultation);
 
-  final String year;
-  final double sales;
+  final String month;
+  final double consultation;
 }

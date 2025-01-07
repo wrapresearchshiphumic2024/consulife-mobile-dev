@@ -333,9 +333,9 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
             ],
           ),
           const SizedBox(height: 8),
-          const Text(
-            "Last analyzed: 01 Oct, 2024",
-            style: TextStyle(
+          Text(
+            "Last analyzed: ${formatDate(controller.appointmentDetail.value?.aiAnalyzer?.createdAt.toString() ?? '')}",
+            style: const TextStyle(
               color: textColor,
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -371,7 +371,7 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "${controller.stressProbability}%",
+                    "${controller.appointmentDetail.value?.aiAnalyzer?.stress}%",
                     style: const TextStyle(
                       color: textColor,
                       fontSize: 16,
@@ -412,7 +412,7 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "${controller.anxietyProbability}%",
+                    "${controller.appointmentDetail.value?.aiAnalyzer?.anxiety}%",
                     style: const TextStyle(
                       color: textColor,
                       fontSize: 16,
@@ -453,7 +453,7 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "${controller.depressionProbability}%",
+                    "${controller.appointmentDetail.value?.aiAnalyzer?.depression}%",
                     style: const TextStyle(
                       color: textColor,
                       fontSize: 16,
@@ -507,19 +507,11 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
   }
 
   Widget _buildReviewConcernTab() {
-    return ListView(
+    return ListView.builder(
+      itemCount: controller.aiAnalysisHistory.value?.length,
       padding: const EdgeInsets.all(16.0),
-      children: [
-        const Text(
-          "Latest Analyze Result",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Card(
+      itemBuilder: (context, index) {
+        return Card(
           elevation: 0,
           margin: const EdgeInsets.only(bottom: 16.0),
           color: carddetail,
@@ -529,10 +521,9 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  controller.appointmentDate
-                      .toLocal()
-                      .toString()
-                      .substring(0, 10), // Hanya tahun-bulan-tanggal
+                  formatDate(
+                      controller.aiAnalysisHistory.value?[index].createdAt ??
+                          ''), // Hanya tahun-bulan-tanggal
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -540,67 +531,9 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  "I often feel overwhelmed with my daily tasks, and I struggle to find motivation. I have trouble sleeping and frequently feel anxious about upcoming deadlines. Additionally, I sometimes feel sad without any specific reason, making it difficult to enjoy things I once liked.",
-                  style: TextStyle(fontSize: 16, color: textColor),
-                ),
-                const Divider(color: textColor),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "Probability of Stress: ${controller.stressProbability}%",
-                            style: const TextStyle(color: textColor)),
-                        Text(
-                            "Probability of Anxiety: ${controller.anxietyProbability}%",
-                            style: const TextStyle(color: textColor)),
-                        Text(
-                            "Probability of Depression:  ${controller.depressionProbability}%",
-                            style: const TextStyle(color: textColor)),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        const Text(
-          "Earlier Scan Result",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Card(
-          elevation: 0,
-          margin: const EdgeInsets.only(bottom: 16.0),
-          color: carddetail,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
                 Text(
-                  controller.appointmentDate
-                      .toLocal()
-                      .toString()
-                      .substring(0, 10), // Ganti dengan tanggal yang sesuai
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "I often feel overwhelmed with my daily tasks, and I struggle to find motivation. I have trouble sleeping and frequently feel anxious about upcoming deadlines. Additionally, I sometimes feel sad without any specific reason, making it difficult to enjoy things I once liked.",
-                  style: TextStyle(fontSize: 16, color: textColor),
+                  controller.aiAnalysisHistory.value?[index].complaint ?? '',
+                  style: const TextStyle(fontSize: 16, color: textColor),
                 ),
                 const Divider(color: textColor),
                 Row(
@@ -610,13 +543,13 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            "Probability of Stress: ${controller.stressProbability}%",
+                            "Probability of Stress: ${controller.aiAnalysisHistory.value?[index].stress}%",
                             style: const TextStyle(color: textColor)),
                         Text(
-                            "Probability of Anxiety: ${controller.anxietyProbability}%",
+                            "Probability of Anxiety: ${controller.aiAnalysisHistory.value?[index].anxiety}%",
                             style: const TextStyle(color: textColor)),
                         Text(
-                            "Probability of Depression:  ${controller.depressionProbability}%",
+                            "Probability of Depression:  ${controller.aiAnalysisHistory.value?[index].depression}%",
                             style: const TextStyle(color: textColor)),
                       ],
                     ),
@@ -625,8 +558,8 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
               ],
             ),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
