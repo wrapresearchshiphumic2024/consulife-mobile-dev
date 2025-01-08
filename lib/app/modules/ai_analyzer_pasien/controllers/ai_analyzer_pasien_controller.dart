@@ -1,92 +1,88 @@
+import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst.dart';
+import 'package:consulin_mobile_dev/app/modules/psycholog/controllers/psycholog_controller.dart';
+import 'package:consulin_mobile_dev/app/utils/api/patient/PatientService.dart';
+import 'package:consulin_mobile_dev/app/utils/helpers/toast_helper.dart';
+import 'package:consulin_mobile_dev/widgets/ui/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AiAnalyzerPasienController extends GetxController {
-  // Map untuk terjemahan
-  final Map<String, Map<String, String>> translations = {
-    'English': {
-      'title': 'Health Mental Analyzer',
-      'hint_text': 'Tell us about your current mental state...',
-      'analyze_button': 'Analyze',
-      'cancel_button': 'Cancel',
-      'analysis_results': 'Analysis Results',
-      'result_placeholder': 'Your result will appear here',
-      'stress_probability': 'Probability of Stress',
-      'anxiety_probability': 'Probability of Anxiety',
-      'depression_probability': 'Probability of Depression',
-    },
-    'Indonesian': {
-      'title': 'Analisis Kesehatan Mental',
-      'hint_text': 'Ceritakan kondisi mental Anda saat ini...',
-      'analyze_button': 'Analisis',
-      'cancel_button': 'Batal',
-      'analysis_results': 'Hasil Analisis',
-      'result_placeholder': 'Hasil Anda akan muncul di sini',
-      'stress_probability': 'Probabilitas Stres',
-      'anxiety_probability': 'Probabilitas Kecemasan',
-      'depression_probability': 'Probabilitas Depresi',
-    }
-  };
-
-  // Variabel untuk bahasa
-  final currentLanguage = 'English'.obs;
-
   // Variabel untuk TextController dan status tombol
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final textController = TextEditingController();
-  final isAnalyzeEnabled = false.obs;
-  final isResultAvailable = false.obs;
+  final isLoading = false.obs;
 
-  // Data hasil analisis
-  final stressProbability = 0.obs;
-  final anxietyProbability = 0.obs;
-  final depressionProbability = 0.obs;
-  String lastAnalyzed = '';
+// Data hasil analisis
+  final stressProbability = 0.0.obs;
+  final anxietyProbability = 0.0.obs;
+  final depressionProbability = 0.0.obs;
 
-  // Metode untuk mendapatkan teks sesuai bahasa
-  String translate(String key) {
-    return translations[currentLanguage.value]?[key] ?? key;
+  // Fungsi untuk mengambil riwayat analisis
+  final aiHistory = <AiAnalyzer>[].obs;
+  // Mengakses LandingPatientController
+  final PsychologController psychologController =
+      Get.find<PsychologController>();
+
+  // Fungsi untuk mengambil analisis terbaru
+  Future<void> fetchLatestAiAnalyzer() async {
+    try {
+      isLoading.value = true;
+      final latest = await PatientService().getLatestHistoryAiAnalyzer();
+      if (latest != null) {
+        stressProbability.value = latest.stress;
+        anxietyProbability.value = latest.anxiety;
+        depressionProbability.value = latest.depression;
+        textController.text = latest.complaint;
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to fetch the latest AI analysis');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-  // Mengubah bahasa
-  void changeLanguage(String language) {
-    currentLanguage.value = language;
-  }
+  void analyze() async {
+    if (formKey.currentState!.validate()) {
+      // Ambil data dari form atau TextController untuk analisis
+      LoadingDialog.show(Get.context!);
+      isLoading.value = true;
+      Map<String, String> data = {
+        'text': textController.text,
+      };
 
-  // Validasi input untuk mengaktifkan tombol Analyze
-  void validateInput() {
-    isAnalyzeEnabled.value = textController.text.trim().isNotEmpty;
-  }
+      try {
+        // Panggil fungsi aiAnalyzer dari PatientService
+        await PatientService().aiAnalyzer(data);
 
-  // Fungsi untuk membersihkan input dan reset status
-  void clearInput() {
-    textController.clear();
-    isAnalyzeEnabled.value = false;
-    isResultAvailable.value = false;
-  }
+        // Update hasil analisis jika sukses
+        await fetchLatestAiAnalyzer();
+        if (!psychologController.patientHasAIAnalysis.value) {
+          await psychologController.fetchPsychologists();
+        }
 
-  // Fungsi untuk melakukan analisis (simulasi)
-  void analyze() {
-    // Simulasi hasil analisis
-    stressProbability.value = 65;
-    anxietyProbability.value = 40;
-    depressionProbability.value = 70;
-    lastAnalyzed = '01 Nov 2024';
-
-    isResultAvailable.value = true;
-  }
-
-  // Mengambil data untuk chart
-  Map<String, double> getChartData() {
-    return {
-      'Stress': stressProbability.value.toDouble(),
-      'Anxiety': anxietyProbability.value.toDouble(),
-      'Depression': depressionProbability.value.toDouble(),
-    };
+        ToastHelper.show(
+          message: "AI analysis successful",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      } catch (e) {
+        ToastHelper.show(
+          message: e.toString(),
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      } finally {
+        LoadingDialog.hide(Get.context!);
+        isLoading.value = false;
+      }
+    }
   }
 
   @override
-  void onClose() {
-    textController.dispose();
-    super.onClose();
+  void onInit() {
+    super.onInit();
+    fetchLatestAiAnalyzer(); // Fetch riwayat saat controller diinisialisasi
   }
 }

@@ -1,3 +1,5 @@
+import 'package:consulin_mobile_dev/app/modules/detail_available_pasien/bindings/detail_available_pasien_binding.dart';
+import 'package:consulin_mobile_dev/app/modules/detail_available_pasien/views/detail_available_pasien_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/Edit_Information/bindings/psikolog_pro_det_binding.dart';
@@ -223,6 +225,11 @@ class AppPages {
       name: _Paths.DETAIL_COMPLETED_PASIEN,
       page: () => const DetailCompletedPasienView(),
       binding: DetailCompletedPasienBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_AVAILABLE_PASIEN,
+      page: () => const DetailAvailablePasienView(),
+      binding: DetailAvailablePasienBinding(),
     ),
     GetPage(
       name: _Paths.NOTIFICATION_PASIEN,

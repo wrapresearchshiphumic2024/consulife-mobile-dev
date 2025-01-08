@@ -5,7 +5,6 @@ import 'package:consulin_mobile_dev/widgets/ui/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SignInController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

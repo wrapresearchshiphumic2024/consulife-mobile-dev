@@ -1,6 +1,8 @@
+import 'package:consulin_mobile_dev/widgets/ui/column_chart_analysis.dart';
+import 'package:consulin_mobile_dev/widgets/ui/loading_custom.dart';
+import 'package:consulin_mobile_dev/widgets/ui/refresh_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pie_chart/pie_chart.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import '../controllers/ai_analyzer_pasien_controller.dart';
 import 'package:consulin_mobile_dev/widgets/ui/custom_elevated_button.dart';
@@ -13,197 +15,131 @@ class AiAnalyzerPasienView extends GetView<AiAnalyzerPasienController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                Card(
-                  color: carddetail,
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Obx(() => Text(
-                          controller.translate('title'),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: textColor,
-                          ),
-                        )),
-                        const SizedBox(height: 16),
-                        Obx(() => TextField(
-                          controller: controller.textController,
-                          maxLines: 20,
-                          minLines: 15,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            hintText: controller.translate('hint_text'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            controller.validateInput();
-                          },
-                          scrollPadding: const EdgeInsets.all(16.0),
-                          scrollPhysics: const BouncingScrollPhysics(),
-                        )),
-                        const SizedBox(height: 16),
-                        Obx(() => Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ElevatedButton(
-                              onPressed: controller.isAnalyzeEnabled.value
-                                  ? controller.analyze
-                                  : null,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                controller.isAnalyzeEnabled.value
-                                    ? textColor
-                                    : unactiv,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 12),
-                              ),
-                              child: Text(
-                                controller.translate('analyze_button'),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            ElevatedButton(
-                              onPressed: controller.clearInput,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                controller.isAnalyzeEnabled.value
-                                    ? warningColor
-                                    : unactivcancel,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 12),
-                              ),
-                              child: Text(
-                                controller.translate('cancel_button'),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        )),
-                        const SizedBox(height: 150),
-                        Obx(
-                              () => controller.isResultAvailable.value
-                              ? Column(
-                            children: [
-                              PieChart(
-                                dataMap: controller.getChartData(),
-                                animationDuration:
-                                const Duration(milliseconds: 800),
-                                chartLegendSpacing: 40,
-                                chartRadius:
-                                MediaQuery.of(context).size.width / 2.2,
-                                colorList: const [
-                                  Colors.blue,
-                                  Colors.red,
-                                  Colors.orange,
-                                ],
-                                initialAngleInDegree: 0,
-                                chartType: ChartType.disc,
-                                legendOptions: const LegendOptions(
-                                  showLegendsInRow: false,
-                                  legendPosition: LegendPosition.bottom,
-                                  showLegends: true,
-                                  legendTextStyle: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                chartValuesOptions:
-                                const ChartValuesOptions(
-                                  showChartValueBackground:
-                                  false, // Menghilangkan background putih
-                                  showChartValues: true,
-                                  showChartValuesInPercentage: true,
-                                  showChartValuesOutside: false,
-                                  chartValueStyle: TextStyle(
-                                      color: Colors
-                                          .black), // Opsional: mengatur warna teks
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-
-                              const Divider(), // Menambahkan garis horizontal
-
-                              Text(
-                                '${controller.translate('stress_probability')}: ${controller.stressProbability}%',
-                              ),
-                              Text(
-                                '${controller.translate('anxiety_probability')}: ${controller.anxietyProbability}%',
-                              ),
-                              Text(
-                                '${controller.translate('depression_probability')}: ${controller.depressionProbability}%',
-                              ),
-                              const SizedBox(height: 30),
-                              Text(
-                                'Last analyzed: ${controller.lastAnalyzed}',
-                              ),
-                            ],
-                          )
-                              : Card(
-                            color: Colors.white,
-                            elevation: 2,
+        child: Obx(() {
+          return controller.isLoading.value
+              ? const LoadingCustom()
+              : CustomRefreshIndicator(
+                  onRefresh: () async {
+                    await controller.fetchLatestAiAnalyzer();
+                  },
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 16),
+                          Card(
+                            color: carddetail,
+                            elevation: 4,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(16),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                controller
-                                    .translate('result_placeholder'),
-                                style: const TextStyle(
-                                  color: textColor,
-                                  fontSize: 20,
-                                ),
-                                textAlign: TextAlign.center,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Health Mental Analyzer',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: textColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Form(
+                                    key: controller.formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          controller: controller.textController,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          maxLines: 20,
+                                          minLines: 15,
+                                          keyboardType: TextInputType.multiline,
+                                          decoration: InputDecoration(
+                                            fillColor: Colors.white,
+                                            filled: true,
+                                            hintText:
+                                                'Tell us about your current mental state...',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                          ),
+                                          scrollPadding:
+                                              const EdgeInsets.all(16.0),
+                                          scrollPhysics:
+                                              const BouncingScrollPhysics(),
+                                          validator: (value) => value != null &&
+                                                  value.length < 10
+                                              ? 'Field must contain at least 10 characters'
+                                              : null,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        ElevatedButton(
+                                          onPressed: controller.analyze,
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: textColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 12),
+                                          ),
+                                          child: const Text(
+                                            'Analyze',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        const ColumnChartAnalysis(),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                'Probability of Stress: ${controller.stressProbability.value}%'),
+                                            Text(
+                                                'Probability of Anxiety: ${controller.anxietyProbability.value}%'),
+                                            Text(
+                                                'Probability of Depression: ${controller.depressionProbability.value}%'),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              CustomElevatedButton(
+                                primaryColor: primaryColor,
+                                onPressed: () {
+                                  Get.toNamed(Routes.ANALYZER_HISTORY_PASIEN);
+                                },
+                                buttonText: "Analyzer History",
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    CustomElevatedButton(
-                      primaryColor: primaryColor,
-                      onPressed: () {
-                        Get.toNamed(Routes.ANALYZER_HISTORY_PASIEN);
-                      },
-                      buttonText: "Analyzer History",
-                    ),
-                    const SizedBox(height: 10),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+                );
+        }),
       ),
     );
   }
