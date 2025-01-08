@@ -38,7 +38,7 @@ class HomePsychologView extends GetView<HomePsychologController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Hi,${" ${controller.profilePychologController.profile.value.firstname} ${controller.profilePychologController.profile.value.lastname}"}",
+                                    "Hi,${" ${controller.profilePychologController.profile.value.firstname.capitalizeFirst} ${controller.profilePychologController.profile.value.lastname.capitalizeFirst}"}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -167,7 +167,7 @@ class HomePsychologView extends GetView<HomePsychologController> {
                                             .consultations[index]
                                             .status,
                                         name:
-                                            "${controller.consultationDataPsychologst.value.consultations[index].user.firstname} ${controller.consultationDataPsychologst.value.consultations[index].user.lastname}",
+                                            "${controller.consultationDataPsychologst.value.consultations[index].user.firstname.capitalizeFirst} ${controller.consultationDataPsychologst.value.consultations[index].user.lastname.capitalizeFirst}",
                                         time:
                                             "${formatDate(controller.consultationDataPsychologst.value.consultations[index].date)}, ${controller.consultationDataPsychologst.value.consultations[index].startTime}",
                                       );

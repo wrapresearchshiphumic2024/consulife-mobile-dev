@@ -1,4 +1,5 @@
 import 'package:consulin_mobile_dev/app/models/patient/info-patient.dart';
+import 'package:consulin_mobile_dev/app/modules/ai_analyzer_pasien/controllers/ai_analyzer_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/modules/profile_pasien/controllers/profile_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/utils/api/patient/PatientService.dart';
 
@@ -9,6 +10,8 @@ class HomePasienController extends GetxController {
   final isLoading = false.obs;
   final ProfilePasienController profilePasienController =
       Get.find<ProfilePasienController>();
+  final AiAnalyzerPasienController aiAnalyzerPasienController =
+      Get.find<AiAnalyzerPasienController>();
 
   // Observable for appointment data
   var appointmentData = AppointmentPatient(
@@ -39,41 +42,11 @@ class HomePasienController extends GetxController {
           appointmentData.value.upcomingAppointments.take(5).toList();
       appointmentData.value.history =
           appointmentData.value.history.take(5).toList();
-
-      await fetchProbabilitiesFromAPI(); // Fetch probabilities when initializing
     } catch (e) {
       // Handle any errors that occur during the fetch
       print('Error fetching appointment data: $e');
     } finally {
       isLoading.value = false; // Set loading to false
     }
-  }
-
-  // Method to fetch probabilities
-  Future<void> fetchProbabilitiesFromAPI() async {
-    try {
-      // Simulate an API call to fetch probabilities
-      await Future.delayed(const Duration(seconds: 1));
-      // Update probabilities with new values (replace with actual API call)
-      updateProbabilities(70.0, 45.0, 60.0);
-    } catch (e) {
-      print('Error fetching probabilities: $e');
-    }
-  }
-
-  // Method to update probabilities
-  void updateProbabilities(double stress, double anxiety, double depression) {
-    probabilityOfStress.value = stress;
-    probabilityOfAnxiety.value = anxiety;
-    probabilityOfDepression.value = depression;
-  }
-
-  // Method to get pie chart data
-  Map<String, double> getPieChartData() {
-    return {
-      "Probability of Stress": probabilityOfStress.value,
-      "Probability of Anxiety": probabilityOfAnxiety.value,
-      "Probability of Depression": probabilityOfDepression.value,
-    };
   }
 }

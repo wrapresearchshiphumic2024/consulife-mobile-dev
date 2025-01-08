@@ -16,11 +16,11 @@ class LandingPasienController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Get.put(ProfilePasienController());
-    Get.put(HomePasienController());
-    Get.put(PsychologController());
-    Get.put(ChatPatientController());
-    Get.put(AiAnalyzerPasienController());
+    Get.lazyPut(() => ProfilePasienController());
+    Get.lazyPut(() => HomePasienController());
+    Get.lazyPut(() => PsychologController());
+    Get.lazyPut(() => ChatPatientController());
+    Get.lazyPut(() => AiAnalyzerPasienController());
   }
 
   static const TextStyle optionStyle =

@@ -15,7 +15,7 @@ class PsikologHistoryController extends GetxController {
           await PsychologstService().getAppointmentHistory();
       print(appointments);
       // Limit to the first 5 appointments
-      appointmentHistory.value = appointments.take(5).toList();
+      appointmentHistory.value = appointments.toList();
     } catch (e) {
       // Handle any errors that occur during the fetch
       print('Error fetching appointment history: $e');

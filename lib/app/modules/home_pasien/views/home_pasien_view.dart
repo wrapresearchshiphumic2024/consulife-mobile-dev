@@ -1,4 +1,5 @@
 import 'package:consulin_mobile_dev/widgets/ui/appointment_card.dart';
+import 'package:consulin_mobile_dev/widgets/ui/column_chart_analysis.dart';
 import 'package:consulin_mobile_dev/widgets/ui/loading_custom.dart';
 import 'package:consulin_mobile_dev/widgets/ui/refresh_custom.dart';
 import 'package:flutter/material.dart';
@@ -81,60 +82,26 @@ class HomePasienView extends GetView<HomePasienController> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Row(
+                                  const Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
-                                        child: Obx(
-                                          () => PieChart(
-                                            dataMap: {
-                                              "Probability of Stress":
-                                                  controller.probabilityOfStress
-                                                      .value,
-                                              "Probability of Anxiety":
-                                                  controller
-                                                      .probabilityOfAnxiety
-                                                      .value,
-                                              'Probability of Depression':
-                                                  controller
-                                                      .probabilityOfDepression
-                                                      .value,
-                                            },
-                                            animationDuration: const Duration(
-                                                milliseconds: 800),
-                                            chartLegendSpacing: 32.0,
-                                            chartRadius: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.2,
-                                            colorList: const [
-                                              Color(0xfffd9b08),
-                                              Color(0xff47af65),
-                                              Color(0xffed3c76),
-                                            ],
-                                            initialAngleInDegree: 0,
-                                            chartType: ChartType.disc,
-                                            ringStrokeWidth: 32,
-                                            legendOptions: const LegendOptions(
-                                              showLegendsInRow: false,
-                                              legendPosition:
-                                                  LegendPosition.bottom,
-                                              showLegends: true,
-                                            ),
-                                            chartValuesOptions:
-                                                const ChartValuesOptions(
-                                              showChartValueBackground: false,
-                                              showChartValues: true,
-                                              showChartValuesInPercentage: true,
-                                              chartValueStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        child: ColumnChartAnalysis(),
                                       ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          'Probability of Stress: ${controller.aiAnalyzerPasienController.stressProbability.value}%'),
+                                      Text(
+                                          'Probability of Anxiety: ${controller.aiAnalyzerPasienController.anxietyProbability.value}%'),
+                                      Text(
+                                          'Probability of Depression: ${controller.aiAnalyzerPasienController.depressionProbability.value}%'),
                                     ],
                                   ),
                                   const SizedBox(height: 16.0),

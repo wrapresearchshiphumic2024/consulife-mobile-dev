@@ -287,4 +287,62 @@ class PatientService {
 
     return analyzers;
   }
+
+  // Method to fetch the latest AI analysis history
+  Future<AiAnalyzer?> getLatestHistoryAiAnalyzer() async {
+    final response = await HttpService.getRequest(
+      '/patients/ai-analysis-history', // API endpoint
+      includeBearer: true, // Include Bearer token in the request
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch AI analysis history');
+    }
+
+    final json = jsonDecode(response.body);
+
+    if (json['data'] == null || (json['data'] as List).isEmpty) {
+      return null;
+    }
+
+    // Getting the latest data (first item in the list)
+    final latestData = json['data'][0];
+
+    // Mapping the latest data to an AiAnalyzer object
+    final latestAnalyzer = AiAnalyzer(
+      id: latestData['id'],
+      complaint: latestData['complaint'],
+      stress: latestData['stress'],
+      anxiety: latestData['anxiety'],
+      depression: latestData['depression'],
+      createdAt: latestData['created_at'],
+      updatedAt: latestData['updated_at'],
+      patientId: latestData['patient_id'],
+    );
+
+    return latestAnalyzer;
+  }
+
+  // Fungsi untuk menganalisis AI
+  Future<void> aiAnalyzer(Map<String, String> data) async {
+    try {
+      // Memanggil API untuk analisis AI
+      final response = await HttpService.postRequest(
+        '/patients/ai-analyze',
+        body: data,
+        includeBearer: true,
+      );
+      final responseJson = jsonDecode(response.body);
+      print(responseJson);
+      if (response.statusCode == 200) {
+        if (responseJson['success'] == true) {
+          return; // Tidak ada nilai yang dikembalikan, cukup selesai
+        } else {
+          throw Exception(responseJson['message'] ?? "AI analysis failed");
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
