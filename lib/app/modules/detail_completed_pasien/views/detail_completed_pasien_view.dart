@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/detail_completed_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 const double defaultPadding = 16.0;
 
 class DetailCompletedPasienView
@@ -265,22 +265,91 @@ class DetailCompletedPasienView
                       controller.appointmentDetail.value!.status.toString() ==
                               'ongoing'
                           ? Row(
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      Get.toNamed(Routes.DETAIL_CHAT_PATIENT,
-                                          arguments: controller
-                                              .appointmentDetail
-                                              .value!
-                                              .channelId
-                                              .toString());
-                                    },
-                                    child: const Text("Chat")),
-                                TextButton(
-                                    onPressed: () {}, child: Text("Call")),
-                              ],
-                            )
-                          : const SizedBox(),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: Card(
+                              color: carddetail,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.toNamed(
+                                    Routes.DETAIL_CHAT_PATIENT,
+                                    arguments: controller.appointmentDetail.value!.channelId.toString(),
+                                  );
+                                },
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/chat_pasien.svg',
+                                        color: textColor,
+                                        height: 32.0,
+                                        width: 32.0,
+                                      ),
+                                      const SizedBox(width: 12.0),
+                                      Expanded(
+                                        child: Text(
+                                          'Message your Psychologist',
+                                          style: TextStyle(
+                                            fontSize: 10.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16.0),
+                          Expanded(
+                            child: Card(
+                              color: carddetail,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: InkWell(
+                                onTap: () { // Tetap menggunakan onTap
+                                  // Aksi untuk "Online therapy session"
+                                },
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/video.svg',
+                                        color: textColor,
+                                        height: 22.0,
+                                        width: 32.0,
+                                      ),
+                                      const SizedBox(width: 12.0),
+                                      Expanded(
+                                        child: Text(
+                                          'Online therapy session',
+                                          style: TextStyle(
+                                            fontSize: 10.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                      : const SizedBox(),
                     ],
                   ),
                 ),
