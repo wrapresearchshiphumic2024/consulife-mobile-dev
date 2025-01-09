@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
+import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,7 +25,7 @@ class DetailCompletedController extends GetxController {
 
   var appointmentDetail =
       Rx<Appointment?>(null); // Observable for appointment details
-  final DateTime appointmentDate = DateTime.now().add(Duration(hours: 2));
+  final DateTime appointmentDate = DateTime.now().add(const Duration(hours: 2));
   Rx<List<AiAnalyzer>?> aiAnalysisHistory = Rx<List<AiAnalyzer>?>(null);
 
   void changeTab(int index) {
@@ -153,7 +154,7 @@ class DetailCompletedController extends GetxController {
                   textColor: Colors.white,
                   toastLength: Toast.LENGTH_SHORT,
                 );
-                Future.delayed(Duration(seconds: 1), () {
+                Future.delayed(const Duration(seconds: 1), () {
                   Get.back();
                   Get.offAllNamed('');
                 });
@@ -225,7 +226,7 @@ class DetailCompletedController extends GetxController {
             TextField(
               controller: reasonController,
               maxLines: 4,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Reason',
                 hintText: '',
                 border: OutlineInputBorder(),
@@ -244,7 +245,7 @@ class DetailCompletedController extends GetxController {
                   textColor: Colors.white,
                   toastLength: Toast.LENGTH_SHORT,
                 );
-                Future.delayed(Duration(seconds: 1), () {
+                Future.delayed(const Duration(seconds: 1), () {
                   Get.back();
                   Get.offAllNamed('');
                 });
@@ -287,5 +288,13 @@ class DetailCompletedController extends GetxController {
         actionsAlignment: MainAxisAlignment.center,
       ),
     );
+  }
+
+  void joinMeet() {
+    var jitsiMeet = JitsiMeet();
+    var options = JitsiMeetConferenceOptions(
+      room: StorageService.getToken("user_id").toString(),
+    );
+    jitsiMeet.join(options);
   }
 }

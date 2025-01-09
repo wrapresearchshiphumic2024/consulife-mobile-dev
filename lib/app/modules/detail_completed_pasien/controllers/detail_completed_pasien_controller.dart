@@ -2,6 +2,7 @@ import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst
 import 'package:consulin_mobile_dev/app/utils/api/patient/PatientService.dart';
 
 import 'package:get/get.dart';
+import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 
 class DetailCompletedPasienController extends GetxController {
   final count = 0.obs;
@@ -37,5 +38,13 @@ class DetailCompletedPasienController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void joinMeet() {
+    var jitsiMeet = JitsiMeet();
+    var options = JitsiMeetConferenceOptions(
+      room: appointmentDetail.value!.user.id,
+    );
+    jitsiMeet.join(options);
   }
 }
