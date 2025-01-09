@@ -393,7 +393,7 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: SvgPicture.asset(
-                  'assets/icons/anxiety.svg',
+                  'assets/icons/ansiety.svg',
                   semanticsLabel: 'Anxiety Icon',
                   height: 67,
                 ),
@@ -434,7 +434,7 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: SvgPicture.asset(
-                  'assets/icons/depression.svg',
+                  'assets/icons/depresi.svg',
                   semanticsLabel: 'Depression Icon',
                   height: 60,
                 ),
