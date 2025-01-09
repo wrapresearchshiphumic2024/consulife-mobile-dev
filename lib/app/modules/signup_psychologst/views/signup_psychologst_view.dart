@@ -1,6 +1,7 @@
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/app/modules/signup_psychologst/controllers/signup_psychologst_controller.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/first_step.dart';
+import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/five_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/four_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/second_step.dart';
 import 'package:consulin_mobile_dev/widgets/signup/signup_psychologst/third_step.dart';
@@ -67,8 +68,10 @@ class SignupPsychologstView extends GetView<SignupPsychologstController> {
                         } else if (controller.step.value == 1) {
                           return SecondStep(controller: controller);
                         } else if (controller.step.value == 2) {
-                          return ThirdStep(controller: controller);
+                          return FiveStep(controller: controller);
                         } else if (controller.step.value == 3) {
+                          return ThirdStep(controller: controller);
+                        } else if (controller.step.value == 4) {
                           return FourStep(controller: controller);
                         }
 

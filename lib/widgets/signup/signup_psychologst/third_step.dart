@@ -42,7 +42,7 @@ class ThirdStep extends StatelessWidget {
         const SizedBox(height: 10),
         CustomMultiDropdown<String>(
           label: 'Specialization',
-          items: controller.spesializations,
+          items: controller.specializations,
           controller: controller.specialization,
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -62,7 +62,7 @@ class ThirdStep extends StatelessWidget {
           items: const ['1 Years', '2 Years', '3 Years', '4 Years', '5 Years'],
           onChanged: (value) {
             if (value != null) {
-              controller.selectedGender.value = value;
+              controller.selectedWorkExperience.value = value;
             }
           },
           validator: SignupValidation.workExperience,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst.dart';
+import 'package:consulin_mobile_dev/app/modules/Profile/controllers/profile_pycholog_controller.dart';
 import 'package:consulin_mobile_dev/app/utils/api/psychologst/PsychologstService.dart';
 import 'package:consulin_mobile_dev/app/utils/storage_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,6 +19,8 @@ class DetailCompletedController extends GetxController {
   ); // Declare channel without initialization here
   var selectedTabIndex = 0.obs;
   final isLoading = false.obs;
+  final ProfilePychologController profilePsychologController =
+      Get.find<ProfilePychologController>();
 
   var appointmentDetail =
       Rx<Appointment?>(null); // Observable for appointment details
@@ -42,8 +45,10 @@ class DetailCompletedController extends GetxController {
     // Check if profile is initialized
 
     // Fetch the user token
-    final token =
-        await fetchToken(StorageService.getToken("user_id").toString());
+    final token = await fetchToken(
+      StorageService.getToken("user_id").toString(),
+      '${profilePsychologController.profile.value.firstname} ${profilePsychologController.profile.value.lastname}',
+    );
 
     // Connect the user to the StreamChatClient
     await client.connectUser(
@@ -66,12 +71,12 @@ class DetailCompletedController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<String> fetchToken(String userId) async {
+  Future<String> fetchToken(String userId, String name) async {
     final response = await http.post(
       Uri.parse(
-          'https://consulife-frontend-website.vercel.app/api/chat-token'), // Adjust the URL as needed
+          '${dotenv.env["API_CHAT_URL"]}/chat-token'), // Adjust the URL as needed
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'userId': userId}),
+      body: jsonEncode({'userId': userId, 'name': name}),
     );
 
     if (response.statusCode != 200) {

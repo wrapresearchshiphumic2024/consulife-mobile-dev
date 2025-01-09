@@ -91,4 +91,36 @@ class SignupValidation {
 
     return null;
   }
+
+  static String? validateDegree(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your degree';
+    }
+
+    return null;
+  }
+
+  static String? validateUniversity(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your university';
+    }
+
+    return null;
+  }
+
+  static String? validateMajor(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your major';
+    }
+
+    return null;
+  }
+
+  static String? validateGraduationYear(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your graduation year';
+    }
+
+    return null;
+  }
 }

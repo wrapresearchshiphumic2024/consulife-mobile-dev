@@ -12,9 +12,8 @@ class AuthService {
       };
 
       final response = await HttpService.postRequest('/login', body: body);
-
+      var data = json.decode(response.body);
       if (response.statusCode == 200) {
-        var data = json.decode(response.body);
         if (data['data']['role'] == "admin") {
           throw Exception('Credentials not valid');
         }
@@ -32,13 +31,39 @@ class AuthService {
           throw Exception('Token not found');
         }
       } else {
-        print(response.body);
-        throw Exception('Login gagal: ${response.statusCode}');
+        throw data['message'];
       }
     } catch (e) {
-      // Menangani error lainnya dan melempar exception lebih lanjut
-      print('Terjadi kesalahan: $e');
-      throw Exception('Terjadi kesalahan saat proses login: $e');
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> register(Map<String, dynamic> formData) async {
+    try {
+      final body = {
+        'firstname': formData['firstname'],
+        'lastname': formData['lastname'],
+        'phone_number': formData['phone_number'],
+        'email': formData['email'],
+        'gender': formData['gender'],
+        'password': formData['password'],
+      };
+
+      // Kirim data ke API
+      final response = await HttpService.postRequest('/register', body: body);
+      var data = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        return {'success': data['status']};
+      } else {
+        if (data['status'] == 'error') {
+          return {'errors': data['errors']['email'][0]};
+        }
+        print('Register gagal: ${response.body}');
+        throw Exception('Register gagal dengan status: ${response.statusCode}');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

@@ -41,7 +41,7 @@ class SignInController extends GetxController {
       } catch (e) {
         LoadingDialog.hide(Get.context!);
         Fluttertoast.showToast(
-          msg: "Credentials are incorrect",
+          msg: e.toString(),
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0,

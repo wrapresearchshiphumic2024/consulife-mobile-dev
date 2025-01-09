@@ -31,20 +31,29 @@ class ManageScheduleView extends GetView<ManageScheduleController> {
                     await controller.getSchedule();
                   },
                   child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, top: 20),
-                          child: Column(
-                            children: [
-                              _buildHeader(),
-                              const SizedBox(height: 5),
-                            ],
-                          ),
-                        ),
-                        _buildScheduleCards(height),
+                        Obx(() {
+                          return controller.scheduleOpen.isEmpty
+                              ? const SizedBox()
+                              : Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20, right: 20, top: 20),
+                                      child: Column(
+                                        children: [
+                                          _buildHeader(),
+                                          const SizedBox(height: 5),
+                                        ],
+                                      ),
+                                    ),
+                                    _buildScheduleCards(height),
+                                  ],
+                                );
+                        }),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
