@@ -109,7 +109,7 @@ class PickRoleView extends GetView<PickRoleController> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             image: const DecorationImage(
-                              image: AssetImage('assets/images/Kanan.png'),
+                              image: AssetImage('assets/images/Pick_User.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
