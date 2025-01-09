@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:consulin_mobile_dev/app/modules/profile_pasien/controllers/profile_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/utils/storage_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class ChatPatientController extends GetxController {
   late Channel channel; // Declare channel without initialization here
 
   final isLoading = false.obs;
+  final ProfilePasienController profilePasienController =
+      Get.find<ProfilePasienController>();
 
   @override
   void onInit() {
@@ -28,8 +31,10 @@ class ChatPatientController extends GetxController {
     isLoading.value = true;
     // Check if profile is initialized
     try {
-      final token =
-          await fetchToken(StorageService.getToken("user_id").toString());
+      final token = await fetchToken(
+        StorageService.getToken("user_id").toString(),
+        '${profilePasienController.profile.value.firstname} ${profilePasienController.profile.value.lastname}',
+      );
 
       // Connect the user to the StreamChatClient
       await client.connectUser(
@@ -49,13 +54,12 @@ class ChatPatientController extends GetxController {
     }
   }
 
-  Future<String> fetchToken(String userId) async {
-    print(userId);
+  Future<String> fetchToken(String userId, String name) async {
     final response = await http.post(
       Uri.parse(
-          'https://consulife-frontend-website.vercel.app/api/chat-token'), // Adjust the URL as needed
+          '${dotenv.env["API_CHAT_URL"]}/chat-token'), // Adjust the URL as needed
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'userId': userId}),
+      body: jsonEncode({'userId': userId, 'name': name}),
     );
 
     if (response.statusCode != 200) {

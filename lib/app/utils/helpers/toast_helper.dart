@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class ToastHelper {
   // Fungsi statis untuk menampilkan toast
@@ -24,9 +25,12 @@ class ToastHelper {
           borderRadius: BorderRadius.circular(25.0),
           color: backgroundColor,
         ),
-        child: Text(
-          message,
-          style: TextStyle(color: textColor, fontSize: fontSize),
+        child: Center(
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: textColor, fontSize: fontSize),
+          ),
         ),
       ),
       gravity: gravity,
