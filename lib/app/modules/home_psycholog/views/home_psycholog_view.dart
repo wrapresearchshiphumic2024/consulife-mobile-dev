@@ -58,11 +58,11 @@ class HomePsychologView extends GetView<HomePsychologController> {
                                   ),
                                 ],
                               ),
-                              IconButton(
-                                  onPressed: () {
-                                    Get.toNamed(Routes.NOTIFICATION);
-                                  },
-                                  icon: const Icon(Icons.notifications)),
+                              // IconButton(
+                              //     onPressed: () {
+                              //       Get.toNamed(Routes.NOTIFICATION);
+                              //     },
+                              //     icon: const Icon(Icons.notifications)),
                             ],
                           ),
                           const SizedBox(height: 25),

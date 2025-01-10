@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:consulin_mobile_dev/app/models/psychologst/info-data-psychologst.dart';
 import 'package:consulin_mobile_dev/app/modules/Profile/controllers/profile_pycholog_controller.dart';
+import 'package:consulin_mobile_dev/app/modules/home_psycholog/controllers/home_psycholog_controller.dart';
 import 'package:consulin_mobile_dev/app/utils/api/psychologst/PsychologstService.dart';
 import 'package:consulin_mobile_dev/app/utils/storage_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -27,7 +28,11 @@ class DetailCompletedController extends GetxController {
       Rx<Appointment?>(null); // Observable for appointment details
   final DateTime appointmentDate = DateTime.now().add(const Duration(hours: 2));
   Rx<List<AiAnalyzer>?> aiAnalysisHistory = Rx<List<AiAnalyzer>?>(null);
+  final key = GlobalKey<FormState>();
+  TextEditingController reasonController = TextEditingController();
 
+  final HomePsychologController homePsychologController =
+      Get.find<HomePsychologController>();
   void changeTab(int index) {
     selectedTabIndex.value = index;
   }
@@ -146,18 +151,8 @@ class DetailCompletedController extends GetxController {
             ),
             const SizedBox(height: 12),
             ElevatedButton(
-              onPressed: () {
-                Fluttertoast.showToast(
-                  msg: "Consultation Completed",
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: successColor,
-                  textColor: Colors.white,
-                  toastLength: Toast.LENGTH_SHORT,
-                );
-                Future.delayed(const Duration(seconds: 1), () {
-                  Get.back();
-                  Get.offAllNamed('');
-                });
+              onPressed: () async {
+                await doneAppointment();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: successColor,
@@ -199,8 +194,64 @@ class DetailCompletedController extends GetxController {
     );
   }
 
+  Future<void> doneAppointment() async {
+    try {
+      await PsychologstService()
+          .doneAppointment(appointmentDetail.value!.id.toString());
+      Fluttertoast.showToast(
+        msg: "Consultation Completed",
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: successColor,
+        textColor: Colors.white,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+
+      Get.back();
+      fetchAppointmentDetails(Get.arguments.toString());
+      homePsychologController.getConsultationDataPsychologist();
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      Get.back();
+    }
+  }
+
+  Future<void> cancelAppointment() async {
+    try {
+      if (key.currentState!.validate()) {
+        await PsychologstService().cancelAppointment(
+          appointmentDetail.value!.id.toString(),
+          reasonController.text,
+        );
+        Fluttertoast.showToast(
+          msg: "Consultation Cancelled",
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: warningColor,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_SHORT,
+        );
+        Get.back();
+        fetchAppointmentDetails(Get.arguments.toString());
+        homePsychologController.getConsultationDataPsychologist();
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      Get.back();
+    }
+  }
+
   void cancel(BuildContext context) {
-    TextEditingController reasonController = TextEditingController();
     Get.dialog(
       AlertDialog(
         title: const Text(
@@ -211,79 +262,83 @@ class DetailCompletedController extends GetxController {
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Are you sure you want to cancel this session?\n\n'
-              'Please provide the reason for cancellation below:',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: primaryColor,
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: reasonController,
-              maxLines: 4,
-              decoration: const InputDecoration(
-                labelText: 'Reason',
-                hintText: '',
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: primaryColor),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Fluttertoast.showToast(
-                  msg: "Consultation Cancelled",
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: warningColor,
-                  textColor: Colors.white,
-                  toastLength: Toast.LENGTH_SHORT,
-                );
-                Future.delayed(const Duration(seconds: 1), () {
-                  Get.back();
-                  Get.offAllNamed('');
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                minimumSize: const Size(200, 40),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Yes, Cancel session',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            OutlinedButton(
-              onPressed: () {
-                Get.back();
-              },
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.white),
-                minimumSize: const Size(200, 40),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Return',
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Are you sure you want to cancel this session?\n\n'
+                'Please provide the reason for cancellation below:',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: primaryColor,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              Form(
+                key: key,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: reasonController,
+                      maxLines: 4,
+                      decoration: const InputDecoration(
+                        hintText: 'Reason for cancellation',
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: primaryColor),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please provide a reason for cancellation';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await cancelAppointment();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        minimumSize: const Size(200, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Yes, Cancel session',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    OutlinedButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: Colors.white),
+                        minimumSize: const Size(200, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Return',
+                        style: TextStyle(
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
         actionsAlignment: MainAxisAlignment.center,
       ),
