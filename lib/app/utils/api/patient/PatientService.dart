@@ -266,6 +266,7 @@ class PatientService {
     }
 
     final json = jsonDecode(response.body);
+    print(json);
 
     if (json['data'] == null || (json['data'] as List).isEmpty) {
       return null;
@@ -276,9 +277,9 @@ class PatientService {
       return AiAnalyzer(
         id: item['id'],
         complaint: item['complaint'],
-        stress: item['stress'],
-        anxiety: item['anxiety'],
-        depression: item['depression'],
+        stress: item['stress'].toDouble(),
+        anxiety: item['anxiety'].toDouble(),
+        depression: item['depression'].toDouble(),
         createdAt: item['created_at'],
         updatedAt: item['updated_at'],
         patientId: item['patient_id'],

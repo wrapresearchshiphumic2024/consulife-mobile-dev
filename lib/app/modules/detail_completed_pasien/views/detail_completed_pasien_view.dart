@@ -47,6 +47,7 @@ class DetailCompletedPasienView
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const CircleAvatar(
                             radius: 60,
@@ -55,62 +56,89 @@ class DetailCompletedPasienView
                             ),
                           ),
                           const SizedBox(width: 16.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${controller.appointmentDetail.value!.user.firstname.capitalizeFirst} ${controller.appointmentDetail.value!.user.lastname.capitalizeFirst}',
-                                style: const TextStyle(
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${controller.appointmentDetail.value!.user.firstname.capitalizeFirst} ${controller.appointmentDetail.value!.user.lastname.capitalizeFirst}',
+                                  style: const TextStyle(
                                     color: textColor,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Row(
-                                children: [
-                                  const Icon(Icons.email_outlined, size: 16.0),
-                                  const SizedBox(width: 4.0),
-                                  Text(
-                                    controller
-                                        .appointmentDetail.value!.user.email
-                                        .toString(),
-                                    style: const TextStyle(color: textColor),
+                                    fontSize: 20,
                                   ),
-                                ],
-                              ),
-                              const SizedBox(height: 8.0),
-                              Row(
-                                children: [
-                                  const Icon(Icons.work_outline_rounded,
-                                      size: 16.0),
-                                  const SizedBox(width: 4.0),
-                                  Text(
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 8.0),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Icon(Icons.email_outlined,
+                                        size: 16.0),
+                                    const SizedBox(width: 4.0),
+                                    Expanded(
+                                      child: Text(
+                                        controller
+                                            .appointmentDetail.value!.user.email
+                                            .toString(),
+                                        style:
+                                            const TextStyle(color: textColor),
+                                        maxLines: 2,
+                                        overflow: TextOverflow
+                                            .visible, // Teks akan melanjutkan ke bawah.
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8.0),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Icon(Icons.work_outline_rounded,
+                                        size: 16.0),
+                                    const SizedBox(width: 4.0),
+                                    Expanded(
+                                      child: Text(
+                                        controller.appointmentDetail.value!.user
+                                            .psychologist!.workExperience
+                                            .toString(),
+                                        style:
+                                            const TextStyle(color: textColor),
+                                        maxLines: 2,
+                                        overflow: TextOverflow
+                                            .visible, // Teks akan berpindah ke bawah jika panjang.
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8.0),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
                                     controller.appointmentDetail.value!.user
-                                        .psychologist!.workExperience
-                                        .toString(),
-                                    style: const TextStyle(color: textColor),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8.0),
-                              Row(
-                                children: [
-                                  controller.appointmentDetail.value!.user
-                                              .gender
-                                              .toString() ==
-                                          "Male"
-                                      ? const Icon(Icons.male, size: 16.0)
-                                      : const Icon(Icons.female, size: 16.0),
-                                  const SizedBox(width: 4.0),
-                                  Text(
-                                    controller
-                                        .appointmentDetail.value!.user.gender
-                                        .toString(),
-                                    style: const TextStyle(color: textColor),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                                .gender
+                                                .toString() ==
+                                            "Male"
+                                        ? const Icon(Icons.male, size: 16.0)
+                                        : const Icon(Icons.female, size: 16.0),
+                                    const SizedBox(width: 4.0),
+                                    Expanded(
+                                      child: Text(
+                                        controller.appointmentDetail.value!.user
+                                            .gender
+                                            .toString(),
+                                        style:
+                                            const TextStyle(color: textColor),
+                                        maxLines: 2,
+                                        overflow: TextOverflow
+                                            .visible, // Menghindari teks terpotong.
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -123,7 +151,6 @@ class DetailCompletedPasienView
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      // Menampilkan spesialisasi secara dinamis menggunakan Wrap
                       Obx(() {
                         List<String>? specializations = controller
                             .appointmentDetail
@@ -139,8 +166,8 @@ class DetailCompletedPasienView
                         }
 
                         return Wrap(
-                          spacing: 2.0, // Jarak horizontal antar kartu
-                          runSpacing: 2.0, // Jarak vertical antar baris
+                          spacing: 8.0,
+                          runSpacing: 4.0,
                           alignment: WrapAlignment.start,
                           children: specializations.map((specialization) {
                             return Card(
@@ -160,204 +187,187 @@ class DetailCompletedPasienView
                         );
                       }),
                       const SizedBox(height: 16.0),
-                      Card(
-                        color: _getStatusColor(controller
-                            .appointmentDetail.value!.status
-                            .toString()),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text(
-                              controller.appointmentDetail.value!.status
-                                  .capitalizeFirst
-                                  .toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      _buildStatusCard(),
                       const SizedBox(height: 16.0),
-                      Card(
-                        color: carddetail,
-                        margin: EdgeInsets.zero,
-                        child: SizedBox(
-                          width: width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Appointment Information',
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  'Date: ${formatDate(controller.appointmentDetail.value!.date)}',
-                                  style: const TextStyle(
-                                    color: textColor,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  'Time: ${controller.appointmentDetail.value!.startTime} - ${controller.appointmentDetail.value!.endTime}',
-                                  style: const TextStyle(
-                                    color: textColor,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  'Status: ${controller.appointmentDetail.value!.status.capitalizeFirst}',
-                                  style: const TextStyle(
-                                    color: textColor,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  'Duration: ${controller.appointmentDetail.value!.duration}',
-                                  style: const TextStyle(
-                                    color: textColor,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      _buildAppointmentInformation(width),
                       const SizedBox(height: 16.0),
-                      Card(
-                        color: carddetail,
-                        margin: EdgeInsets.zero,
-                        child: Container(
-                          width: width, // Mengatur lebar menjadi full width
-                          padding: const EdgeInsets.all(
-                              16.0), // Padding di dalam Card
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Note',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: textColor,
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                controller.appointmentDetail.value!.note
-                                    .toString(),
-                                style: const TextStyle(
-                                  color: textColor,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      controller.appointmentDetail.value!.status.toString() ==
-                              'waiting'
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    color: carddetail,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Get.toNamed(
-                                          Routes.DETAIL_CHAT_PATIENT,
-                                          arguments: controller
-                                              .appointmentDetail
-                                              .value!
-                                              .channelId
-                                              .toString(),
-                                        );
-                                      },
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/icons/chat_pasien.svg',
-                                              color: textColor,
-                                              height: 32.0,
-                                              width: 32.0,
-                                            ),
-                                            const SizedBox(width: 12.0),
-                                            const Expanded(
-                                              child: Text(
-                                                'Message your Psychologist',
-                                                style: TextStyle(
-                                                  fontSize: 10.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: textColor,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 16.0),
-                                Expanded(
-                                  child: Card(
-                                    color: carddetail,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: InkWell(
-                                      onTap: controller.joinMeet,
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/icons/video.svg',
-                                              color: textColor,
-                                              height: 22.0,
-                                              width: 32.0,
-                                            ),
-                                            const SizedBox(width: 12.0),
-                                            const Expanded(
-                                              child: Text(
-                                                'Online therapy session',
-                                                style: TextStyle(
-                                                  fontSize: 10.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: textColor,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
+                      _buildNoteSection(width),
+                      const SizedBox(height: 16.0),
+                      if (controller.appointmentDetail.value!.status
+                              .toString() ==
+                          'ongoing')
+                        _buildActionButtons(),
                     ],
                   ),
                 ),
               );
       }),
+    );
+  }
+
+  Widget _buildStatusCard() {
+    return Obx(() {
+      return Card(
+        color: _getStatusColor(
+            controller.appointmentDetail.value!.status.toString()),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Text(
+              controller.appointmentDetail.value!.status.capitalizeFirst
+                  .toString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget _buildAppointmentInformation(double width) {
+    return Card(
+      color: carddetail,
+      margin: EdgeInsets.zero,
+      child: SizedBox(
+        width: width,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Appointment Information',
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                'Date: ${formatDate(controller.appointmentDetail.value!.date)}',
+                style: const TextStyle(color: textColor, fontSize: 12),
+              ),
+              Text(
+                'Time: ${controller.appointmentDetail.value!.startTime} - ${controller.appointmentDetail.value!.endTime}',
+                style: const TextStyle(color: textColor, fontSize: 12),
+              ),
+              Text(
+                'Status: ${controller.appointmentDetail.value!.status.capitalizeFirst}',
+                style: const TextStyle(color: textColor, fontSize: 12),
+              ),
+              Text(
+                'Duration: ${controller.appointmentDetail.value!.duration}',
+                style: const TextStyle(color: textColor, fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNoteSection(double width) {
+    return Card(
+      color: carddetail,
+      margin: EdgeInsets.zero,
+      child: Container(
+        width: width,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Note',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            Obx(() {
+              return Text(
+                controller.appointmentDetail.value!.note.toString(),
+                style: const TextStyle(color: textColor, fontSize: 12),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          child: _buildActionCard(
+            icon: 'assets/icons/chat_pasien.svg',
+            label: 'Message your Psychologist',
+            onTap: () {
+              Get.toNamed(
+                Routes.DETAIL_CHAT_PATIENT,
+                arguments:
+                    controller.appointmentDetail.value!.channelId.toString(),
+              );
+            },
+          ),
+        ),
+        const SizedBox(width: 16.0),
+        Expanded(
+          child: _buildActionCard(
+            icon: 'assets/icons/video.svg',
+            label: 'Online therapy session',
+            onTap: controller.joinMeet,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionCard({
+    required String icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      color: carddetail,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                icon,
+                color: textColor,
+                height: 32.0,
+                width: 32.0,
+              ),
+              const SizedBox(width: 12.0),
+              Expanded(
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

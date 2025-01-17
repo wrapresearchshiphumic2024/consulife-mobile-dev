@@ -35,18 +35,16 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                 controller.appointmentDetail.value!.status == 'ongoing') {
               return IconButton(
                 icon: const Icon(Icons.videocam, color: primaryColor),
-                onPressed: () {
-                  // Add your onPressed logic here
-                },
+                onPressed: controller.joinMeet,
               );
             } else {
               return Container();
             }
           }),
-          IconButton(
-            icon: const Icon(Icons.videocam, color: primaryColor),
-            onPressed: controller.joinMeet,
-          )
+          // IconButton(
+          //   icon: const Icon(Icons.videocam, color: primaryColor),
+          //   onPressed: controller.joinMeet,
+          // )
         ],
       ),
       body: Obx(() {
@@ -139,7 +137,7 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 5),
             const Text(
@@ -210,6 +208,14 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
                       ),
                     ),
                     const SizedBox(width: 16),
+                  ],
+                );
+              } else if (controller.appointmentDetail.value!.status ==
+                      'waiting' ||
+                  controller.appointmentDetail.value!.status == 'ongoing') {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
@@ -310,7 +316,7 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
       onRefresh: () =>
           controller.fetchAppointmentDetails(Get.arguments.toString()),
       child: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         children: [
           _buildPatientCard(),
           const SizedBox(height: 16),

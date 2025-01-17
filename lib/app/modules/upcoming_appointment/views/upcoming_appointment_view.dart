@@ -73,7 +73,7 @@ class UpcomingAppointmentView extends GetView<UpcomingAppointmentController> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  consultation.status,
+                                  '${consultation.status.capitalizeFirst.toString()} Consultation',
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -138,11 +138,11 @@ class UpcomingAppointmentView extends GetView<UpcomingAppointmentController> {
 
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'Ongoing Consultation':
+      case 'ongoing':
         return successColor;
-      case 'Waiting Consultation':
+      case 'waiting':
         return primaryColor;
-      case 'Canceled Consultation':
+      case 'canceled':
         return warningColor;
       default:
         return Colors.grey;

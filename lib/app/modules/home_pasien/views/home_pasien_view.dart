@@ -4,7 +4,6 @@ import 'package:consulin_mobile_dev/widgets/ui/loading_custom.dart';
 import 'package:consulin_mobile_dev/widgets/ui/refresh_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pie_chart/pie_chart.dart';
 import '../controllers/home_pasien_controller.dart';
 import 'package:consulin_mobile_dev/app/constants/color.dart';
 import 'package:consulin_mobile_dev/app/routes/app_pages.dart';

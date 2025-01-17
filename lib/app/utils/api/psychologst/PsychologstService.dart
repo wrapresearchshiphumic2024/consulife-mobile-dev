@@ -211,4 +211,43 @@ class PsychologstService {
 
     return analyzers;
   }
+
+  Future<void> doneAppointment(String appointmentId) async {
+    try {
+      final response = await HttpService.postRequest(
+        '/psychologist/appointment-done/$appointmentId}',
+        includeBearer: true,
+      );
+
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw responseData['message'];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> cancelAppointment(String appointmentId, String note) async {
+    try {
+      // Perbaikan endpoint URL (menghapus kurung kurawal ekstra di akhir)
+      final response = await HttpService.postRequest(
+        '/psychologist/appointment-cancel/$appointmentId',
+        body: {'note': note},
+        includeBearer: true,
+      );
+
+      // Memastikan respons dapat diproses dengan benar
+      if (response.statusCode != 200) {
+        final responseData = jsonDecode(response.body);
+        final errorMessage =
+            responseData['message'] ?? 'Unknown error occurred';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      // Melempar ulang error untuk ditangani di tingkat yang lebih tinggi
+      rethrow;
+    }
+  }
 }
