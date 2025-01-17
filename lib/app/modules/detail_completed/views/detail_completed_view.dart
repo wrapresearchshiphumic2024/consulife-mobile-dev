@@ -41,6 +41,10 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
               return Container();
             }
           }),
+          // IconButton(
+          //   icon: const Icon(Icons.videocam, color: primaryColor),
+          //   onPressed: controller.joinMeet,
+          // )
         ],
       ),
       body: Obx(() {

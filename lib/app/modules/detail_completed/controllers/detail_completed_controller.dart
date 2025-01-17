@@ -349,6 +349,14 @@ class DetailCompletedController extends GetxController {
     var jitsiMeet = JitsiMeet();
     var options = JitsiMeetConferenceOptions(
       room: StorageService.getToken("user_id").toString(),
+      configOverrides: {
+        "startWithAudioMuted": true,
+        "startWithVideoMuted": true,
+      },
+      featureFlags: {
+        "unsaferoomwarning.enabled": false,
+        "security-options.enabled": false
+      },
     );
     jitsiMeet.join(options);
   }

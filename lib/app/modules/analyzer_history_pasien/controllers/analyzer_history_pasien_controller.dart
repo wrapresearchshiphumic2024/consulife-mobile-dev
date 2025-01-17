@@ -31,6 +31,7 @@ class AnalyzerHistoryPasienController extends GetxController {
     try {
       // Send GET request to your API
       final history = await PatientService().getHistoryAiAnalyzer();
+      print("coba");
 
       // Check if history is null, then use an empty list if so
       analyzerHistory.value = history ?? [];

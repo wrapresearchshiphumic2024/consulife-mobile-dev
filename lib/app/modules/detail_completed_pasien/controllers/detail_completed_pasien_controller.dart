@@ -44,6 +44,14 @@ class DetailCompletedPasienController extends GetxController {
     var jitsiMeet = JitsiMeet();
     var options = JitsiMeetConferenceOptions(
       room: appointmentDetail.value!.user.id,
+      configOverrides: {
+        "startWithAudioMuted": true,
+        "startWithVideoMuted": true,
+      },
+      featureFlags: {
+        "unsaferoomwarning.enabled": false,
+        "security-options.enabled": false
+      },
     );
     jitsiMeet.join(options);
   }
