@@ -32,7 +32,8 @@ class DetailCompletedView extends GetView<DetailCompletedController> {
         actions: [
           Obx(() {
             if (controller.appointmentDetail.value != null &&
-                controller.appointmentDetail.value!.status == 'ongoing') {
+                (controller.appointmentDetail.value!.status == 'waiting' ||
+                    controller.appointmentDetail.value!.status == 'ongoing')) {
               return IconButton(
                 icon: const Icon(Icons.videocam, color: primaryColor),
                 onPressed: controller.joinMeet,
@@ -589,7 +590,8 @@ class ChannelPage extends StatelessWidget {
             child: StreamMessageListView(),
           ),
           Obx(() {
-            if (controller.appointmentDetail.value!.status == 'ongoing') {
+            if (controller.appointmentDetail.value!.status == 'waiting' ||
+                controller.appointmentDetail.value!.status == 'ongoing') {
               return const StreamMessageInput();
             }
             return const SizedBox.shrink();

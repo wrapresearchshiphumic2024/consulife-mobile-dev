@@ -215,13 +215,13 @@ class PsychologistCard extends StatelessWidget {
                               style: const TextStyle(fontSize: 10),
                             ),
                             const SizedBox(height: 8.0),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Wrap(
+                              spacing: 8.0,
+                              runSpacing: 8.0,
                               children: [
                                 GenderInfoBadge(
                                   gender: psychologist.gender.toString(),
                                 ),
-                                const SizedBox(width: 8.0),
                                 ExperienceInfoBadge(
                                   experience: psychologist
                                           .psychologist?.workExperience
